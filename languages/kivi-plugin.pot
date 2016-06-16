@@ -1,0 +1,1499 @@
+# Copyright (C) 2016 Kivi
+# This file is distributed under the same license as the Kivi package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Kivi 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/kivi-plugin\n"
+"POT-Creation-Date: 2016-05-29 12:24:25+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: admin/class-kivi-admin.php:159
+msgid ""
+"Tausta-ajo käynnissä. Ajon aikana käyttöliittymä saattaa tuntua hitaammalta "
+"kuin tavallisesti."
+msgstr ""
+
+#: admin/class-kivi-admin.php:315 admin/class-kivi-admin.php:317
+#: admin/class-kivi-admin.php:318
+msgid "KIVI items"
+msgstr ""
+
+#: admin/class-kivi-admin.php:316 admin/class-kivi-admin.php:348
+msgid "Item"
+msgstr ""
+
+#: admin/class-kivi-admin.php:319
+msgid "Item listing"
+msgstr ""
+
+#: admin/class-kivi-admin.php:320
+msgid "Parent Item:"
+msgstr ""
+
+#: admin/class-kivi-admin.php:321
+msgid "All items"
+msgstr ""
+
+#: admin/class-kivi-admin.php:322
+msgid "Add Item"
+msgstr ""
+
+#: admin/class-kivi-admin.php:323
+msgid "Add new"
+msgstr ""
+
+#: admin/class-kivi-admin.php:324
+msgid "New Item"
+msgstr ""
+
+#: admin/class-kivi-admin.php:325
+msgid "Edit Item"
+msgstr ""
+
+#: admin/class-kivi-admin.php:326
+msgid "Update Item"
+msgstr ""
+
+#: admin/class-kivi-admin.php:327
+msgid "View Item"
+msgstr ""
+
+#: admin/class-kivi-admin.php:328
+msgid "Search items"
+msgstr ""
+
+#: admin/class-kivi-admin.php:329
+msgid "Not found."
+msgstr ""
+
+#: admin/class-kivi-admin.php:330
+msgid "Not found in trash."
+msgstr ""
+
+#: admin/class-kivi-admin.php:331
+msgid "Featured Item image"
+msgstr ""
+
+#: admin/class-kivi-admin.php:332
+msgid "Set featured Item image"
+msgstr ""
+
+#: admin/class-kivi-admin.php:333
+msgid "Remove featured image"
+msgstr ""
+
+#: admin/class-kivi-admin.php:334
+msgid "Use as featured image"
+msgstr ""
+
+#: admin/class-kivi-admin.php:335
+msgid "Insert into Item"
+msgstr ""
+
+#: admin/class-kivi-admin.php:336
+msgid "Uploaded to this Item"
+msgstr ""
+
+#: admin/class-kivi-admin.php:337
+msgid "Item list"
+msgstr ""
+
+#: admin/class-kivi-admin.php:338
+msgid "Comapny navigation"
+msgstr ""
+
+#: admin/class-kivi-admin.php:339
+msgid "Filter items"
+msgstr ""
+
+#: admin/class-kivi-admin.php:349
+msgid "Item type"
+msgstr ""
+
+#: admin/partials/kivi-admin-display.php:29
+msgid "Aseta URL ja tuo aineisto"
+msgstr ""
+
+#: admin/partials/kivi-admin-display.php:30
+msgid "Tähän laitetaan XML-tiedoston URL-osoite"
+msgstr ""
+
+#: admin/partials/kivi-admin-display.php:32
+msgid "Tuo"
+msgstr ""
+
+#: admin/partials/kivi-admin-display.php:35
+msgid "Brändiväri"
+msgstr ""
+
+#: admin/partials/kivi-admin-display.php:36
+msgid ""
+"Brändiväri, joka esiintyy esim. napeissa jne. Kivi -kohteita näytettäessä"
+msgstr ""
+
+#: admin/partials/kivi-admin-display.php:39
+msgid "esim. kohde"
+msgstr ""
+
+#: admin/partials/kivi-admin-display.php:39
+msgid "Polkutunnus"
+msgstr ""
+
+#: admin/partials/kivi-admin-display.php:42
+msgid "Näytä sivupalkki kohdesivulla"
+msgstr ""
+
+#: admin/partials/kivi-admin-display.php:45
+msgid "Käytä www-kokoisia kuvia siirrossa (oletus: original)"
+msgstr ""
+
+#: admin/partials/kivi-admin-display.php:50
+msgid "Keskeytä"
+msgstr ""
+
+#: admin/partials/kivi-admin-display.php:52
+msgid "Tallenna asetukset"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:99
+msgid "Kohdelistaus"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:104
+msgid "Asunnon tyyppi"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:106
+msgid "-"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:107
+msgid "Kerrostalo"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:108
+msgid "Omakotitalo"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:109
+msgid "Rivitalo"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:110
+msgid "Paritalo"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:111
+msgid "Erillistalo"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:112
+msgid "Puutalo-osake"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:113
+msgid "Luhtitalo"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:118 public/kivi-functions.php:86
+msgid "Sijainti"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:119
+msgid "Sijainti: esim. Tampere tai 00100"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:123
+#: includes/partials/kivi-index-template.php:124
+msgid "Hinta min"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:128
+#: includes/partials/kivi-index-template.php:129
+msgid "Hinta max"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:133
+#: includes/partials/kivi-index-template.php:134
+msgid "Pinta-ala min"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:138
+#: includes/partials/kivi-index-template.php:139
+msgid "Pinta-ala max"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:143
+msgid "Huoneluku"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:146
+msgid "Yksiö"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:147
+msgid "2 huonetta"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:148
+msgid "3 huonetta"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:149
+msgid "4 huonetta"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:150
+msgid "5 huonetta"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:151
+msgid "Yli 5 huonetta"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:156
+msgid "Hae"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:164
+msgid "Hakutulokset"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:194
+msgid "« Edellinen"
+msgstr ""
+
+#: includes/partials/kivi-index-template.php:195
+msgid "Seuraava »"
+msgstr ""
+
+#: includes/partials/kivi-single-template.php:101
+msgid "Kuvaus"
+msgstr ""
+
+#: includes/partials/kivi-single-template.php:113
+msgid "Yhteystiedot ja esittelyt"
+msgstr ""
+
+#: includes/partials/kivi-single-template.php:126
+msgid "Asunnon perustiedot"
+msgstr ""
+
+#: includes/partials/kivi-single-template.php:141
+msgid "Hinta ja kustannukset"
+msgstr ""
+
+#: includes/partials/kivi-single-template.php:156
+msgid "Asunnon lisätiedot"
+msgstr ""
+
+#: includes/partials/kivi-single-template.php:171 public/kivi-functions.php:182
+msgid "Asunnon tilat ja materiaalit"
+msgstr ""
+
+#: includes/partials/kivi-single-template.php:186
+msgid "Taloyhtiö"
+msgstr ""
+
+#: includes/partials/kivi-single-template.php:202
+msgid "Kartta kaikki tiedot"
+msgstr ""
+
+#: includes/wp-background-process.php:327
+msgid "Every %d Minutes"
+msgstr ""
+
+#: kivi.php:32
+msgid "Every 30 minutes"
+msgstr ""
+
+#: public/class-kivi-public.php:97
+msgid "realty_unique_no"
+msgstr ""
+
+#: public/class-kivi-public.php:102
+msgid "flat structure"
+msgstr ""
+
+#: public/class-kivi-public.php:107
+msgid "street"
+msgstr ""
+
+#: public/class-kivi-public.php:112
+msgid "addr_town_area"
+msgstr ""
+
+#: public/class-kivi-public.php:117
+msgid "Item Image"
+msgstr ""
+
+#: public/class-kivi-public.php:124
+msgid "KIVI item data"
+msgstr ""
+
+#: public/class-kivi-public.php:136
+msgid "Maakunta"
+msgstr ""
+
+#: public/class-kivi-public.php:137
+msgid "Kunta"
+msgstr ""
+
+#: public/class-kivi-public.php:138
+msgid "Ei peltoa"
+msgstr ""
+
+#: public/class-kivi-public.php:139
+msgid "Pellon kuvaus"
+msgstr ""
+
+#: public/class-kivi-public.php:140
+msgid "Peltoala ha"
+msgstr ""
+
+#: public/class-kivi-public.php:141
+msgid "Lisätietoja rakennusoikeudesta"
+msgstr ""
+
+#: public/class-kivi-public.php:142
+msgid "Rakennusoikeus e-luku"
+msgstr ""
+
+#: public/class-kivi-public.php:143
+msgid "Rakennusoikeus, m2"
+msgstr ""
+
+#: public/class-kivi-public.php:144
+msgid "Maa"
+msgstr ""
+
+#: public/class-kivi-public.php:145
+msgid "Salaojitettu"
+msgstr ""
+
+#: public/class-kivi-public.php:146
+msgid "Kortteli/kiinteistön nimi"
+msgstr ""
+
+#: public/class-kivi-public.php:147
+msgid "Kiinteistön tyyppi"
+msgstr ""
+
+#: public/class-kivi-public.php:148
+msgid "Metsän kuvaus"
+msgstr ""
+
+#: public/class-kivi-public.php:149
+msgid "Metsätaloussuunnitelma olemassa"
+msgstr ""
+
+#: public/class-kivi-public.php:150
+msgid "Tuoteryhmä"
+msgstr ""
+
+#: public/class-kivi-public.php:151
+msgid "Karttakoordinaatti x"
+msgstr ""
+
+#: public/class-kivi-public.php:152
+msgid "Karttakoordinaatti y"
+msgstr ""
+
+#: public/class-kivi-public.php:153
+msgid "Välittömät hakkuumahdollisuudet, m3"
+msgstr ""
+
+#: public/class-kivi-public.php:154
+msgid "Hakkuumahdollisuuksien kuvaus"
+msgstr ""
+
+#: public/class-kivi-public.php:155
+msgid "Tontin pinta-alan yksikkö"
+msgstr ""
+
+#: public/class-kivi-public.php:156
+msgid "Tontin numero"
+msgstr ""
+
+#: public/class-kivi-public.php:157
+msgid "Tontin tyyppi"
+msgstr ""
+
+#: public/class-kivi-public.php:158
+msgid "Lisätietoja tontista"
+msgstr ""
+
+#: public/class-kivi-public.php:159
+msgid "Muut tilat (säiliöelementti)"
+msgstr ""
+
+#: public/class-kivi-public.php:160
+msgid "Muu tila"
+msgstr ""
+
+#: public/class-kivi-public.php:161
+msgid "Postitoimipaikka"
+msgstr ""
+
+#: public/class-kivi-public.php:162 public/class-kivi-public.php:328
+msgid "Postinumero"
+msgstr ""
+
+#: public/class-kivi-public.php:163
+msgid "Kaupunginosa/kylä"
+msgstr ""
+
+#: public/class-kivi-public.php:164 public/class-kivi-public.php:264
+msgid "Tontin omistus"
+msgstr ""
+
+#: public/class-kivi-public.php:165
+msgid "Kiinteistötunnus/laitostunnus"
+msgstr ""
+
+#: public/class-kivi-public.php:166 public/class-kivi-public.php:369
+msgid "Tyyppi"
+msgstr ""
+
+#: public/class-kivi-public.php:167
+msgid "Hauissa mukana myös tuoteryhmissä"
+msgstr ""
+
+#: public/class-kivi-public.php:168
+msgid "Katuosoite"
+msgstr ""
+
+#: public/class-kivi-public.php:169
+msgid "Katu"
+msgstr ""
+
+#: public/class-kivi-public.php:170
+msgid "Talon numero"
+msgstr ""
+
+#: public/class-kivi-public.php:171
+msgid "Kaupunki"
+msgstr ""
+
+#: public/class-kivi-public.php:172
+msgid "Kohteen käyttö- ja luovutusrajoitukset"
+msgstr ""
+
+#: public/class-kivi-public.php:173
+msgid "Alueen taso"
+msgstr ""
+
+#: public/class-kivi-public.php:174
+msgid "Vesistön nimi"
+msgstr ""
+
+#: public/class-kivi-public.php:175
+msgid "Veden laatu ja riittävyys"
+msgstr ""
+
+#: public/class-kivi-public.php:176
+msgid "Omaa rantaviivaa, metriä"
+msgstr ""
+
+#: public/class-kivi-public.php:177
+msgid "Rannan tyyppi"
+msgstr ""
+
+#: public/class-kivi-public.php:178
+msgid "Rannan kuvaus"
+msgstr ""
+
+#: public/class-kivi-public.php:179
+msgid "Metsäala ha"
+msgstr ""
+
+#: public/class-kivi-public.php:180
+msgid "Ei metsää"
+msgstr ""
+
+#: public/class-kivi-public.php:181
+msgid "Kaavoitus"
+msgstr ""
+
+#: public/class-kivi-public.php:182
+msgid "Lisätietoa kaavoituksesta"
+msgstr ""
+
+#: public/class-kivi-public.php:183
+msgid "Lisätietoa muista rakennuksista"
+msgstr ""
+
+#: public/class-kivi-public.php:184
+msgid "Muut rakennukset"
+msgstr ""
+
+#: public/class-kivi-public.php:185 public/class-kivi-public.php:285
+msgid "Lisätietoa kunnosta"
+msgstr ""
+
+#: public/class-kivi-public.php:186
+msgid "Rakennusmateriaalien kuvaus"
+msgstr ""
+
+#: public/class-kivi-public.php:187
+msgid "Kerrosala m2"
+msgstr ""
+
+#: public/class-kivi-public.php:188
+msgid "Lämmitysjärjestelmä ja sen kunto"
+msgstr ""
+
+#: public/class-kivi-public.php:189 public/class-kivi-public.php:225
+msgid "Asuinpinta-ala m2"
+msgstr ""
+
+#: public/class-kivi-public.php:190 public/class-kivi-public.php:226
+msgid "Muut tilat m2"
+msgstr ""
+
+#: public/class-kivi-public.php:191
+msgid "Rakennusvuosi (aloitettu)"
+msgstr ""
+
+#: public/class-kivi-public.php:192
+msgid "Rakennusvuosi (päättynyt)"
+msgstr ""
+
+#: public/class-kivi-public.php:193
+msgid "Rakennuksen käyttöönottovuosi"
+msgstr ""
+
+#: public/class-kivi-public.php:194
+msgid "Tehdyt korjaukset"
+msgstr ""
+
+#: public/class-kivi-public.php:195
+msgid "Katon kunto"
+msgstr ""
+
+#: public/class-kivi-public.php:196 public/class-kivi-public.php:231
+msgid "Yhteensä m2"
+msgstr ""
+
+#: public/class-kivi-public.php:197 public/class-kivi-public.php:233
+msgid "(Sähkölämmityksen) Keskimääräinen kokonaiskustannus"
+msgstr ""
+
+#: public/class-kivi-public.php:198
+msgid "Lämmityskustannukset, muu kuin sähkö (€/kk)"
+msgstr ""
+
+#: public/class-kivi-public.php:199
+msgid "Lisätietoa maksuista"
+msgstr ""
+
+#: public/class-kivi-public.php:200
+msgid "Kiinteistövero"
+msgstr ""
+
+#: public/class-kivi-public.php:201
+msgid "Tiemaksut"
+msgstr ""
+
+#: public/class-kivi-public.php:202
+msgid "Vesi ja jätevesi"
+msgstr ""
+
+#: public/class-kivi-public.php:203
+msgid "Puhtaanapito €/kk"
+msgstr ""
+
+#: public/class-kivi-public.php:204 public/class-kivi-public.php:239
+msgid "Satelliittiantenni/Kaapeli-TV (€/kk)"
+msgstr ""
+
+#: public/class-kivi-public.php:205 public/class-kivi-public.php:244
+msgid "Sähkölämmitys"
+msgstr ""
+
+#: public/class-kivi-public.php:206
+msgid "Velkakiinnitykset"
+msgstr ""
+
+#: public/class-kivi-public.php:207
+msgid "Vapaana olevat velkakiinnitykset"
+msgstr ""
+
+#: public/class-kivi-public.php:208
+msgid "Velkakirjojen säilytyspaikka"
+msgstr ""
+
+#: public/class-kivi-public.php:209
+msgid "Panttivastuu"
+msgstr ""
+
+#: public/class-kivi-public.php:210
+msgid "Kirjatut muut rasitukset, rasitteet ja valinnanrajoitukset"
+msgstr ""
+
+#: public/class-kivi-public.php:211
+msgid "Kirjattu hallinnonjakosopimus"
+msgstr ""
+
+#: public/class-kivi-public.php:212
+msgid "Maksamattomat maksut"
+msgstr ""
+
+#: public/class-kivi-public.php:213
+msgid ""
+"Toimeksiantaja on ilmoittanut kaikki sellaiset kiinteistöön kohdistuvat…"
+msgstr ""
+
+#: public/class-kivi-public.php:214
+msgid "Lisätietoa edellisestä"
+msgstr ""
+
+#: public/class-kivi-public.php:215
+msgid "Lisätietoja pinta-alasta"
+msgstr ""
+
+#: public/class-kivi-public.php:216
+msgid "Pinta-alan peruste"
+msgstr ""
+
+#: public/class-kivi-public.php:217
+msgid "Huoneisto"
+msgstr ""
+
+#: public/class-kivi-public.php:218
+msgid "Tulisija"
+msgstr ""
+
+#: public/class-kivi-public.php:219
+msgid "Huoneistoselitelmä"
+msgstr ""
+
+#: public/class-kivi-public.php:220
+msgid "Huoneluku, hakuehtona Internetissä"
+msgstr ""
+
+#: public/class-kivi-public.php:221
+msgid "Kerros"
+msgstr ""
+
+#: public/class-kivi-public.php:222
+msgid "Kerroksia"
+msgstr ""
+
+#: public/class-kivi-public.php:223
+msgid "Hallintamuoto"
+msgstr ""
+
+#: public/class-kivi-public.php:224
+msgid "Hallintamuoto, muu"
+msgstr ""
+
+#: public/class-kivi-public.php:227
+msgid "Omistusmuoto"
+msgstr ""
+
+#: public/class-kivi-public.php:228
+msgid "Esittelyteksti"
+msgstr ""
+
+#: public/class-kivi-public.php:229
+msgid "Rappu"
+msgstr ""
+
+#: public/class-kivi-public.php:230
+msgid "Osakesarjojen numerot"
+msgstr ""
+
+#: public/class-kivi-public.php:232
+msgid "Näkymät huoneistosta"
+msgstr ""
+
+#: public/class-kivi-public.php:234
+msgid "Rahoitusvastike"
+msgstr ""
+
+#: public/class-kivi-public.php:235
+msgid "Hoitovastike"
+msgstr ""
+
+#: public/class-kivi-public.php:236
+msgid "Lisätietoja maksuista"
+msgstr ""
+
+#: public/class-kivi-public.php:237
+msgid "Autopaikka (€/kk)"
+msgstr ""
+
+#: public/class-kivi-public.php:238
+msgid "Saunamaksu"
+msgstr ""
+
+#: public/class-kivi-public.php:240
+msgid "Vesimaksu (€/kk)"
+msgstr ""
+
+#: public/class-kivi-public.php:241
+msgid "Yhtiövastike"
+msgstr ""
+
+#: public/class-kivi-public.php:242
+msgid "Lunastusoikeus yhtiöllä"
+msgstr ""
+
+#: public/class-kivi-public.php:243
+msgid "Lunastusoikeus osakkailla"
+msgstr ""
+
+#: public/class-kivi-public.php:245
+msgid "Autopaikkamaksun tarkenne"
+msgstr ""
+
+#: public/class-kivi-public.php:246
+msgid "Muut käyttö- ja luovutusrajoitukset"
+msgstr ""
+
+#: public/class-kivi-public.php:247
+msgid "Vesimaksun tarkenne"
+msgstr ""
+
+#: public/class-kivi-public.php:248
+msgid "Taloyhtiön Rakennusvuosi (aloitettu)"
+msgstr ""
+
+#: public/class-kivi-public.php:249
+msgid "Rakennusvuosi"
+msgstr ""
+
+#: public/class-kivi-public.php:250
+msgid "(Taloyhtiön) Sähköpistokepaikkoja kpl"
+msgstr ""
+
+#: public/class-kivi-public.php:251
+msgid "Autokatospaikkoja"
+msgstr ""
+
+#: public/class-kivi-public.php:252
+msgid "Taloyhtiön Rakennusmateriaali, muu"
+msgstr ""
+
+#: public/class-kivi-public.php:253
+msgid "Energiatodistus"
+msgstr ""
+
+#: public/class-kivi-public.php:254
+msgid "Lisätietoja energiatodistuksesta"
+msgstr ""
+
+#: public/class-kivi-public.php:255
+msgid "Energialuokka"
+msgstr ""
+
+#: public/class-kivi-public.php:256
+msgid "Kustannuksia myöhemmin aiheuttavat velvoitteet esim. autopaikat"
+msgstr ""
+
+#: public/class-kivi-public.php:257
+msgid "Autotallipaikkoja"
+msgstr ""
+
+#: public/class-kivi-public.php:258
+msgid "Taloyhtiössä muuta"
+msgstr ""
+
+#: public/class-kivi-public.php:259
+msgid "Isännöitsijän yhteystiedot"
+msgstr ""
+
+#: public/class-kivi-public.php:260
+msgid "Tontin pinta-ala"
+msgstr ""
+
+#: public/class-kivi-public.php:261
+msgid "Tontin vuokra"
+msgstr ""
+
+#: public/class-kivi-public.php:262
+msgid "Tontin Vuokranantaja"
+msgstr ""
+
+#: public/class-kivi-public.php:263
+msgid "Taloyhtiön (Tontin) Vuokrasopimus päättyy"
+msgstr ""
+
+#: public/class-kivi-public.php:265
+msgid "Taloyhtiön Kiinteistön hoidosta vastaa"
+msgstr ""
+
+#: public/class-kivi-public.php:266
+msgid "Taloyhtiön Kiinteistönhoidon lisätiedot"
+msgstr ""
+
+#: public/class-kivi-public.php:267
+msgid "(Taloyhtiön) Piha-autopaikkoja kpl"
+msgstr ""
+
+#: public/class-kivi-public.php:268
+msgid "Päätös tehty tiedossa olevista korjauksista/remontista"
+msgstr ""
+
+#: public/class-kivi-public.php:269
+msgid "(Taloyhtiön) Rakennukseen tehdyt korjaukset ja remontit"
+msgstr ""
+
+#: public/class-kivi-public.php:270
+msgid "Tiedossa olevat tulevat korjaukset/remontit"
+msgstr ""
+
+#: public/class-kivi-public.php:271
+msgid ""
+"(Taloyhtiön) Rakennuksissa havaitut puutteellisuudet, virheellisyydet ja "
+"korjaustarpeet"
+msgstr ""
+
+#: public/class-kivi-public.php:272
+msgid "Taloyhtiön Kattotyyppi"
+msgstr ""
+
+#: public/class-kivi-public.php:273
+msgid "Taloyhtiön Kate"
+msgstr ""
+
+#: public/class-kivi-public.php:274
+msgid "Käyttöönottovuosi"
+msgstr ""
+
+#: public/class-kivi-public.php:275
+msgid ""
+"Jätevesiasetuksen mukainen selvitys, suunnitelma sekä käyttö- ja huolto-ohje"
+msgstr ""
+
+#: public/class-kivi-public.php:276
+msgid "(Taloyhtiön) Lisätietoa kaavoituksesta"
+msgstr ""
+
+#: public/class-kivi-public.php:277
+msgid "Taloyhtiön kiinteistön hoidosta vastaa"
+msgstr ""
+
+#: public/class-kivi-public.php:278
+msgid "Taloyhtiön nimi"
+msgstr ""
+
+#: public/class-kivi-public.php:279
+msgid "(Taloyhtiön) Lainat"
+msgstr ""
+
+#: public/class-kivi-public.php:280
+msgid "(Taloyhtiön) Kiinnitykset"
+msgstr ""
+
+#: public/class-kivi-public.php:281
+msgid ""
+"(Taloyhtiön kiinnitykset) Isännöitsijän todistuksen mukaisena päivämääränä"
+msgstr ""
+
+#: public/class-kivi-public.php:282
+msgid "Pesutilojen kuvaus, lisätiedot ja varustus"
+msgstr ""
+
+#: public/class-kivi-public.php:283
+msgid "Makuuhuoneiden lukumäärä"
+msgstr ""
+
+#: public/class-kivi-public.php:284
+msgid "Makuuhuoneen kuvaus, lisätiedot ja varustus"
+msgstr ""
+
+#: public/class-kivi-public.php:286
+msgid "Yleiskunto"
+msgstr ""
+
+#: public/class-kivi-public.php:287
+msgid "Lattiamateriaalien kuvaus ja lisätiedot"
+msgstr ""
+
+#: public/class-kivi-public.php:288
+msgid "Keittiön kuvaus, lisätiedot ja varustus"
+msgstr ""
+
+#: public/class-kivi-public.php:289
+msgid "Khh:n kuvaus, lisätiedot ja varustus"
+msgstr ""
+
+#: public/class-kivi-public.php:290
+msgid "Oleskelutilojen kuvaus, lisätiedot ja varustus"
+msgstr ""
+
+#: public/class-kivi-public.php:291
+msgid "Kauppaan ei kuulu"
+msgstr ""
+
+#: public/class-kivi-public.php:292
+msgid "Muuta kauppaan kuuluvaa"
+msgstr ""
+
+#: public/class-kivi-public.php:293
+msgid "Tilojen kuvaus"
+msgstr ""
+
+#: public/class-kivi-public.php:294
+msgid ""
+"Toimeksiantajan aikana huoneistoon tehdyt toimenpiteet sekä niiden ajankohta"
+msgstr ""
+
+#: public/class-kivi-public.php:295
+msgid "Kattomateriaalien kuvaus ja lisätiedot"
+msgstr ""
+
+#: public/class-kivi-public.php:296
+msgid "Saunan kuvaus, lisätiedot ja varustus"
+msgstr ""
+
+#: public/class-kivi-public.php:297
+msgid "Saunan kiuas"
+msgstr ""
+
+#: public/class-kivi-public.php:298
+msgid "Säilytystilojen kuvaus ja lisätiedot"
+msgstr ""
+
+#: public/class-kivi-public.php:299
+msgid "Vessojen lukumäärä"
+msgstr ""
+
+#: public/class-kivi-public.php:300
+msgid "WC:n kuvaus, lisätiedot ja varustus"
+msgstr ""
+
+#: public/class-kivi-public.php:301
+msgid "Seinämateriaalien kuvaus ja lisätiedot"
+msgstr ""
+
+#: public/class-kivi-public.php:302
+msgid "Liikenneyhteydet"
+msgstr ""
+
+#: public/class-kivi-public.php:303
+msgid "Päiväkoti"
+msgstr ""
+
+#: public/class-kivi-public.php:304
+msgid "Ajo-ohje"
+msgstr ""
+
+#: public/class-kivi-public.php:305
+msgid "Muut kaupan kannalta merkittävät tiedot"
+msgstr ""
+
+#: public/class-kivi-public.php:306
+msgid "Koulut"
+msgstr ""
+
+#: public/class-kivi-public.php:307
+msgid "Palvelut"
+msgstr ""
+
+#: public/class-kivi-public.php:308
+msgid "Lisätietoa palveluista"
+msgstr ""
+
+#: public/class-kivi-public.php:309
+msgid "Onko kyseessä tarjouskauppa"
+msgstr ""
+
+#: public/class-kivi-public.php:310
+msgid "Linkki kohteen seurantasivulle"
+msgstr ""
+
+#: public/class-kivi-public.php:311
+msgid "Korkein annettu tarjous"
+msgstr ""
+
+#: public/class-kivi-public.php:312
+msgid "Annetut tarjoukset (säiliöelementti)"
+msgstr ""
+
+#: public/class-kivi-public.php:313
+msgid "Annettu tarjous"
+msgstr ""
+
+#: public/class-kivi-public.php:314
+msgid "Tarjous voimassa pvm asti"
+msgstr ""
+
+#: public/class-kivi-public.php:315
+msgid "Tarjous voimassa pvm alkaen"
+msgstr ""
+
+#: public/class-kivi-public.php:316
+msgid "Onko kyseessä ehdollinen tarjous"
+msgstr ""
+
+#: public/class-kivi-public.php:317
+msgid "Tarjoukseen liittyvät asiakkaat (säiliöelementti)"
+msgstr ""
+
+#: public/class-kivi-public.php:318
+msgid "Asiakkaan puhelinnumero"
+msgstr ""
+
+#: public/class-kivi-public.php:319
+msgid "Asiakkaan id Kivi-järjestelmässä"
+msgstr ""
+
+#: public/class-kivi-public.php:320
+msgid "Asiakkaan nimi"
+msgstr ""
+
+#: public/class-kivi-public.php:321
+msgid "Asiakkaan sähköposti"
+msgstr ""
+
+#: public/class-kivi-public.php:322
+msgid "Toimiston postitoimipaikka"
+msgstr ""
+
+#: public/class-kivi-public.php:323
+msgid "Sähköposti"
+msgstr ""
+
+#: public/class-kivi-public.php:324
+msgid "Kotisivun osoite"
+msgstr ""
+
+#: public/class-kivi-public.php:325
+msgid "Toimiston matkapuhelin"
+msgstr ""
+
+#: public/class-kivi-public.php:326
+msgid "Toimiston nimi"
+msgstr ""
+
+#: public/class-kivi-public.php:327
+msgid "Toimiston lankapuhelin"
+msgstr ""
+
+#: public/class-kivi-public.php:329
+msgid "Toimiston ID"
+msgstr ""
+
+#: public/class-kivi-public.php:330
+msgid "Lähiosoite"
+msgstr ""
+
+#: public/class-kivi-public.php:331
+msgid "phone Välittäjän lankanumero"
+msgstr ""
+
+#: public/class-kivi-public.php:332 public/class-kivi-public.php:342
+msgid "Välittäjän kuva"
+msgstr ""
+
+#: public/class-kivi-public.php:333 public/class-kivi-public.php:341
+msgid "Välittäjän matkapuhelinnumero"
+msgstr ""
+
+#: public/class-kivi-public.php:334
+msgid "Välittäjän nimi"
+msgstr ""
+
+#: public/class-kivi-public.php:335 public/class-kivi-public.php:338
+msgid "Välittäjän toimiston nimi"
+msgstr ""
+
+#: public/class-kivi-public.php:336
+msgid "Välittäjän sukunimi"
+msgstr ""
+
+#: public/class-kivi-public.php:337
+msgid "Välittäjän ID"
+msgstr ""
+
+#: public/class-kivi-public.php:339
+msgid "Välittäjän sähköposti"
+msgstr ""
+
+#: public/class-kivi-public.php:340
+msgid "Välittäjän etunimi"
+msgstr ""
+
+#: public/class-kivi-public.php:343
+msgid "Sähköposti kohdesivulla"
+msgstr ""
+
+#: public/class-kivi-public.php:344
+msgid "Toimeksiannon luojan matkapuhelin"
+msgstr ""
+
+#: public/class-kivi-public.php:345
+msgid "Kohteen tila, aktiivinen tai passiivinen"
+msgstr ""
+
+#: public/class-kivi-public.php:346
+msgid "Pinta-ala yhteensä, ylä"
+msgstr ""
+
+#: public/class-kivi-public.php:347
+msgid "Pinta-ala yhteensä, ala"
+msgstr ""
+
+#: public/class-kivi-public.php:348
+msgid "Yleisesittely"
+msgstr ""
+
+#: public/class-kivi-public.php:349
+msgid "Kokoustila 1=kyllä, 2=ei, 3=ei tiedossa"
+msgstr ""
+
+#: public/class-kivi-public.php:350
+msgid "Lisätietoja kokoustiloista"
+msgstr ""
+
+#: public/class-kivi-public.php:351
+msgid "Velatonhinta, ylä"
+msgstr ""
+
+#: public/class-kivi-public.php:352
+msgid "Velatonhinta, ala"
+msgstr ""
+
+#: public/class-kivi-public.php:353
+msgid "Muuta lisätietoa"
+msgstr ""
+
+#: public/class-kivi-public.php:354
+msgid "Sijoituskohde"
+msgstr ""
+
+#: public/class-kivi-public.php:355
+msgid "Hissi 1=kyllä, 2=ei, 3=ei tiedossa"
+msgstr ""
+
+#: public/class-kivi-public.php:356
+msgid "Lisätietoja hissistä"
+msgstr ""
+
+#: public/class-kivi-public.php:357
+msgid "Toimistopalvelut"
+msgstr ""
+
+#: public/class-kivi-public.php:358
+msgid "Muut vuokraushedot"
+msgstr ""
+
+#: public/class-kivi-public.php:359
+msgid "Pysäköinti"
+msgstr ""
+
+#: public/class-kivi-public.php:360
+msgid "Myyntihinta, ylä ja pakollinen"
+msgstr ""
+
+#: public/class-kivi-public.php:361
+msgid "Myyntihinta, ala"
+msgstr ""
+
+#: public/class-kivi-public.php:362
+msgid "Hinta/Vuokratietojen käsittely"
+msgstr ""
+
+#: public/class-kivi-public.php:363
+msgid "Sopimuksen kesto, pvm asti"
+msgstr ""
+
+#: public/class-kivi-public.php:364
+msgid "Sopimuksen kesto"
+msgstr ""
+
+#: public/class-kivi-public.php:365
+msgid "Kohde vapautuu, pvm"
+msgstr ""
+
+#: public/class-kivi-public.php:366
+msgid "Kohde vapautuu"
+msgstr ""
+
+#: public/class-kivi-public.php:367
+msgid "Kohde vapautuu, muu ehto"
+msgstr ""
+
+#: public/class-kivi-public.php:368
+msgid "Kategoria, johon toimitila kuuluu"
+msgstr ""
+
+#: public/class-kivi-public.php:370
+msgid "Neliövuokra, max"
+msgstr ""
+
+#: public/class-kivi-public.php:371
+msgid "Neliövuokra, min"
+msgstr ""
+
+#: public/class-kivi-public.php:372
+msgid "Vuokrahinta, max"
+msgstr ""
+
+#: public/class-kivi-public.php:373
+msgid "Vuokrahinta, min"
+msgstr ""
+
+#: public/class-kivi-public.php:374
+msgid "Ravintolapalvelut"
+msgstr ""
+
+#: public/class-kivi-public.php:375
+msgid "Sosiaalitilat"
+msgstr ""
+
+#: public/class-kivi-public.php:376
+msgid "Tilan jakaminen"
+msgstr ""
+
+#: public/class-kivi-public.php:377
+msgid "Katutaso"
+msgstr ""
+
+#: public/class-kivi-public.php:378
+msgid "Kohteen nimi"
+msgstr ""
+
+#: public/class-kivi-public.php:379
+msgid "Ilmoitustyyppi 1=myynti, 2=vuokraus, 3=myynti tai vuokraus"
+msgstr ""
+
+#: public/class-kivi-public.php:380
+msgid "Kuukausivuokra"
+msgstr ""
+
+#: public/class-kivi-public.php:381
+msgid "Ulkopuolisen järjestelmän käyttäjä-ID"
+msgstr ""
+
+#: public/class-kivi-public.php:382
+msgid "Myyntihinta"
+msgstr ""
+
+#: public/class-kivi-public.php:383
+msgid "Kohdenumero"
+msgstr ""
+
+#: public/class-kivi-public.php:384
+msgid "Virtuaaliesittely"
+msgstr ""
+
+#: public/class-kivi-public.php:385
+msgid "Velaton hinta"
+msgstr ""
+
+#: public/class-kivi-public.php:386
+msgid "Virtuaaliesittelyn osoite"
+msgstr ""
+
+#: public/class-kivi-public.php:387
+msgid "Moniarvoiset kohdetietovalinnat"
+msgstr ""
+
+#: public/class-kivi-public.php:388 public/class-kivi-public.php:389
+msgid "Arvon nimi"
+msgstr ""
+
+#: public/class-kivi-public.php:390
+msgid "Ryhmä johon arvo kuuluu / Otsikko arvolle"
+msgstr ""
+
+#: public/class-kivi-public.php:391
+msgid "Esittelyajat"
+msgstr ""
+
+#: public/class-kivi-public.php:392
+msgid "Esittelyn päivämäärä"
+msgstr ""
+
+#: public/class-kivi-public.php:393
+msgid "Esittelyn loppumisaika"
+msgstr ""
+
+#: public/class-kivi-public.php:394
+msgid "Esittelyn lisätiedot"
+msgstr ""
+
+#: public/class-kivi-public.php:395
+msgid "Esittelyn alkamisaika"
+msgstr ""
+
+#: public/class-kivi-public.php:396
+msgid "Esittely poistettu"
+msgstr ""
+
+#: public/class-kivi-public.php:397 public/class-kivi-public.php:398
+#: public/class-kivi-public.php:399
+msgid "Igglo"
+msgstr ""
+
+#: public/class-kivi-public.php:400 public/class-kivi-public.php:401
+msgid "Vapautuminen"
+msgstr ""
+
+#: public/kivi-functions.php:121
+msgid "Vesimaksu"
+msgstr ""
+
+#: public/kivi-functions.php:134
+msgid "Taloyhtiöön kuuluu"
+msgstr ""
+
+#: public/kivi-functions.php:151
+msgid "Sauna"
+msgstr ""
+
+#: public/kivi-functions.php:153
+msgid "taloyhtiössä sauna"
+msgstr ""
+
+#: public/kivi-functions.php:157
+msgid "Parveke"
+msgstr ""
+
+#: public/kivi-functions.php:158
+msgid "asunnossa on parveke"
+msgstr ""
+
+#: public/kivi-functions.php:160
+msgid "Parvekkeen kuvaus"
+msgstr ""
+
+#: public/kivi-functions.php:161
+msgid "Ilmansuunta"
+msgstr ""
+
+#: public/kivi-functions.php:162
+msgid "Parveketyyppi"
+msgstr ""
+
+#: public/kivi-functions.php:164
+msgid "Hissi"
+msgstr ""
+
+#: public/kivi-functions.php:165
+msgid "taloyhtiössä on hissi"
+msgstr ""
+
+#: public/kivi-functions.php:167
+msgid "Asuntoon kuuluu"
+msgstr ""
+
+#: public/kivi-functions.php:168
+msgid "Autopaikka"
+msgstr ""
+
+#: public/kivi-functions.php:173
+msgid "Lämmitysjärjestelmän kuvaus"
+msgstr ""
+
+#: public/kivi-functions.php:183
+msgid "Pääasiallinen rakennusmateriaali"
+msgstr ""
+
+#: public/kivi-functions.php:187
+msgid "Katto"
+msgstr ""
+
+#: public/kivi-functions.php:191
+msgid "Keittiön kuvaus"
+msgstr ""
+
+#: public/kivi-functions.php:193 public/kivi-functions.php:201
+#: public/kivi-functions.php:210 public/kivi-functions.php:216
+#: public/kivi-functions.php:221 public/kivi-functions.php:227
+#: public/kivi-functions.php:234
+msgid "Lattiamateriaalit"
+msgstr ""
+
+#: public/kivi-functions.php:194 public/kivi-functions.php:202
+#: public/kivi-functions.php:211 public/kivi-functions.php:217
+#: public/kivi-functions.php:222 public/kivi-functions.php:228
+#: public/kivi-functions.php:235
+msgid "Seinämateriaalit"
+msgstr ""
+
+#: public/kivi-functions.php:195
+msgid "Työtaso"
+msgstr ""
+
+#: public/kivi-functions.php:196 public/kivi-functions.php:203
+#: public/kivi-functions.php:212 public/kivi-functions.php:223
+msgid "Varusteet"
+msgstr ""
+
+#: public/kivi-functions.php:197
+msgid "Liesi"
+msgstr ""
+
+#: public/kivi-functions.php:198
+msgid "Jääkaappi ja pakastin"
+msgstr ""
+
+#: public/kivi-functions.php:200
+msgid "Kylpyhuoneen kuvaus"
+msgstr ""
+
+#: public/kivi-functions.php:206
+msgid "WC-tilojen kuvaus"
+msgstr ""
+
+#: public/kivi-functions.php:207
+msgid "Lukumäärä:"
+msgstr ""
+
+#: public/kivi-functions.php:214
+msgid "Saunan kuvaus"
+msgstr ""
+
+#: public/kivi-functions.php:219
+msgid "Kodinhoitohuoneen kuvaus"
+msgstr ""
+
+#: public/kivi-functions.php:225
+msgid "Olohuoneen kuvaus"
+msgstr ""
+
+#: public/kivi-functions.php:230
+msgid "Makuuhuoneiden kuvaus"
+msgstr ""
+
+#: public/kivi-functions.php:231
+msgid "Lukumäärä: "
+msgstr ""
+
+#: public/kivi-functions.php:242
+msgid "Yhteystiedot"
+msgstr ""
+
+#: public/kivi-functions.php:248
+msgid "Esittelyt"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Kivi"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/almamedia/mepa-kivi-wp-plugin/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "A plugin for displaying KIVI real estate system items in WordPress"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Alma Medapartners Oy"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://kivi.etuovi.com/"
+msgstr ""

@@ -1,0 +1,293 @@
+
+/* INDEX ARCHIVE VIEW FOR KIVI ITEMS */
+.kivi-index-archive {
+  width: 100%;
+  max-width: 986px;
+  margin: 0 auto;
+}
+
+.kivi-item-filters {
+  background: #e7e7e7;
+  padding: 16px;
+}
+
+.kivi-filter-cell {
+  display: inline-block;
+  width: 20%;
+  padding: 8px;
+}
+
+.kivi-filter-cell label,
+.kivi-filter-cell select,
+.kivi-filter-cell input {
+  width: 100%;
+  font-size: 14px;
+  height: 36px;
+}
+
+.kivi-filter-cell-50 {
+  width: 48%;
+}
+
+.kivi-filter-cell-15 {
+  width: 14%;
+}
+
+.grid-sizer,
+.kivi-index-item {
+  display: inline-block;
+  width:50%;
+  padding: 10px;
+}
+.kivi-item {
+  display: inline-block;
+  padding: 10px;
+  margin: 8px 16px;
+  vertical-align: top;
+  position: relative;
+}
+
+.kivi-item-img {
+  width: 100%;
+}
+
+.kivi-item-body {
+  font-size: 16px;
+  line-height: 1.5;
+  padding-top: 8px;
+}
+
+.kivi-item-title-link {
+  font-weight: 600;
+}
+
+input[type="submit"].button-kivi {
+  display: block;
+  padding: 0;
+  width: 82px;
+}
+
+
+/* SINGLE VIEW FOR A KIVI ITEM*/
+.kivi-template-single {
+  padding: 32px !important;
+}
+
+@media (min-width: 800px) {
+  .kivi-template-single {
+    padding: 64px !important;
+  }
+}
+@media (max-width: 600px) {
+  .kivi-template-single {
+    padding: 5px !important;
+  }
+}
+
+.kivi-single-item-title {
+  font-size: 2em;
+}
+
+.slick-for-image-wrapper {
+  text-align: center;
+}
+
+.slick-for-image-wrapper.slick-current {
+  background: #f9f9f9;
+}
+
+.slick-for-image.current {
+  height: auto;
+  max-height: 574px;
+  display: inline-block;
+  text-align: center;
+}
+
+.slick-slide,
+.slick-slide img {
+  display: inline-block;
+  text-align: center;
+}
+
+.slick-carousel-image {
+  text-align: center;
+}
+
+.kivi-single-item-infowrapper {
+  margin-top: 64px;
+}
+
+.kivi-single-item-body {
+  width: 100%;
+  max-width: 960px;
+  margin: 16px auto;
+  background: #fff;
+  padding: 32px;
+  font-size: 14px;
+}
+
+
+.slick-arrow {
+  right: -32px;
+  display: block;
+  background: rgba(0,0,0,0.5);
+  border-radius: 100%;
+  height: 24px;
+  width: 24px;
+}
+
+.slick-arrow:focus,
+.slick-arrow:active {
+  background: rgba(0,0,0,5);
+}
+
+.slick-arrow:hover {
+  background: rgba(0,0,0,1);
+}
+
+.slick-arrow::before {
+  opacity: 1;
+}
+
+.slick-prev {
+  left: -32px;
+}
+
+@media (min-width: 800px) {
+  .slick-arrow {
+    right: -64px;
+    height: 48px;
+    width: 48px;
+  }
+  .slick-prev {
+    left: -64px;
+  }
+  .kivi-single-item-body {
+    padding: 12px;
+    margin: 16px auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .kivi-single-item-body {
+    padding: 5px;
+    margin: 16px auto;
+  }
+}
+
+.kivi-item-table {
+  border: 0;
+}
+
+.kivi-item-cell {
+  font-size: 14px;
+  display: inline-block;
+  padding-bottom: 0;
+  border: 0;
+}
+
+.kivi-item-cell-header {
+  width: 240px;
+}
+
+@media (min-width: 800px) {
+  .kivi-item-cell {
+    padding: 4px 4px 4px 0;
+    display: table-cell;
+  }
+}
+
+.kivi-header-wrapper {
+  display: inline-block;
+  background: #333;
+  margin-bottom: 24px;
+}
+
+.kivi-single-item-body-header {
+  color: #fff;
+  padding: 8px 16px;
+}
+
+.kivi-item-cell-value-wrap {
+  word-break: break-all;
+}
+
+.kivi-item-cell-value ul {
+  list-style: none;
+  margin: 0 0 0 0;
+}
+
+#map {
+  height: 0;
+  padding-top: 62.5%;
+  position: relative;
+}
+
+.kivi-item-image-link {
+  display: block;
+  position: absolute;
+    top:0;right:0;bottom:0;left:0;
+}
+
+
+
+.kivi-item-list-item {
+  background: #fdfdfd;
+  border: 1px solid #f2f2f2;
+  padding: 32px;
+  margin-top: 16px;
+}
+
+.kivi-item-list-item:first-child {
+  border-top: 1px solid #f2f2f2;
+}
+
+.kivi-item-list-body {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.kivi-item-list-heading {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 1em !important;
+}
+
+.kivi-item-list-link {
+  border: 0 !important;
+}
+
+.kivi-item-list-link:hover {
+  color: #222 !important;
+}
+
+.kivi-item-list-item-image-wrapper {
+  width: 160px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 16px !important;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  border: 1px solid #f2f2f2 !important;
+  border-bottom: 2px solid #f2f2f2 !important;
+}
+
+.kivi-item-list-item-image-wrapper:hover {
+  border: 1px solid #e0e0e0 !important;
+  border-bottom: 2px solid #e0e0e0 !important;
+}
+
+.kivi-item-list-item-image {
+  width: 100%;
+  border: 0;
+}
+
+.kivi-item-list-item-meta {
+  font-style: italic;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.kivi-index-paginator {
+  margin: 5px;
+}
