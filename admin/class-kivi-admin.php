@@ -405,13 +405,13 @@ class Kivi_Admin {
   * the new xml and does it's stuff every 30 minutes.
   */
   public function start_scheduler() {
-    if (! wp_next_scheduled ( 'kivi_hourly_sync' )) {
-      wp_schedule_event(time(), 'every30minutes', 'kivi_hourly_sync');
+    if (! wp_next_scheduled ( 'kivi_items_sync' )) {
+      wp_schedule_event(time(), 'every15minutes', 'kivi_items_sync');
     }
   }
 
   public function stop_scheduler() {
-    wp_clear_scheduled_hook('kivi_hourly_sync');
+    wp_clear_scheduled_hook('kivi_items_sync');
   }
 
 }

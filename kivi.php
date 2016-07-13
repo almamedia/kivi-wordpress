@@ -10,7 +10,7 @@
  * Plugin Name:       Kivi
  * Plugin URI:        https://github.com/almamedia/kivi-wordpress
  * Description:       A plugin for displaying KIVI real estate system items in WordPress
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Alma Medapartners Oy
  * Author URI:        https://kivi.etuovi.com/
  * License:           GPL-2.0+
@@ -26,10 +26,10 @@ if ( ! defined( 'WPINC' ) ) {
 
 
 /* Schedule for kivi background jobs */
-function kivi_add_30_minutes_schedule( $schedules ) {
-	$schedules['every30minutes'] = array(
-		'interval' => 1800,
-		'display' => __('Every 30 minutes')
+function kivi_add_schedule( $schedules ) {
+	$schedules['every15minutes'] = array(
+		'interval' => 900,
+		'display' => __('Every 15 minutes')
 	);
 	return $schedules;
 }

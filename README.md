@@ -1,7 +1,7 @@
 # KIVI WP-plugin
-- Requires at least: 3.0.1
-- Tested up to: 3.4
-- Stable tag: 4.3
+- Requires at least: 4.0
+- Tested up to: 4.5.3
+- Stable tag: 1.0.1
 - License: GPLv2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
 
 ## Description
@@ -59,3 +59,12 @@ for example:
 We are not too actively developing individual features for the plugin as it's meant to be a starting point for development anyways. However, we do fix bugs and for example add support for new data if such data appears in the source system. If there are specific needs you can of course contact our sales.
 
 We are also happy to accept any pull requests if they are generic enough and seem fit for our users.
+
+## Changelog
+
+** 1.0.1 **
+- Fix scheduling initalialization (the scheduling did not work at all)
+- Change scheduling interval to 15 minutes
+
+** 1.0.0 **
+- Initial version

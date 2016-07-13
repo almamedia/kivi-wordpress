@@ -20,7 +20,6 @@ class Kivi_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-		add_filter( 'cron_schedules', 'kivi_add_30_minutes_schedule' );
 	}
 
 }
