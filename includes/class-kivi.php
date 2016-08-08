@@ -294,7 +294,7 @@ class Kivi {
   public function register_shortcodes(){
     add_shortcode('taloyhtio', array($this, 'realtycompany_shortcode'));
     add_shortcode('kunta', array($this, 'town_shortcode'));
-
+    add_shortcode('tyyppi', array($this, 'realtytype_shortcode'));
   }
 
   public function kivi_list_shortcode($key, $value){
@@ -349,6 +349,11 @@ class Kivi {
   public function realtycompany_shortcode($attributes) {
     return $this->kivi_list_shortcode('_realtycompany', $attributes["nimi"]);
   }
+
+  public function realtytype_shortcode($attributes) {
+    return $this->kivi_list_shortcode('_realtytype_id', $attributes["nimi"]);
+  }
+
   public function town_shortcode($attributes) {
     return $this->kivi_list_shortcode('_town', $attributes["nimi"]);
   }

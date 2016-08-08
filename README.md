@@ -54,6 +54,12 @@ for example:
 for example:
 `[taloyhtio nimi='Asunto Oy Tampereen Pohtola']`
 
+### List items by item type
+`[tyyppi nimi=<item type name>]`
+
+for example:
+`[tyyppi nimi="omakotitalo"]`
+
 ## Feature Requests and Contributing
 
 We are not too actively developing individual features for the plugin as it's meant to be a starting point for development anyways. However, we do fix bugs and for example add support for new data if such data appears in the source system. If there are specific needs you can of course contact our sales.
@@ -62,9 +68,12 @@ We are also happy to accept any pull requests if they are generic enough and see
 
 ## Changelog
 
-** 1.0.1 **
+**1.0.2**
+- Added shortcode for listing items based on item type. Patch submitted by @karikauppinen
+
+**1.0.1**
 - Fix scheduling initalialization (the scheduling did not work at all)
 - Change scheduling interval to 15 minutes
 
-** 1.0.0 **
+**1.0.0**
 - Initial version
