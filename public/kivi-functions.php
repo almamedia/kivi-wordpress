@@ -112,6 +112,7 @@
 
   function view_cost_info( $post_id ){
     $box = New Kivi_Fact_Box();
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_assignmentrent_rent' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_unencumbered_price' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_price' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_debt' ) );
