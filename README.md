@@ -4,6 +4,9 @@
 - Stable tag: 1.0.1
 - License: GPLv2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
 
+- *PHP >= 5.5.0 required*, 5.5.9 tested
+- php GD support required
+
 ## Description
 
 A plugin for displaying KIVI real estate system properties on a WordPress site. The plugin is not meant to be out-of-the box solution
