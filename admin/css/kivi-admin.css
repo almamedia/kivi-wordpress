@@ -1,4 +1,4 @@
-.admin-status-bar {
+#admin-page-kivi .admin-status-bar {
   background: #ed5851;
   padding: 16px;
   color: white;
@@ -6,7 +6,7 @@
   margin-left: -20px;
 }
 
-.admin-page.header {
+#admin-page-kivi .admin-page.header {
   margin-top: 36px;
   margin-bottom: 36px;
 }
@@ -18,21 +18,7 @@
   font-size: 12px;
 }
 
-#xmlimport-submit {
-  display: inline-block;
-  height: 34px;
-  background: #ED5851;
-  border-color: transparent;
-  border-radius: 0;
-  text-shadow: none;
-  box-shadow: none;
-}
-
-.buttons {
-  margin-top: 16px;
-}
-
-#xmlimport-sync {
+#admin-page-kivi #xmlimport-sync {
   height: 36px;
   min-width: 60px;
   background: #ED5851;
@@ -49,7 +35,7 @@
   margin-top: 16px;
 }
 
-#save-kivi-settings,
+#admin-page-kivi #save-kivi-settings,
 #xmlimport-reset {
   margin-top: 16px;
   display: inline-block;
@@ -62,22 +48,22 @@
   box-shadow: none;
 }
 
-#xmlimport-reset {
+#admin-page-kivi #xmlimport-reset {
   background: #333;
 }
 
-label {
+#admin-page-kivi label {
   display: block;
   margin-top: 16px;
   font-style: italic;
   font-weight: bold;
 }
 
-label input {
+#admin-page-kivi label input {
   font-weight: normal;
 }
 
-::-webkit-input-placeholder {
+#admin-page-kivi ::-webkit-input-placeholder {
    color: #bbb;
    font-weight: 300;
 }
@@ -381,7 +367,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
    box-sizing: border-box;
 }
 .sp-input:focus  {
-    
+
 }
 .sp-input.sp-validation-error {
     border: 1px solid red;
@@ -419,7 +405,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     border:solid 2px transparent;
 }
 .sp-palette .sp-thumb-el:hover, .sp-palette .sp-thumb-el.sp-thumb-active {
-    
+
 }
 .sp-thumb-el {
     position:relative;
@@ -594,4 +580,3 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     background-position: center;
     background-image: url(data:image/gif;base64,R0lGODlhFAAUAPcAAAAAAJmZmZ2dnZ6enqKioqOjo6SkpKWlpaampqenp6ioqKmpqaqqqqurq/Hx8fLy8vT09PX19ff39/j4+Pn5+fr6+vv7+wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAP8ALAAAAAAUABQAAAihAP9FoPCvoMGDBy08+EdhQAIJCCMybCDAAYUEARBAlFiQQoMABQhKUJBxY0SPICEYHBnggEmDKAuoPMjS5cGYMxHW3IiT478JJA8M/CjTZ0GgLRekNGpwAsYABHIypcAgQMsITDtWJYBR6NSqMico9cqR6tKfY7GeBCuVwlipDNmefAtTrkSzB1RaIAoXodsABiZAEFB06gIBWC1mLVgBa0AAOw==);
 }
-
