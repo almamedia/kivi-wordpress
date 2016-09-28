@@ -297,7 +297,7 @@ class Kivi {
     add_shortcode('tyyppi', array($this, 'realtytype_shortcode'));
   }
 
-  public function kivi_list_shortcode($key, $value){
+  public function kivi_list_shortcode($key, $value,  $toimeksianto=""){
     $html = '<div class="kivi-item-list"><div class="kivi-item-list-wrapper">';
 
     $args = array(
@@ -309,14 +309,20 @@ class Kivi {
           'key' => $key,
           'value' => $value,
           'compare' => '='
-        )
+        ),
+		array (
+		   
+				'key' => '_assignment_type',
+				'value' => $toimeksianto ,
+				'compare' => 'LIKE'
+				)
       )
     );
 
     $items = query_posts($args);
 
     $brand_styling = ' style="color:'.get_option("kivi-brand-color").';"';
-
+    
     if ( have_posts() ) :
       while (have_posts()) : the_post();
         $kivi_item_desc = ucfirst(get_post_meta(get_the_ID(), '_realtytype_id', true));
@@ -351,7 +357,15 @@ class Kivi {
   }
 
   public function realtytype_shortcode($attributes) {
-    return $this->kivi_list_shortcode('_realtytype_id', $attributes["nimi"]);
+	  
+	$toimeksianto=null;
+    
+	if (array_key_exists('toimeksianto', $attributes)) {
+		$toimeksianto = $attributes["toimeksianto"];
+    }
+
+	  
+    return $this->kivi_list_shortcode('_realtytype_id', $attributes["nimi"],$toimeksianto);
   }
 
   public function town_shortcode($attributes) {
