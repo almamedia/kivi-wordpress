@@ -16,6 +16,8 @@
         'kivi-brand-color': $('#kivi-brand-color').val(),
         'kivi-slug': $('#kivi-slug').val(),
         'kivi-show-statusbar': $('#kivi-show-statusbar').val(),
+        'kivi-prefilter-name': $('#kivi-prefilter-name').val(),
+        'kivi-prefilter-value': $('#kivi-prefilter-value').val(),
         'kivi-show-sidebar': $('#kivi-show-sidebar').is(':checked') ? true : "",
 				'kivi-use-www-size': $('#kivi-use-www-size').is(':checked') ? true : "",
         'kivi-gmap-id': $('#kivi-gmap-id').val()

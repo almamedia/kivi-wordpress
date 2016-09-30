@@ -32,6 +32,12 @@
           <?php _e("Tuo", "kivi"); ?>
         </button>
         <div class="other-kivi-settings">
+          <label>
+            <div><?php _e("Rajaa tuotavia kohteita", "kivi"); ?></div>
+            <div class="description"><?php _e("Rajaa aineistosta tuotavia kohteita aineiston kenttien mukaan. Esim. nettinäkyvyydelle valitun välittäjän mukaan voi rajata käyttäen kenttää iv_person_name.");?></div>
+            <input type="text" name="kivi-prefilter-name" id="kivi-prefilter-name" class="text-input" value="<?php echo esc_attr( get_kivi_option('kivi-prefilter-name') ); ?>" placeholder="<?php _e('elementin nimi', 'kivi'); ?>"><?php _e("Esisuodatuksen peruste", "kivi"); ?>
+            <input type="text" name="kivi-prefilter-value" id="kivi-prefilter-value" class="text-input" value="<?php echo esc_attr( get_kivi_option('kivi-prefilter-value') ); ?>" placeholder="<?php _e('elementin arvo', 'kivi'); ?>"><?php _e("Esisuodatuksen arvo", "kivi"); ?>
+          </label>
           <label for="kivi-brand-color"><?php _e("Brändiväri", "kivi"); ?><br>
             <input type="text" name="kivi-brand-color" id="kivi-brand-color" class="text-input" value="<?php echo esc_attr( get_option('kivi-brand-color') ); ?>" placeholder="<?php _e('Brändiväri, joka esiintyy esim. napeissa jne. Kivi -kohteita näytettäessä', 'kivi'); ?>">
           </label>

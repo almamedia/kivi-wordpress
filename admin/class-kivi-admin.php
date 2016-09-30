@@ -151,9 +151,21 @@ class Kivi_Admin {
           }
         }
       }
+
+      $z->next('item');
+
+      if( ! empty( get_kivi_option('kivi-prefilter-name' )) && ! empty(get_kivi_option('kivi-prefilter-value'))  ) {
+        $filtername = get_kivi_option('kivi-prefilter-name');
+        if( isset( $result[$filtername] ) && $result[$filtername] == get_kivi_option('kivi-prefilter-value' )){
+          /* Filters match */
+        }else {
+          /* Filters don't match, ignore this item */
+          continue;
+        }
+      }
+      
       array_push($active_items, $result['realty_unique_no']);
       $this->process->push_to_queue( $result );
-      $z->next('item');
     }
 
     $this->process->items_delete( $active_items );
@@ -205,6 +217,8 @@ class Kivi_Admin {
     update_option( 'kivi-show-statusbar', $_POST['kivi-show-statusbar'] );
     set_kivi_option('kivi-show-sidebar',  $_POST['kivi-show-sidebar'] );
     set_kivi_option('kivi-use-www-size',  $_POST['kivi-use-www-size'] );
+    set_kivi_option('kivi-prefilter-name',  $_POST['kivi-prefilter-name'] );
+    set_kivi_option('kivi-prefilter-value',  $_POST['kivi-prefilter-value'] );
     set_kivi_option('kivi-gmap-id', $_POST['kivi-gmap-id']);
     wp_send_json( array('status'=>1, 'message'=>$_POST['kivi-brand-color'].', '.$_POST['kivi-slug'].', '.$_POST['kivi-show-statusbar']) );
   }
