@@ -71,6 +71,9 @@ We are also happy to accept any pull requests if they are generic enough and see
 
 ## Changelog
 
+**1.0.4**
+- Added possibility for prefiltering items while importing
+
 **1.0.3**
 - Missing assets of slick carousel (Issue #3)
 - More specific css selectors for admin css (Issue #2)
