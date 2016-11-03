@@ -71,6 +71,14 @@ We are also happy to accept any pull requests if they are generic enough and see
 
 ## Changelog
 
+**1.0.4**
+- Added possibility for prefiltering items while importing
+
+**1.0.3**
+- Missing assets of slick carousel (Issue #3)
+- More specific css selectors for admin css (Issue #2)
+- Shortcode for listing based on assignment type (PR #1)
+
 **1.0.2**
 - Added shortcode for listing items based on item type. Patch submitted by @karikauppinen
 
