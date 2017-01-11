@@ -290,39 +290,28 @@ class Kivi {
   }
 
 
-
+  /* Register shortcodes for listing items based on item properties */
   public function register_shortcodes(){
     add_shortcode('taloyhtio', array($this, 'realtycompany_shortcode'));
     add_shortcode('kunta', array($this, 'town_shortcode'));
     add_shortcode('tyyppi', array($this, 'realtytype_shortcode'));
+    add_shortcode('toimeksianto', array($this, 'assignmenttype_shortcode'));
+    add_shortcode('tuoteryhma', array($this, 'itemgroup_shortcode'));
   }
 
-  public function kivi_list_shortcode($key, $value,  $toimeksianto=""){
+  public function kivi_list_shortcode( $meta_query ){
     $html = '<div class="kivi-item-list"><div class="kivi-item-list-wrapper">';
 
     $args = array(
       'post_type' => 'kivi_item',
       'posts_per_page' => -1,
-      'meta_query' => array(
-        'relation' => 'AND',
-        array(
-          'key' => $key,
-          'value' => $value,
-          'compare' => '='
-        ),
-		array (
-		   
-				'key' => '_assignment_type',
-				'value' => $toimeksianto ,
-				'compare' => 'LIKE'
-				)
-      )
+      'meta_query' => $meta_query
     );
 
     $items = query_posts($args);
 
     $brand_styling = ' style="color:'.get_option("kivi-brand-color").';"';
-    
+
     if ( have_posts() ) :
       while (have_posts()) : the_post();
         $kivi_item_desc = ucfirst(get_post_meta(get_the_ID(), '_realtytype_id', true));
@@ -352,24 +341,82 @@ class Kivi {
     return $html;
   }
 
+  public function assignmenttype_shortcode($attributes){
+    $meta_query = array(
+      'relation' => 'AND',
+      array(
+        'key' => '_assignment_type',
+        'value' => $attributes["tyyppi"],
+        'compare' => 'LIKE'
+      )
+    );
+    return $this->kivi_list_shortcode($meta_query);
+  }
+
   public function realtycompany_shortcode($attributes) {
-    return $this->kivi_list_shortcode('_realtycompany', $attributes["nimi"]);
+    $meta_query = array(
+      'relation' => 'AND',
+      array(
+        'key' => '_realtycompany',
+        'value' => $attributes["nimi"],
+        'compare' => '='
+      )
+    );
+    return $this->kivi_list_shortcode($meta_query);
+  }
+
+  public function itemgroup_shortcode($attributes) {
+    $toimeksianto=null;
+    if (array_key_exists('toimeksianto', $attributes)) {
+      $toimeksianto = $attributes["toimeksianto"];
+    }
+    $meta_query = array(
+      'relation' => 'AND',
+      array(
+        'key' => '_itemgroup_id',
+        'value' => $attributes["nimi"],
+        'compare' => '='
+      ),
+      array (
+        'key' => '_assignment_type',
+        'value' => $toimeksianto ,
+        'compare' => 'LIKE'
+      )
+    );
+    return $this->kivi_list_shortcode( $meta_query );
   }
 
   public function realtytype_shortcode($attributes) {
-	  
-	$toimeksianto=null;
-    
-	if (array_key_exists('toimeksianto', $attributes)) {
-		$toimeksianto = $attributes["toimeksianto"];
+    $toimeksianto=null;
+    if (array_key_exists('toimeksianto', $attributes)) {
+      $toimeksianto = $attributes["toimeksianto"];
     }
-
-	  
-    return $this->kivi_list_shortcode('_realtytype_id', $attributes["nimi"],$toimeksianto);
+    $meta_query = array(
+      'relation' => 'AND',
+      array(
+        'key' => '_realtytype_id',
+        'value' => $attributes["nimi"],
+        'compare' => '='
+      ),
+      array (
+        'key' => '_assignment_type',
+        'value' => $toimeksianto ,
+        'compare' => 'LIKE'
+      )
+    );
+    return $this->kivi_list_shortcode( $meta_query );
   }
 
   public function town_shortcode($attributes) {
-    return $this->kivi_list_shortcode('_town', $attributes["nimi"]);
+    $meta_query = array(
+      'relation' => 'AND',
+      array(
+        'key' => '_town',
+        'value' => $attributes["nimi"],
+        'compare' => '='
+      )
+    );
+    return $this->kivi_list_shortcode($meta_query);
   }
 
 }

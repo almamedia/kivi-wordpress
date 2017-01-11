@@ -43,7 +43,7 @@ The plugin has default templates for listing properties and displaying a single 
 
 ## Shortcodes defined by the plugin
 
-You can use shotcodes to display KIVI data in your own custom WordPress pages by adding a shortcode defined by the plugin in the content of the page.
+You can use shortcodes to display KIVI data in your own custom WordPress pages by adding a shortcode defined by the plugin in the content of the page.
 
 ### List items by town
 `[kunta nimi='<city>']`
@@ -62,6 +62,26 @@ for example:
 
 for example:
 `[tyyppi nimi="omakotitalo"]`
+or
+`[tyyppi nimi="omakotitalo" toimeksianto="vuokra"]`
+
+
+### List items by item group
+`[tuoteryhma nimi=<item group name>]`
+
+for example:
+`[tuoteryhma nimi="toimitilat"]`
+
+Possible item groups are: asunnot,loma-asunnot,toimitilat,tontit,vuokra-asunnot,loma-asunnot,uudiskohteet, "maa- ja metsätilat", "autotallit ja muut"
+
+### List items by assignment type
+`[toimeksianto tyyppi=<assignment type>]`
+
+for example:
+`[toimeksianto tyyppi="vuokra"]`
+or
+`[toimeksianto tyyppi="myynti"]`
+
 
 ## Feature Requests and Contributing
 
