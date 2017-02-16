@@ -50,6 +50,9 @@
           <label>
             <input type="checkbox" id="kivi-use-www-size" <?php if(get_kivi_option('kivi-use-www-size')){echo "checked=''";} ?> name="kivi-use-www-size" value=""><?php _e('Käytä www-kokoisia kuvia siirrossa (oletus: original)')?>
           </label>
+          <label>
+            <input type="checkbox" id="kivi-use-debt-free-price-on-shortcode" <?php if(get_kivi_option('kivi-use-debt-free-price-on-shortcode')){echo "checked=''";} ?> name="kivi-use-debt-free-price-on-shortcode" value=""><?php _e('Näytä velaton hinta shortcode-listauksissa (oletus: myyntihinta)')?>
+          </label>
           <label><input type="text" name="kivi-gmap-id" id="kivi-gmap-id" class="text-input" value="<?php echo get_kivi_option('kivi-gmap-id')?>" placeholder="google maps key">Google maps api key</label>
           <input type="hidden" name="kivi-show-statusbar" id="kivi-show-statusbar" value="<?php echo esc_attr( get_option('kivi-show-statusbar') ); ?>">
 
