@@ -51,7 +51,7 @@ class Kivi_Viewable {
     }elseif(count( $this->properties ) == 1){
       $ret = $ret.$this->properties[0];
     }
-    return $ret;
+    return apply_filters( 'kivi_viewable_value', $ret, $this->label, $this->properties );
   }
 
   public function getTableRow(){
