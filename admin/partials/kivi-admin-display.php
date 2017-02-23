@@ -50,6 +50,9 @@
           <label>
             <input type="checkbox" id="kivi-use-www-size" <?php if(get_kivi_option('kivi-use-www-size')){echo "checked=''";} ?> name="kivi-use-www-size" value=""><?php _e('Käytä www-kokoisia kuvia siirrossa (oletus: original)')?>
           </label>
+		  <label>
+            <input type="checkbox" id="kivi-clean-values" <?php if(get_kivi_option('kivi-clean-values')){echo "checked=''";} ?> name="kivi-clean-values" value=""><?php _e('Siisti kohdesivun arvot. (Esim. hintoihin €, neliöt m²)')?>
+          </label>
           <label><input type="text" name="kivi-gmap-id" id="kivi-gmap-id" class="text-input" value="<?php echo get_kivi_option('kivi-gmap-id')?>" placeholder="google maps key">Google maps api key</label>
           <input type="hidden" name="kivi-show-statusbar" id="kivi-show-statusbar" value="<?php echo esc_attr( get_option('kivi-show-statusbar') ); ?>">
 
