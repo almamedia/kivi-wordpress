@@ -32,6 +32,8 @@ Just drop extract the package in the `plugins` directory of your WP installation
 
 - 'Use www sized images in transfer (default: original)' Use www-size images when transferring the items to WP. Www-sized are smaller than originals. This is useful for in development phase as the www images download quicker. Using originals in production is a good idea.
 
+- Clean values. Alters property data to look better. Replaces "m2" with "m²", addds euro sign to prices and formats numbers. For additional formatting, use the filter "kivi_viewable_value" ( with up to three attributes: value, label, properties).
+
 - Google maps api key. If set, a google maps component is shown on the item page and the property is pinned on the map. The location is based on the address and geocoded using google's api. Note that there is a limit of geocoding requests for a single api key.
 
 - Reset. This will reset the settings and remove all KIVI items.
@@ -39,7 +41,7 @@ Just drop extract the package in the `plugins` directory of your WP installation
 
 ## Adapting to a theme
 
-The plugin has default templates for listing properties and displaying a single item. The templates might work with your theme just fine, or not. You can place your own templates in your theme's directory and these will override the ones defined by the plugin. The files sould be `kivi-index-template.php` and `kivi-index-template.php` for index page and single item page, respectively. You can of course use the default templates as a starting point for your own templates, the files are  `includes/partials/kivi-index-template.php` and `includes/partials/kivi-single-template.php`.
+The plugin has default templates for listing properties and displaying a single item. The templates might work with your theme just fine, or not. You can place your own templates in your theme's directory and these will override the ones defined by the plugin. The files sould be `kivi-index-template.php` and `kivi-single-template.php` for index page and single item page, respectively. You can of course use the default templates as a starting point for your own templates, the files are  `includes/partials/kivi-index-template.php` and `includes/partials/kivi-single-template.php`.
 
 ## Shortcodes defined by the plugin
 
