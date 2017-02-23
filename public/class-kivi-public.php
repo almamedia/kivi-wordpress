@@ -426,6 +426,10 @@ class Kivi_Public {
 		
 		// only check for single properties
 		if( count($properties) == 1 && isset($properties[0]) ){
+			
+			// change first character to uppercase
+			$value = ucfirst ( $value );
+			
 			$kivi_property = $properties[0];
 			
 			// change listed name values to int
@@ -447,7 +451,7 @@ class Kivi_Public {
 				'_charges_maint_base_month',
 			);
 			if( in_array($kivi_property->name, $to_price) ){
-				return number_format($value, 2, ',', ' ');
+				return number_format($value, 2, ',', ' ')." €";
 			}
 			
 			// check for property name ending "_m2"
