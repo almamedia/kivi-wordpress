@@ -144,6 +144,8 @@
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_carshelter_count' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_garage_count' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_services' ) );
+	$box->add( Kivi_Viewable::asSingle( $post_id, '_rc_renovation_made' ) );
+	$box->add( Kivi_Viewable::asSingle( $post_id, '_rc_renovation_planned' ) );
     echo $box;
   }
 
