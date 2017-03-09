@@ -450,8 +450,18 @@ class Kivi_Public {
 				'_charges_finance_base_month',
 				'_charges_maint_base_month',
 			);
-			if( in_array($kivi_property->name, $to_price) ){
-				return number_format($value, 2, ',', ' ')." €";
+			if( in_array($kivi_property->name, $to_price) && is_numeric($value) ){
+				if( is_float($value) || intval($value) < 1000 ){
+					$price = number_format($value, 2, ',', ' '); // to 2 decimal price string with thousand separators
+				}
+				elseif( intval($value) > 999 ){
+					$price = intval($price);
+					$price = number_format($value, 0, '', ' '); // with thousands separated
+				}
+				else{
+					return $value;
+				}
+				return $price." €";
 			}
 			
 			// check for property name ending "_m2"
