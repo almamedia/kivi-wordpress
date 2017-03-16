@@ -20,6 +20,7 @@
         'kivi-prefilter-value': $('#kivi-prefilter-value').val(),
         'kivi-show-sidebar': $('#kivi-show-sidebar').is(':checked') ? true : "",
 				'kivi-use-www-size': $('#kivi-use-www-size').is(':checked') ? true : "",
+        'kivi-use-debt-free-price-on-shortcode': $('#kivi-use-debt-free-price-on-shortcode').is(':checked') ? true : "",
         'kivi-gmap-id': $('#kivi-gmap-id').val()
       };
 
