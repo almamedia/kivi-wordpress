@@ -216,7 +216,10 @@ class Kivi {
     });
 
     add_action('init', array($this, 'register_shortcodes'));
-
+	
+    if( get_kivi_option('kivi-clean-values') ) {
+		$this->loader->add_filter( 'kivi_viewable_value', $plugin_public, 'filter_viewable_values', 10, 3 );
+	}
   }
 
   public function load_kivi_index_template($index_template) {

@@ -21,6 +21,7 @@
         'kivi-show-sidebar': $('#kivi-show-sidebar').is(':checked') ? true : "",
 				'kivi-use-www-size': $('#kivi-use-www-size').is(':checked') ? true : "",
         'kivi-use-debt-free-price-on-shortcode': $('#kivi-use-debt-free-price-on-shortcode').is(':checked') ? true : "",
+				'kivi-clean-values': $('#kivi-clean-values').is(':checked') ? true : "",
         'kivi-gmap-id': $('#kivi-gmap-id').val()
       };
 

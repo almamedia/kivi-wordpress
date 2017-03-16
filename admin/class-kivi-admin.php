@@ -218,6 +218,7 @@ class Kivi_Admin {
     set_kivi_option('kivi-show-sidebar',  $_POST['kivi-show-sidebar'] );
     set_kivi_option('kivi-use-debt-free-price-on-shortcode',  $_POST['kivi-use-debt-free-price-on-shortcode'] );
     set_kivi_option('kivi-use-www-size',  $_POST['kivi-use-www-size'] );
+	set_kivi_option('kivi-clean-values',  $_POST['kivi-clean-values'] );
     set_kivi_option('kivi-prefilter-name',  $_POST['kivi-prefilter-name'] );
     set_kivi_option('kivi-prefilter-value',  $_POST['kivi-prefilter-value'] );
     set_kivi_option('kivi-gmap-id', $_POST['kivi-gmap-id']);
