@@ -416,37 +416,37 @@ class Kivi_Public {
    * @since    1.0.3
    */
 	function filter_viewable_values( $value, $label, $properties ) {
-	
+
 		if( empty($value) ){
 			return $value;
 		}
-		
+
 		// replace "m2" with square character
 		$value = str_replace('m2', 'm²', $value);
-		
+
 		// only check for single properties
 		if( count($properties) == 1 && isset($properties[0]) ){
-			
+
 			// change first character to uppercase
 			$value = ucfirst ( $value );
-			
+
 			$kivi_property = $properties[0];
-			
+
 			// change listed name values to int
 			$to_integer = array(
-				'_floor', 
+				'_floor',
 				'_floors',
 			);
 			if( in_array($kivi_property->name, $to_integer) ){
 				return intval($value);
 			}
-			
+
 			// format values to prices for listed names
 			$to_price = array(
-				'_unencumbered_price', 
-				'_price', 
-				'_assignmentrent_rent', 
-				'_chargesmaint2_month', 
+				'_unencumbered_price',
+				'_price',
+				'_assignmentrent_rent',
+				'_chargesmaint2_month',
 				'_charges_finance_base_month',
 				'_charges_maint_base_month',
 			);
@@ -455,7 +455,7 @@ class Kivi_Public {
 					$price = number_format($value, 2, ',', ' '); // to 2 decimal price string with thousand separators
 				}
 				elseif( intval($value) > 999 ){
-					$price = intval($price);
+					$price = intval($value);
 					$price = number_format($value, 0, '', ' '); // with thousands separated
 				}
 				else{
@@ -463,14 +463,14 @@ class Kivi_Public {
 				}
 				return $price." €";
 			}
-			
+
 			// check for property name ending "_m2"
 			if( stripos(strrev($kivi_property->name), "2m_") === 0 ){
 				return intval($value) . " m²";
 			}
-			
+
 		}
-				
+
 		return $value;
 	}
 }
