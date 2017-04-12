@@ -473,4 +473,32 @@ class Kivi_Public {
 
 		return $value;
 	}
+	
+	/**
+	* Hide presentations in the past
+	*/ 
+	function filter_presentation_date( $value, $label, $properties ) {
+		
+		if('Esittelyt' == $label){
+			
+			$date_obj = null;
+			
+			// $value starts with date(d.m.Y) = 10 chars			
+			$date = substr(trim($value), 0, 10);
+			$date = trim($date);
+			if( !empty($date)){
+				$date_obj = DateTime::createFromFormat('d.m.Y H:i', $date." 23:59" ); // use late time of date in compare
+			}
+			
+			if( !empty($date_obj) ){
+				$cur_obj = new DateTime();
+				if($date_obj < $cur_obj){
+					return "";
+				}
+			}
+		}
+		
+		return $value;
+	}
+	
 }

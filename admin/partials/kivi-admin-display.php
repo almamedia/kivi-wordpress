@@ -53,8 +53,8 @@
           <label>
             <input type="checkbox" id="kivi-use-debt-free-price-on-shortcode" <?php if(get_kivi_option('kivi-use-debt-free-price-on-shortcode')){echo "checked=''";} ?> name="kivi-use-debt-free-price-on-shortcode" value=""><?php _e('Näytä velaton hinta shortcode-listauksissa (oletus: myyntihinta)')?>
            </label>
-		       <label>
-            <input type="checkbox" id="kivi-clean-values" <?php if(get_kivi_option('kivi-clean-values')){echo "checked=''";} ?> name="kivi-clean-values" value=""><?php _e('Siisti kohdesivun arvot. (Esim. hintoihin €, neliöt m²)')?>
+		  <label>
+            <input type="checkbox" id="kivi-clean-values" <?php if(get_kivi_option('kivi-clean-values')){echo "checked=''";} ?> name="kivi-clean-values" value=""><?php _e('Siisti kohdesivun arvot. (Esim. hintoihin €, neliöt m², piilota menneet esittelyt)')?>
           </label>
           <label><input type="text" name="kivi-gmap-id" id="kivi-gmap-id" class="text-input" value="<?php echo get_kivi_option('kivi-gmap-id')?>" placeholder="google maps key">Google maps api key</label>
           <input type="hidden" name="kivi-show-statusbar" id="kivi-show-statusbar" value="<?php echo esc_attr( get_option('kivi-show-statusbar') ); ?>">

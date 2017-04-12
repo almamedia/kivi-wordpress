@@ -219,6 +219,7 @@ class Kivi {
 	
     if( get_kivi_option('kivi-clean-values') ) {
 		$this->loader->add_filter( 'kivi_viewable_value', $plugin_public, 'filter_viewable_values', 10, 3 );
+		$this->loader->add_filter( 'kivi_viewable_value', $plugin_public, 'filter_presentation_date', 10, 3 );
 	}
   }
 
