@@ -6,6 +6,12 @@
 
 - *PHP >= 5.5.0 required*, 5.5.9 tested
 - php GD support required
+- php settings:
+	-	”memory limit” at least 128M
+	-	”max_execution_time” at least 30
+- enough memory on server to create image thumbnails (2GB+)
+
+
 
 ## Description
 
