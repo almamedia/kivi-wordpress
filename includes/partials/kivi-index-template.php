@@ -62,7 +62,11 @@ if ( isset($_POST["submit"]) ){
         $town,
         $postcode,
       )
-    )
+    ),
+	'orderby'	=> 'meta_value',
+	'meta_key' 	=> '_homepage_publish_date',
+	'meta_type'	=> 'DATETIME',
+	'order'		=> 'DESC',		
   );
   query_posts($args);
   $_SESSION['kivi_search'] = $args;
@@ -90,7 +94,16 @@ if ( isset($_POST["submit"]) ){
   $areamaxval = $searchcriteria[4];
   $realtytypeval = $searchcriteria[5];
 }
-
+else{
+	$args = array(
+		'post_type' => 'kivi_item',
+		'orderby'	=> 'meta_value',
+		'meta_key' 	=> '_homepage_publish_date',
+		'meta_type'	=> 'DATETIME',
+		'order'		=> 'DESC',
+	);
+	query_posts($args);
+}
 
 ?>
   <div id="primary" class="content-area">
