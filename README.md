@@ -99,6 +99,10 @@ We are also happy to accept any pull requests if they are generic enough and see
 
 ## Changelog
 
+**1.0.5**
+- Changed default item order in listing. (merged branch list-order)
+- Fixed data update to work like it is specified in readme. All item data, including post_content and post_title, will now update from Kivi.
+
 **1.0.4**
 - Added possibility for prefiltering items while importing
 
