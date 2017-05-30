@@ -102,9 +102,11 @@
     /**
     * Figure out if item needs to be modified. That is if the updatedate in the
     * post metadata is different from the one in the incoming XML.
+	*
+	* Uncommenting item_update_content allows custom titles and content to be written in WP admin
+	* without overwriting after scheduled update.
     */
     public function item_update(&$item){
-      global $wpdb;
       $args = array(
         'meta_key' => '_realty_unique_no',
         'meta_value' => $item['realty_unique_no'],
@@ -115,9 +117,21 @@
       if( $item['updatedate'] === $d ){
       }else {
         $this->item_update_metadata( $post->ID, $item );
+		$this->item_update_content( $post->ID, $item ); // uncomment this to disable automatic updates for post_content and post_title. 
       }
     }
 
+	/*
+	* Update post_content and post_title for kivi_item.
+	*/
+	public function item_update_content($post_id, &$item){
+		$postarr =  [];
+		$postarr['post_content'] = $item['presentation'];
+		$postarr['post_title'] = $item['flat_structure'] . ' ' . $item['town'] . ' ' . $item['street'] . ' ' . $item['stairway'] . ' ' . $item['door_number'];
+		$postarr['ID'] = $post_id;
+		wp_update_post( $postarr );
+	}
+	
     /*
     * Update all the metadata in the item, in case the item has any
     * modifications.
@@ -266,5 +280,3 @@
 
 
   }
-
-?>
