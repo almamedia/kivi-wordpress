@@ -103,8 +103,8 @@
     * Figure out if item needs to be modified. That is if the updatedate in the
     * post metadata is different from the one in the incoming XML.
 	*
-	* Uncommenting item_update_content allows custom titles and content to be written in WP admin
-	* without overwriting after scheduled update.
+	* Removing item_update_content -call allows custom titles and content to be written 
+	* in WP admin without overwriting after scheduled update.
     */
     public function item_update(&$item){
       $args = array(
@@ -117,7 +117,7 @@
       if( $item['updatedate'] === $d ){
       }else {
         $this->item_update_metadata( $post->ID, $item );
-		$this->item_update_content( $post->ID, $item ); // uncomment this to disable automatic updates for post_content and post_title. 
+		$this->item_update_content( $post->ID, $item ); // comment this line to disable automatic updates for post_content and post_title. 
       }
     }
 

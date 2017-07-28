@@ -6,6 +6,7 @@
 
 - *PHP >= 5.5.0 required*, 5.5.9 tested
 - php GD support required
+- php DOM required (http://php.net/manual/en/book.dom.php)
 - php settings:
 	-	”memory limit” at least 128M
 	-	”max_execution_time” at least 30
