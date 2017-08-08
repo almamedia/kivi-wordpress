@@ -174,7 +174,7 @@ else{
       <?php
 
       if ( isset($_POST["submit"]) ) :
-        echo '<h3>'._e("Hakutulokset", "kivi").'</h3>';
+        echo '<h3>' . __("Hakutulokset", "kivi") . '</h3>';
       endif;
 
       if ( have_posts() ) :
@@ -201,6 +201,8 @@ else{
         endwhile;
         ?></div>
         <div class="kivi-index-paginator">
+	  <?php else: ?>
+		<p class="kivi-no-items-info"><?php _e("Ei kohteita", "kivi"); ?></p>
       <?php endif;
 
       $pagination_args = array(

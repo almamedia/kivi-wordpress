@@ -223,16 +223,16 @@ class Kivi {
 	}
   }
 
-  public function load_kivi_index_template($index_template) {
-    global $post;
+  public function load_kivi_index_template( $index_template ) {
     $template_name = 'kivi-index-template.php';
-    $theme_provided_template = get_stylesheet_directory() . "/". $template_name;
-    if ($post->post_type == "kivi_item"){
-      if( file_exists( $theme_provided_template )) {
-        return $theme_provided_template;
-      }else{
-        return dirname(__FILE__) . '/partials/'.$template_name ;
-      }
+    
+    if ( is_post_type_archive( "kivi_item" ) ) {
+		$theme_provided_template = get_stylesheet_directory() . "/" . $template_name;
+		if( file_exists( $theme_provided_template ) ) {
+			return $theme_provided_template;
+		}else{
+			return dirname(__FILE__) . '/partials/' . $template_name ;
+		}
     }
     return $index_template;
   }
