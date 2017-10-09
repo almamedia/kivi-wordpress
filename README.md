@@ -19,7 +19,7 @@
 A plugin for displaying KIVI real estate system properties on a WordPress site. The plugin is not meant to be out-of-the box solution
 for the job, but instead a starting point for development. With the plugin, simple index and single templates are provided for listing and displaying the properties.
 
-KIVI Wordpress plugin imports KIVI data into Wordpress as a background process. The plugin is scheduled to read the active items in the KIVI system every 30 minutes. New items are added, deleted items are deleted and updated items are updated. In WordPress, the KIVI items are stored ad a custom post type named `kivi_item`. Item images are stored in the WordPress media gallery and referenced in the kivi_item posts. Kivi_item posts are not supposed to be edited using the WordPress editor as the scheduled update from the KIVI system will overwrite any changes if the item is changed in KIVI.
+KIVI Wordpress plugin imports KIVI data into Wordpress as a background process. The plugin is scheduled to read the active items in the KIVI system every hour. New items are added, deleted items are deleted and updated items are updated. In WordPress, the KIVI items are stored ad a custom post type named `kivi_item`. Item images are stored in the WordPress media gallery and referenced in the kivi_item posts. Kivi_item posts are not supposed to be edited using the WordPress editor as the scheduled update from the KIVI system will overwrite any changes if the item is changed in KIVI.
 
 For getting the correct export from KIVI system, a specific WordPress transfer needs to be opened first. For more information, contact the sales or the customer support kivi@almamedia.fi.
 
