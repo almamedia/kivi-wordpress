@@ -85,13 +85,17 @@
 
     /* Check if the item already exists in wp database */
     public function item_exists( &$item ){
-      global $wpdb;
       $args = array(
         'meta_key' => '_realty_unique_no',
         'meta_value' => $item['realty_unique_no'],
+		'meta_type' => 'NUMERIC',
         'post_type' => 'kivi_item',
+		'post_status' => get_post_stati(),
       );
-      return count( get_posts( $args ) ) > 0;
+	  
+	  $count = count( get_posts( $args ) );
+	  
+      return $count > 0;
     }
 
     /* Add the media to media library */
