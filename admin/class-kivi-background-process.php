@@ -180,6 +180,7 @@
       $postarr['post_content'] = $item['presentation'];
       $postarr['post_title'] = $item['flat_structure'] . ' ' . $item['town'] . ' ' . $item['street'] . ' ' . $item['stairway'] . ' ' . $item['door_number'];
       $post_id = wp_insert_post ( $postarr );
+	  add_post_meta ( $post_id, '_realty_unique_no', $item['realty_unique_no'], true );
       foreach ( $item as $key => $value ) {
         if ( $key == 'images' ) {
           foreach ($item['images'] as $key => $value) {
@@ -187,6 +188,8 @@
           }
         }elseif( $key == 'iv_person_image_url' && $value ){
           $this->kivi_save_image($value, 'iv_person_image_url', 0, $post_id);
+        }elseif ( $key == 'realty_unique_no' && $value) {
+          add_post_meta ( $post_id, '_'.$key, $value, true );
         }elseif ( $value != "") {
           add_post_meta ( $post_id, '_'.$key, $value );
         }
