@@ -64,6 +64,10 @@
           <button type="button" id="save-kivi-settings" class="button button-secondary"><?php _e('Tallenna asetukset', 'kivi'); ?></button>
         </div>
       </form>
+	 
+	 <?php if( ! wp_next_scheduled ( 'kivi_items_sync' ) ) : ?>
+		<p><?php _e('Automaattipäivitys on pois päältä. Tarkista asetukset, poista lisäosa käytöstä ja ota se uudelleen käyttöön.', 'kivi'); ?></p>
+	 <?php endif; ?>
     </div>
   </div>
 </div>
