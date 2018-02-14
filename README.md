@@ -8,10 +8,11 @@
 - php GD support required
 - php DOM required (http://php.net/manual/en/book.dom.php)
 - php settings:
+	-	”allow_url_fopen” On
 	-	”memory limit” at least 128M
 	-	”max_execution_time” at least 30
 - enough memory on server to create image thumbnails (2GB+)
-
+- no BasicAuth ( blocks async request )
 
 
 ## Description

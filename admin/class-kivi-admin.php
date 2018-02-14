@@ -140,6 +140,10 @@ class Kivi_Admin {
           if ( $result != "" ) {
             $this->presentation_func( $foo, $result );
           }
+        }elseif( $foo->getName() == "realty_vi_presentation") {
+          if ( $result != "" ) {
+            $this->realty_vi_presentation_func( $foo, $result );
+          }
         }elseif( in_array( $foo->getName(), [ "unencumbered_price","price","debt"] )) {
           if ( $result != "" ) {
             $this->copy_int_func( $foo, $result );
@@ -295,6 +299,23 @@ class Kivi_Admin {
       }
     }
     $result['presentations'] = $pres;
+  }
+  
+  /*
+  * Copy vi_presentation items, 0..n of them
+  */
+  public function realty_vi_presentation_func( &$foo, &$result ){
+    $pres = array();
+    foreach ($foo->children() as $p) {
+      $i=array();
+      if( $p->getName() == 'realty_vi_presentation_item'){
+        foreach ($p->children() as $prop) {
+          $this->copy_func($prop, $i);
+        }
+        array_push($pres,$i);
+      }
+    }
+    $result['vi_presentations'] = $pres;
   }
 
 

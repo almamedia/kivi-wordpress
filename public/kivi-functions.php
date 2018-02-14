@@ -176,7 +176,16 @@
     $view = New Kivi_Viewable( $label=__("Lämmitysjärjestelmän kuvaus","kivi"));
     $view->add( New Kivi_Property( $post_id,  $name='', $type="realtyoption", 'Lämmitysjärjestelmä', '' ) );
     $box->add( $view );
-    echo $box;
+	
+	$property = New Kivi_Property( $post_id, '_vi_presentations','vi_presentations' );
+	if( ! empty($property) ) {
+		$view = New Kivi_Viewable( $label=__("Videoesittelyt","kivi"));
+		$view->add($property);
+		$box->add($view);
+	}
+	
+	
+	echo $box;
   }
 
 
@@ -253,5 +262,5 @@
     $box->add($s);
     echo $box;
   }
-
+  
 ?>

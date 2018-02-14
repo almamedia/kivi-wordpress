@@ -69,6 +69,34 @@ class Kivi_Property {
       return $p;
     }
   }
+  
+	private function getViPresentationsValue(){
+		$ret = $ret_list = "";
+		$presentations_arr = get_post_meta( $this->post_id, '_vi_presentations', true );
+		if( ! empty($presentations_arr) && is_array($presentations_arr) ) {
+			foreach( $presentations_arr as $presentation ) {
+				$class = "";
+				if( ! empty($presentation['vi_pre_extralink_seq']) ) {
+					$class .= "type-extra-info ";
+				}
+				if( ! empty($presentation['vi_pre_video_flag']) ) {
+					$class .= "type-video ";
+				}
+				if( empty($presentation['vi_pre_video_flag']) && empty($presentation['vi_pre_extralink_seq']) ) {
+					$class .= "type-virtual";
+				}
+				
+				if( isset($presentation['vi_pre_url']) && filter_var($presentation['vi_pre_url'], FILTER_VALIDATE_URL) ) {
+					$ret_list .= "<li><a href='$presentation[vi_pre_url]' target='_blank' rel='noopener' class='$class'>$presentation[vi_pre_desc]</a></li>";
+				}
+			}
+			if( ! empty($ret_list) ){
+				$ret .= "<ul class='kivi-vi-presentations'>";
+				$ret .= $ret_list."</ul>";
+			}
+		}
+		return $ret;
+	}
 
   function getPrefix(){
     if ($this->getValue() != ""){
@@ -84,6 +112,8 @@ class Kivi_Property {
       return $this->getRealtyOptionValue();
     }elseif( $this->type == 'presentation') {
       return $this->getPresentationValue();
+    }elseif( $this->type == 'vi_presentations') {
+      return $this->getViPresentationsValue();
     }else{
       return get_post_meta($this->post_id, $this->name, true);
     }
