@@ -123,7 +123,10 @@
     $view->add( New Kivi_Property( $post_id, '_charges_water') );
     $view->add( New Kivi_Property( $post_id, '_watercharge_type_id') );
     $box->add( $view );
-    $box->add( Kivi_Viewable::asSingle( $post_id, '_charges_other' ) );
+	$box->add( Kivi_Viewable::asSingle( $post_id, '_charges_eheating' ) );
+	$box->add( Kivi_Viewable::asSingle( $post_id, '_charges_sewage' ) );
+	$box->add( Kivi_Viewable::asSingle( $post_id, '_charges_road' ) );
+	$box->add( Kivi_Viewable::asSingle( $post_id, '_charges_other' ) );
     echo $box;
   }
 
@@ -143,7 +146,6 @@
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_lotholding_id' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_carshelter_count' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_garage_count' ) );
-    $box->add( Kivi_Viewable::asSingle( $post_id, '_services' ) );
 	$box->add( Kivi_Viewable::asSingle( $post_id, '_rc_renovation_made' ) );
 	$box->add( Kivi_Viewable::asSingle( $post_id, '_rc_renovation_planned' ) );
     echo $box;
@@ -184,7 +186,16 @@
 		$box->add($view);
 	}
 	
-	
+	echo $box;
+  }
+
+  function view_services_info( $post_id){
+    $box = New Kivi_Fact_Box();
+	$box->add( Kivi_Viewable::asSingle( $post_id, '_services' ) );
+	$box->add( Kivi_Viewable::asSingle( $post_id, '_services_other' ) );
+	$box->add( Kivi_Viewable::asSingle( $post_id, '_connections' ) );
+	$box->add( Kivi_Viewable::asSingle( $post_id, '_daycare' ) );
+	$box->add( Kivi_Viewable::asSingle( $post_id, '_school' ) );
 	echo $box;
   }
 

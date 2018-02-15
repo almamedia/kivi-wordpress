@@ -195,6 +195,21 @@ get_header(); ?>
           </div>
         </section>
 
+		<section class="kivi-single-item-body kivi-single-services-info">
+          <div class="wrapper">
+            <div class="kivi-header-wrapper">
+              <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>><?php _e('Palvelut ja liikenneyhteydet', 'kivi'); ?></h3>
+            </div>
+            <table class="kivi-item-table">
+              <tbody>
+                <?php
+                  view_services_info( $post->ID);
+                ?>
+              </tbody>
+            </table>
+          </div>
+        </section>
+		
         <?php if( get_kivi_option('kivi-gmap-id') ){ ?>
         <section class="kivi-single-item-body">
           <div class="wrapper">
