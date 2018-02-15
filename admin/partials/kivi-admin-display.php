@@ -66,7 +66,15 @@
       </form>
 	 
 	 <?php if( ! wp_next_scheduled ( 'kivi_items_sync' ) ) : ?>
-		<p><?php _e('Automaattipäivitys on pois päältä. Tarkista asetukset, poista lisäosa käytöstä ja ota se uudelleen käyttöön.', 'kivi'); ?></p>
+		<p><?php _e('Automaattipäivitys on pois päältä. Tarkista asetukset, poista lisäosa käytöstä ja ota se uudelleen käyttöön.', 'kivi');  
+		?></p>
+	<?php else: ?>
+		<?php
+		$date = new DateTime();
+		$date->setTimestamp(wp_next_scheduled ( 'kivi_items_sync' ));
+		$date->setTimezone(new DateTimeZone('Europe/Helsinki'));
+		echo _('Seuraava tarkistus: ').$date->format('d.m.Y H:i:s') . "\n";
+		?>
 	 <?php endif; ?>
     </div>
   </div>
