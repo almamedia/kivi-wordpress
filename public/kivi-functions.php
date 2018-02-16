@@ -126,6 +126,7 @@
 	$box->add( Kivi_Viewable::asSingle( $post_id, '_charges_eheating' ) );
 	$box->add( Kivi_Viewable::asSingle( $post_id, '_charges_sewage' ) );
 	$box->add( Kivi_Viewable::asSingle( $post_id, '_charges_road' ) );
+	$box->add( Kivi_Viewable::asSingle( $post_id, '_charges_streetcleansing' ) );
 	$box->add( Kivi_Viewable::asSingle( $post_id, '_charges_other' ) );
     echo $box;
   }
