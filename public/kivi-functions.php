@@ -176,6 +176,8 @@
     $box->add( $view );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_condition_id' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_condition' ) );
+	$box->add( Kivi_Viewable::asSingle( $post_id, '_renovation_made' ) );
+	$box->add( Kivi_Viewable::asSingle( $post_id, '_energyclass_name' ) );
     $view = New Kivi_Viewable( $label=__("Lämmitysjärjestelmän kuvaus","kivi"));
     $view->add( New Kivi_Property( $post_id,  $name='', $type="realtyoption", 'Lämmitysjärjestelmä', '' ) );
     $box->add( $view );
@@ -187,6 +189,7 @@
 		$box->add($view);
 	}
 	
+	$box->add( Kivi_Viewable::asSingle( $post_id, '_other_important_info' ) );
 	echo $box;
   }
 
@@ -258,6 +261,7 @@
     $view->add( New Kivi_Property( $post_id,  $name=__('Lattiamateriaalit','kivi'), $type="realtyoption", 'Makuuhuoneen lattiamateriaali', ''  ) );
     $view->add( New Kivi_Property( $post_id,  $name=__('Seinämateriaalit','kivi'), $type="realtyoption", 'Makuuhuoneen seinämateriaali', ''  ) );
     $box->add( $view );
+	$box->add( Kivi_Viewable::asSingle( $post_id, '_storage_condition' ) );
     echo $box;
   }
 
