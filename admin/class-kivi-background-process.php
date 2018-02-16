@@ -111,14 +111,21 @@
 	* in WP admin without overwriting after scheduled update.
     */
     public function item_update(&$item){
-      $args = array(
+       $args = array(
         'meta_key' => '_realty_unique_no',
         'meta_value' => $item['realty_unique_no'],
+		'meta_type' => 'NUMERIC',
         'post_type' => 'kivi_item',
+		'post_status' => get_post_stati(),
       );
-      $post = get_posts( $args )[0];
+      $posts = get_posts( $args );
+	  if( ! isset( $posts[0] ) ) {
+		return;
+	  }
+	  $post = $posts[0];
       $d = get_post_meta( $post->ID, '_updatedate', $single=true);
       if( $item['updatedate'] === $d ){
+		  
       }else {
         $this->item_update_metadata( $post->ID, $item );
 		$this->item_update_content( $post->ID, $item ); // comment this line to disable automatic updates for post_content and post_title. 
