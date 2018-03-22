@@ -101,6 +101,7 @@ else{
 		'meta_key' 	=> '_homepage_publish_date',
 		'meta_type'	=> 'DATETIME',
 		'order'		=> 'DESC',
+		'posts_per_page' => 10,
 	);
 	query_posts($args);
 }
