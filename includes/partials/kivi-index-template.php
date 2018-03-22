@@ -103,6 +103,7 @@ else{
 		'order'		=> 'DESC',
 		'posts_per_page' => 10,
 	);
+	$args['paged'] = ( get_query_var('paged') ? get_query_var('paged') : 1 );
 	query_posts($args);
 }
 
