@@ -1,7 +1,7 @@
 # KIVI WP-plugin
 - Requires at least: 4.0
 - Tested up to: 4.9.4
-- Stable tag: 1.0.6
+- Stable tag: 1.0.8
 - License: GPLv2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
 
 - *PHP >= 5.5.0 required*, 5.5.9 tested
@@ -100,6 +100,11 @@ We are not too actively developing individual features for the plugin as it's me
 We are also happy to accept any pull requests if they are generic enough and seem fit for our users.
 
 ## Changelog
+
+**1.0.8**
+- Make unique id selections more strict and fix code to work more as expected
+- Add missing property information
+- Fix pagination on default index template
 
 **1.0.7**
 - Added video/3d links
