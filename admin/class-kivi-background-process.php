@@ -270,6 +270,12 @@
         );
         $attachment_id = wp_insert_attachment( $attachment, $upload_file['file'], $post_id );
         if ( $attachment_id ) {
+			
+		  // Set featured image if not yet set
+          if ( "pääkuva" == $image_type ) {
+            set_post_thumbnail( $post_id, $attachment_id );
+          }	
+			
           require_once(ABSPATH . 'wp-admin/includes/image.php');
           $attachment_data = wp_generate_attachment_metadata( $attachment_id, $upload_file['file'] );
           wp_update_attachment_metadata( $attachment_id,  $attachment_data );
@@ -283,10 +289,7 @@
           if( $image_type != 'iv_person_image_url'){
             add_post_meta( $attachment_id, 'image_order', $image_order);
           }
-          // Set featured image if not yet set
-          if ( "pääkuva" == $image_type ) {
-            set_post_thumbnail( $post_id, $attachment_id );
-          }
+          
           return wp_get_attachment_url($attachment_id);
         }
       }

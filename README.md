@@ -101,6 +101,9 @@ We are also happy to accept any pull requests if they are generic enough and see
 
 ## Changelog
 
+**1.0.9**
+- Minor refactor
+
 **1.0.8**
 - Make unique id selections more strict and fix code to work more as expected
 - Add missing property information
