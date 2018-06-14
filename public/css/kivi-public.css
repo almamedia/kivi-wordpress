@@ -35,6 +35,7 @@
 
 .grid-sizer,
 .kivi-index-item {
+  box-sizing: border-box;
   display: inline-block;
   width:50%;
   padding: 10px;
@@ -49,6 +50,10 @@
 
 .kivi-item-img {
   width: 100%;
+}
+.kivi-item-img-wrapper img{
+	width:100%;
+	height: auto;
 }
 
 .kivi-item-body {
@@ -79,6 +84,9 @@ input[type="submit"].button-kivi {
   }
 }
 @media (max-width: 600px) {
+	.kivi-index-item, .grid-sizer{
+		width:100%; 
+	}
   .kivi-template-single {
     padding: 5px !important;
   }
