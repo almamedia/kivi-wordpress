@@ -168,6 +168,19 @@
              if( ! in_array( $i['image_url'], $current_images) ){
                $this->add_media( $i['image_url'], $i['image_realtyimagetype_id'], $i['image_iv_order'],  $post_id );
              }
+			 elseif( 'pääkuva' == $i['image_realtyimagetype_id'] ) {
+				// get attachment id for this image (already in WP)
+				$args = array(
+					'meta_key' => 'original_image_url',
+					'meta_value' => $i['image_url'],
+					'post_type' => 'attachment',
+				);
+				$posts = get_posts( $args );
+				if( isset( $posts[0] ) && count($posts) == 1 ) {
+					$post = $posts[0];
+					set_post_thumbnail( $post_id, $post->ID );
+				}
+			 }
           }
         }else {
           update_post_meta( $post_id, '_'.$key, $value );

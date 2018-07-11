@@ -101,6 +101,10 @@ We are also happy to accept any pull requests if they are generic enough and see
 
 ## Changelog
 
+
+**1.0.10**
+- Add support for featured image change among images already uploaded to Kivi and WP
+
 **1.0.9**
 - Minor refactor
 
