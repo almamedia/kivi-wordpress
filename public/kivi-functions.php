@@ -55,7 +55,7 @@
   }
 
   /*
-  * Helper to get a posted value from the POST request.
+  * Helper to get a posted value from the POST/GET request.
   */
   function get_posted_value( &$request, $value ){
     $ret="";

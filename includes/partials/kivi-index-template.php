@@ -12,7 +12,6 @@
  * @package    Kivi
  * @subpackage Kivi/public/partials
  */
-session_start();
 get_header();
 $brand_styling = ' style="background-color:'.get_option("kivi-brand-color").';"';
 
@@ -22,8 +21,9 @@ $pricemaxval ="";
 $areaminval ="";
 $areamaxval ="";
 $realtytypeval ="";
+$townval = "";
 
-if ( isset($_POST["submit"]) ){
+if ( isset($_GET["submit"]) ){
   /* There's a POST request and we need to filter the items to show */
   $roomcount = array();
   $pricemin = array();
@@ -35,15 +35,15 @@ if ( isset($_POST["submit"]) ){
   $postcode = array();
   $realtytype = array();
 
-  populate_searchcriteria( $roomcount, $_POST, 'kivi-item-asunto-huoneluku-select', '_flattype_id', '=');
-  populate_searchcriteria( $pricemin, $_POST, 'kivi-item-asunto-hintamin', '_unencumbered_price', '>=', true);
-  populate_searchcriteria( $pricemax, $_POST, 'kivi-item-asunto-hintamax', '_unencumbered_price', '<=', true);
-  populate_searchcriteria( $areamin, $_POST, 'kivi-item-asunto-pamin', '_living_area_m2', '>=', true);
-  populate_searchcriteria( $areamax, $_POST, 'kivi-item-asunto-pamax', '_living_area_m2', '<=', true);
-  populate_searchcriteria( $street, $_POST, 'kivi-item-asunto-osoite', '_street', 'LIKE');
-  populate_searchcriteria( $town, $_POST, 'kivi-item-asunto-osoite', '_town', 'LIKE');
-  populate_searchcriteria( $postcode, $_POST, 'kivi-item-asunto-osoite', '_postcode', '=');
-  populate_searchcriteria( $realtytype, $_POST, 'kivi-item-asunto-type-select', '_realtytype_id','=');
+  populate_searchcriteria( $roomcount, $_GET, 'kivi-item-asunto-huoneluku-select', '_flattype_id', '=');
+  populate_searchcriteria( $pricemin, $_GET, 'kivi-item-asunto-hintamin', '_unencumbered_price', '>=', true);
+  populate_searchcriteria( $pricemax, $_GET, 'kivi-item-asunto-hintamax', '_unencumbered_price', '<=', true);
+  populate_searchcriteria( $areamin, $_GET, 'kivi-item-asunto-pamin', '_living_area_m2', '>=', true);
+  populate_searchcriteria( $areamax, $_GET, 'kivi-item-asunto-pamax', '_living_area_m2', '<=', true);
+  populate_searchcriteria( $street, $_GET, 'kivi-item-asunto-osoite', '_street', 'LIKE');
+  populate_searchcriteria( $town, $_GET, 'kivi-item-asunto-osoite', '_town', 'LIKE');
+  populate_searchcriteria( $postcode, $_GET, 'kivi-item-asunto-osoite', '_postcode', '=');
+  populate_searchcriteria( $realtytype, $_GET, 'kivi-item-asunto-type-select', '_realtytype_id','=');
 
   $args = array(
     'post_type' => 'kivi_item',
@@ -69,30 +69,17 @@ if ( isset($_POST["submit"]) ){
 	'order'		=> 'DESC',		
   );
   query_posts($args);
-  $_SESSION['kivi_search'] = $args;
+  
   /* Values for the form to match the filter criteria */
-  $huonelukuarvo = get_posted_value( $_POST, 'kivi-item-asunto-huoneluku-select');
-  $priceminval = get_posted_value( $_POST, 'kivi-item-asunto-hintamin' );
-  $pricemaxval = get_posted_value( $_POST, 'kivi-item-asunto-hintamax' );
-  $areaminval = get_posted_value( $_POST, 'kivi-item-asunto-pamin' );
-  $areamaxval = get_posted_value( $_POST, 'kivi-item-asunto-pamax' );
-  $realtytypeval = get_posted_value( $_POST, 'kivi-item-asunto-type-select' );
-  $searchcriteria = [ $huonelukuarvo, $priceminval, $pricemaxval, $areaminval, $areamaxval, $realtytypeval];
-  $_SESSION['kivi_search_criteria'] = $searchcriteria;
+  
+  $huonelukuarvo = get_posted_value( $_GET, 'kivi-item-asunto-huoneluku-select');
+  $priceminval = get_posted_value( $_GET, 'kivi-item-asunto-hintamin' );
+  $pricemaxval = get_posted_value( $_GET, 'kivi-item-asunto-hintamax' );
+  $areaminval = get_posted_value( $_GET, 'kivi-item-asunto-pamin' );
+  $areamaxval = get_posted_value( $_GET, 'kivi-item-asunto-pamax' );
+  $realtytypeval = get_posted_value( $_GET, 'kivi-item-asunto-type-select' );
+  $townval = get_posted_value( $_GET, 'kivi-item-asunto-osoite' );
 
-}elseif (isset($_SESSION['kivi_search']) && isset($_SESSION['kivi_search_criteria']) ){
-  /* There's criteria set in session and we need to filter the items to show
-  and populate the form accordingly. */
-  $args = $_SESSION['kivi_search'];
-  $args['paged'] = ( get_query_var('paged') ? get_query_var('paged') : 1);
-  $searchcriteria = $_SESSION['kivi_search_criteria'];
-  query_posts($args);
-  $huonelukuarvo = $searchcriteria[0];
-  $priceminval = $searchcriteria[1];
-  $pricemaxval = $searchcriteria[2];
-  $areaminval = $searchcriteria[3];
-  $areamaxval = $searchcriteria[4];
-  $realtytypeval = $searchcriteria[5];
 }
 else{
 	$args = array(
@@ -113,7 +100,7 @@ else{
 
       <h1 class="kivi-index-archive-title"><?php _e("Kohdelistaus", "kivi"); ?></h1>
 
-      <form action="<?php echo get_site_url() . "/" . (get_option('kivi-slug')?get_option('kivi-slug'):"kohde");?>" method="post" class="kivi-item-filters">
+      <form action="<?php echo get_site_url() . "/" . (get_option('kivi-slug')?get_option('kivi-slug'):"kohde");?>" method="get" class="kivi-item-filters">
         <div class="kivi-item-filters-wrapper">
           <div class="kivi-filter-cell">
             <label><?php _e('Asunnon tyyppi', 'kivi'); ?>
@@ -127,31 +114,30 @@ else{
                 <option <?php if ($realtytypeval == 'puutalo') echo 'selected'; ?> value="puutalo" name="puutalo"><?php _e("Puutalo-osake", "kivi"); ?></option>
                 <option <?php if ($realtytypeval == 'luhtitalo') echo 'selected'; ?> value="luhtitalo" name="luhtitalo"><?php _e("Luhtitalo", "kivi"); ?></option>
               </select>
-            </label>
           </div>
           <div class="kivi-filter-cell kivi-filter-cell-50">
             <label><?php _e('Sijainti', 'kivi'); ?>
-              <input type="text" name="kivi-item-asunto-osoite" id="kivi-item-asunto-osoite" value="" class="kivi-item-input" placeholder="<?php _e('Sijainti: esim. Tampere tai 00100', 'kivi'); ?>">
+              <input type="text" name="kivi-item-asunto-osoite" id="kivi-item-asunto-osoite" value="<?php echo esc_attr($townval); ?>" class="kivi-item-input" placeholder="<?php _e('Sijainti: esim. Tampere tai 00100', 'kivi'); ?>">
           </label>
           </div>
           <div class="kivi-filter-cell kivi-filter-cell-15">
             <label><?php _e('Hinta min', 'kivi'); ?>
-              <input type="text" name="kivi-item-asunto-hintamin" id="kivi-item-asunto-hintamin" value="<?php echo $priceminval; ?>" class="kivi-item-input" placeholder="<?php _e('Hinta min', 'kivi'); ?>">
+              <input type="text" name="kivi-item-asunto-hintamin" id="kivi-item-asunto-hintamin" value="<?php echo esc_attr($priceminval); ?>" class="kivi-item-input" placeholder="<?php _e('Hinta min', 'kivi'); ?>">
             </label>
           </div>
           <div class="kivi-filter-cell kivi-filter-cell-15">
             <label><?php _e('Hinta max', 'kivi'); ?>
-              <input type="text" name="kivi-item-asunto-hintamax" id="kivi-item-asunto-hintamax" value="<?php echo $pricemaxval; ?>" class="kivi-item-input" placeholder="<?php _e('Hinta max', 'kivi'); ?>">
+              <input type="text" name="kivi-item-asunto-hintamax" id="kivi-item-asunto-hintamax" value="<?php echo esc_attr($pricemaxval); ?>" class="kivi-item-input" placeholder="<?php _e('Hinta max', 'kivi'); ?>">
             </label>
           </div>
           <div class="kivi-filter-cell kivi-filter-cell-15">
             <label><?php _e('Pinta-ala min', 'kivi'); ?>
-              <input type="text" name="kivi-item-asunto-pamin" id="kivi-item-asunto-pamin" value="<?php echo $areaminval; ?>" class="kivi-item-input" placeholder="<?php _e('Pinta-ala min', 'kivi'); ?>">
+              <input type="text" name="kivi-item-asunto-pamin" id="kivi-item-asunto-pamin" value="<?php echo esc_attr($areaminval); ?>" class="kivi-item-input" placeholder="<?php _e('Pinta-ala min', 'kivi'); ?>">
             </label>
           </div>
           <div class="kivi-filter-cell kivi-filter-cell-15">
             <label><?php _e('Pinta-ala max', 'kivi'); ?>
-              <input type="text" name="kivi-item-asunto-pamax" id="kivi-item-asunto-pamax" value="<?php echo $areamaxval; ?>" class="kivi-item-input" placeholder="<?php _e('Pinta-ala max', 'kivi'); ?>">
+              <input type="text" name="kivi-item-asunto-pamax" id="kivi-item-asunto-pamax" value="<?php echo esc_attr($areamaxval); ?>" class="kivi-item-input" placeholder="<?php _e('Pinta-ala max', 'kivi'); ?>">
             </label>
           </div>
           <div class="kivi-filter-cell">
@@ -175,7 +161,7 @@ else{
 
       <?php
 
-      if ( isset($_POST["submit"]) ) :
+      if ( isset($_GET["submit"]) ) :
         echo '<h3>' . __("Hakutulokset", "kivi") . '</h3>';
       endif;
 
