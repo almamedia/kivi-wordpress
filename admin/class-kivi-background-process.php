@@ -147,7 +147,7 @@
     * Update all the metadata in the item, in case the item has any
     * modifications.
     */
-    public function item_update_metadata($post_id, &$item){
+    public function item_update_metadata( $post_id, &$item ) {
       foreach ( $item as $key => $value ) {
         if( $key == 'images' ){
           $new_images = array_column( $item['images'], 'image_url' );
@@ -182,7 +182,24 @@
                }
              }
           }
-        }else {
+        } elseif( $key == 'iv_person_image_url' && $value ) {
+			$image_url = get_post_meta( $post_id, '_sc_image_url', $single=true );
+			if ( $image_url  !== $value ) {
+			  $this->kivi_save_image( $value, 'iv_person_image_url', 0, $post_id );
+			  // And delete old file here too...
+			  $args = array(
+				'meta_key' => '_sc_image_url',
+				'meta_value' => $image_url,
+				'post_type' => 'attachment',
+			  );
+			  $posts = get_posts( $args );
+			  foreach( $posts as $attachment ) {
+				  if( wp_get_post_parent_id( $attachment->ID ) == $post->ID ) {
+					  wp_delete_attachment( $attachment->ID, false ); // move to trash (true -> force delete)
+				  }
+			  }
+			}
+		} else {
           update_post_meta( $post_id, '_'.$key, $value );
         }
       }
@@ -293,7 +310,7 @@
           $attachment_data = wp_generate_attachment_metadata( $attachment_id, $upload_file['file'] );
           wp_update_attachment_metadata( $attachment_id,  $attachment_data );
           if( $image_type == 'iv_person_image_url'){
-            add_post_meta ( $post_id, '_kivi_iv_person_image', $attachment_id );
+            update_post_meta ( $post_id, '_kivi_iv_person_image', $attachment_id );
           }else{
             add_post_meta ( $post_id, '_kivi_item_image', $attachment_id );
           }
