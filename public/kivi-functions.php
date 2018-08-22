@@ -39,7 +39,7 @@
   */
   function populate_searchcriteria( &$criteria, &$request, $field, $key, $operator, $intval=false ){
     if ( isset($request[$field]) && $request[$field] != '' ) {
-      $value = $request[$field];
+      $value = sanitize_text_field($request[$field]);
       $type='CHAR';
       if( $intval ){
           $value = intval($request[$field]);
