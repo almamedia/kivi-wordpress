@@ -24,7 +24,7 @@ $realtytypeval ="";
 $townval = "";
 
 if ( isset($_GET["submit"]) ){
-  /* There's a POST request and we need to filter the items to show */
+  /* There's a GET request and we need to filter the items to show */
   $roomcount = array();
   $pricemin = array();
   $pricemax = array();
@@ -100,7 +100,7 @@ else{
 
       <h1 class="kivi-index-archive-title"><?php _e("Kohdelistaus", "kivi"); ?></h1>
 
-      <form action="<?php echo get_site_url() . "/" . (get_option('kivi-slug')?get_option('kivi-slug'):"kohde");?>" method="get" class="kivi-item-filters">
+      <form action="<?php echo get_post_type_archive_link( 'kivi_item' ); ?>" method="get" class="kivi-item-filters">
         <div class="kivi-item-filters-wrapper">
           <div class="kivi-filter-cell">
             <label><?php _e('Asunnon tyyppi', 'kivi'); ?>
@@ -142,7 +142,7 @@ else{
           </div>
           <div class="kivi-filter-cell">
             <label><?php _e('Huoneluku', 'kivi'); ?>
-              <select name="kivi-item-asunto-huoneluku-select" value="<?php echo $huonelukuarvo; ?>">
+              <select name="kivi-item-asunto-huoneluku-select" value="<?php echo esc_attr($huonelukuarvo); ?>">
                 <option name="default" value="">-</option>
                 <option name="yksio" value="yksio" <?php if ($huonelukuarvo == 'yksio') echo 'selected'; ?> ><?php _e('Yksiö', 'kivi'); ?></option>
                 <option name="kaksio" value="kaksio" <?php if ($huonelukuarvo == 'kaksio') echo 'selected'; ?>><?php _e('2 huonetta', 'kivi'); ?></option>
@@ -154,7 +154,7 @@ else{
             </label>
           </div>
           <div class="kivi-filter-cell">
-            <input type="submit" name="submit" class="button button-primary button-kivi" id="kivi-index-search"<?php echo $brand_styling; ?> value="<?php _e('Hae', 'kivi'); ?>" />
+            <input type="submit" name="submit" class="button button-primary button-kivi" id="kivi-index-search"<?php echo esc_attr($brand_styling); ?> value="<?php _e('Hae', 'kivi'); ?>" />
           </div>
         </div>
       </form>
@@ -170,7 +170,7 @@ else{
             <div class="grid-sizer"></div><?php
           while ( have_posts() ) : the_post(); ?>
             <div class="kivi-index-item">
-              <a href="<?php echo the_permalink(); ?>" class="kivi-item-image-link"></a>
+              <a href="<?php the_permalink(); ?>" class="kivi-item-image-link"></a>
               <div class="kivi-item-wrapper">
                 <div class="kivi-item-img-wrapper">
                   <?php
@@ -180,8 +180,8 @@ else{
                   ?>
                 </div>
                 <div class="kivi-item-body">
-                  <a href="<?php echo the_permalink(); ?>" class="kivi-item-title-link">
-                    <?php echo the_title(); ?>
+                  <a href="<?php the_permalink(); ?>" class="kivi-item-title-link">
+                    <?php the_title(); ?>
                   </a>
                 </div>
               </div>
