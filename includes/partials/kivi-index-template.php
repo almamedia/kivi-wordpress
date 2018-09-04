@@ -167,27 +167,21 @@ else{
 
       if ( have_posts() ) :
         ?><div class="kivi-index-item-list">
-            <div class="grid-sizer"></div><?php
-          while ( have_posts() ) : the_post(); ?>
+          <?php while ( have_posts() ) : the_post(); ?>
             <div class="kivi-index-item">
-              <a href="<?php the_permalink(); ?>" class="kivi-item-image-link"></a>
-              <div class="kivi-item-wrapper">
-                <div class="kivi-item-img-wrapper">
+				<a href="<?php the_permalink(); ?>" class="kivi-item-image-link">					
                   <?php
-                  if ( has_post_thumbnail() ) {
-                    the_post_thumbnail('large');
-                  }
+                  if ( has_post_thumbnail() ) { the_post_thumbnail('medium_large'); }
                   ?>
-                </div>
+                </a>
                 <div class="kivi-item-body">
                   <a href="<?php the_permalink(); ?>" class="kivi-item-title-link">
                     <?php the_title(); ?>
                   </a>
                 </div>
               </div>
-            </div><?php
-        endwhile;
-        ?></div>
+			<?php endwhile; ?></div>
+		</div>
         <div class="kivi-index-paginator">
 	  <?php else: ?>
 		<p class="kivi-no-items-info"><?php _e("Ei kohteita", "kivi"); ?></p>
