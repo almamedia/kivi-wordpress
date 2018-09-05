@@ -41,8 +41,8 @@ class Kivi_Property {
 
   private function getRealtyOptionValue(){
     $ret = "";
-    $opts = get_post_meta($this->post_id, "_realtyrealtyoptions" )[0];
-    if( array_key_exists($this->realtyoptiongroup_id, $opts) ){
+    $opts = get_post_meta( $this->post_id, "_realtyrealtyoptions", true );
+    if( is_array($opts) && array_key_exists($this->realtyoptiongroup_id, $opts) ){
       if($this->realtyoption_id == ""){
         if( $this->name ){
             $ret = $ret . $this->name . ': ';
@@ -58,7 +58,7 @@ class Kivi_Property {
   }
 
   private function getPresentationValue(){
-    $opts = get_post_meta($this->post_id, $this->name,true );
+    $opts = get_post_meta( $this->post_id, $this->name, true );
     foreach ($opts as $pres) {
       $p = "";
       $d = new DateTime( $pres['presentation_date'] );
