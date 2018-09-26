@@ -56,9 +56,9 @@ class Kivi_Admin {
    * @since    1.0.0
    */
   public function enqueue_scripts() {
-    wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/kivi-admin.js', array( 'jquery', 'spectrum' ), $this->version, false );
-    wp_enqueue_script( 'spectrum', plugin_dir_url( __FILE__ ) . 'js/spectrum.js', array( 'jquery' ), $this->version, false );
-
+    // Add the color picker css file
+    wp_enqueue_style( 'wp-color-picker' );
+    wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/kivi-admin.js', array( 'jquery', 'wp-color-picker' ), $this->version, false );
   }
 
   /**

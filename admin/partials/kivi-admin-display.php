@@ -38,9 +38,11 @@
             <input type="text" name="kivi-prefilter-name" id="kivi-prefilter-name" class="text-input" value="<?php echo esc_attr( get_kivi_option('kivi-prefilter-name') ); ?>" placeholder="<?php _e('elementin nimi', 'kivi'); ?>"><?php _e("Esisuodatuksen peruste", "kivi"); ?>
             <input type="text" name="kivi-prefilter-value" id="kivi-prefilter-value" class="text-input" value="<?php echo esc_attr( get_kivi_option('kivi-prefilter-value') ); ?>" placeholder="<?php _e('elementin arvo', 'kivi'); ?>"><?php _e("Esisuodatuksen arvo", "kivi"); ?>
           </label>
-          <label for="kivi-brand-color"><?php _e("Brändiväri", "kivi"); ?><br>
+
+          <p>
+            <label for="kivi-brand-color"><?php _e("Brändiväri", "kivi"); ?></label>
             <input type="text" name="kivi-brand-color" id="kivi-brand-color" class="text-input" value="<?php echo esc_attr( get_option('kivi-brand-color') ); ?>" placeholder="<?php _e('Brändiväri, joka esiintyy esim. napeissa jne. Kivi -kohteita näytettäessä', 'kivi'); ?>">
-          </label>
+          </p>
           <label>
             <input type="text" name="kivi-slug" id="kivi-slug" class="text-input" value="<?php echo esc_attr( get_option('kivi-slug') ); ?>" placeholder="<?php _e('esim. kohde', 'kivi'); ?>"><?php _e("Polkutunnus", "kivi"); ?>
           </label>

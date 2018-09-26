@@ -70,28 +70,8 @@
       }
     });
 
-    $("#kivi-brand-color").spectrum({
-      className: "kivi-colorpicker",
-      preferredFormat: "hex",
-      localStorageKey: "kivi.colorpicker",
-      showInput: true,
-      move: function (color) {
-
-      },
-      show: function () {
-
-      },
-      beforeShow: function () {
-
-      },
-      hide: function () {
-
-      },
-      change: function(color) {
-        $('#kivi-brand-color').val(color);
-        $('label[for=""]')
-      }
-    });
+    // Add Color Picker
+    $('#kivi-brand-color').wpColorPicker();
 
 	});
 

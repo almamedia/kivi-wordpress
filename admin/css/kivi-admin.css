@@ -58,6 +58,14 @@
   font-style: italic;
   font-weight: bold;
 }
+#admin-page-kivi .wp-picker-container {
+	display: inline-block;
+}
+#admin-page-kivi .wp-picker-container label {
+  display: inline;
+  margin-top: 0;
+}
+
 
 #admin-page-kivi label input {
   font-weight: normal;
