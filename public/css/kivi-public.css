@@ -33,11 +33,8 @@
   width: 14%;
 }
 
-.grid-sizer,
 .kivi-index-item {
   box-sizing: border-box;
-  display: inline-block;
-  width:50%;
   padding: 10px;
 }
 .kivi-item {
@@ -73,16 +70,6 @@ input[type="submit"].button-kivi {
 }
 
 
-/* SINGLE VIEW FOR A KIVI ITEM*/
-.kivi-template-single {
-  padding: 32px !important;
-}
-
-@media (min-width: 800px) {
-  .kivi-template-single {
-    padding: 64px !important;
-  }
-}
 @media (max-width: 600px) {
 	.kivi-index-item, .grid-sizer{
 		width:100%; 
@@ -233,17 +220,14 @@ input[type="submit"].button-kivi {
 
 .kivi-item-image-link {
   display: block;
-  position: absolute;
-    top:0;right:0;bottom:0;left:0;
 }
 
 
 
 .kivi-item-list-item {
-  background: #fdfdfd;
   border: 1px solid #f2f2f2;
-  padding: 32px;
-  margin-top: 16px;
+  padding: 30px;
+  margin-top: 1em;
 }
 
 .kivi-item-list-item:first-child {

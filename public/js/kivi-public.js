@@ -7,14 +7,6 @@
 
 	$(function() {
 
-		var $container = $('.kivi-index-item-list');
-		$container.imagesLoaded( function() {
-			$('.kivi-index-item-list').masonry({
-				columnWidth: '.grid-sizer',
-				itemSelector: '.kivi-index-item',
-			});
-		});
-
 		$('.slick-for').slick({
 		  slidesToShow: 1,
 		  slidesToScroll: 1,

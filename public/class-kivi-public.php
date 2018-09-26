@@ -77,7 +77,6 @@ class Kivi_Public {
    * @since    1.0.0
    */
   public function enqueue_scripts() {
-		 wp_enqueue_script( 'masonry', plugin_dir_url( __FILE__ ) . 'js/masonry.pkgd.min.js', array( 'jquery' ), $this->version, false );
 		 wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/kivi-public.js', array( 'jquery', 'slick' ), $this->version, false );
 		 wp_enqueue_script( 'slick', plugin_dir_url( __FILE__ ) . 'js/slick.min.js', array( 'jquery' ), $this->version, false );
   }
