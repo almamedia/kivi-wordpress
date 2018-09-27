@@ -134,6 +134,133 @@ class Kivi_Public {
       return $meta_boxes;
   }
 
+  /**
+   * Return a string used inside class element of a kivi item.
+   * @param $post_id
+   * @return string
+   */
+  static function getCssClasses( $post_id ) {
+    $classes = array();
+    $classes[] = "kivi-no-".get_post_meta( $post_id, '_realty_unique_no', true );
+
+    $bid_wanted_flag = get_post_meta( $post_id, "_bid_wanted_flag", true );
+    if( !empty($bid_wanted_flag) && $bid_wanted_flag != 'false' ){
+      $classes[] ="bid-wanted";
+    }
+
+    if( is_array(self::getNextPresentation( $post_id )) ){
+      $classes[] = "has-presentation";
+    }
+
+    $type = get_post_meta($post_id, '_realtytype_id', true);
+    if( ! empty($type) ){
+      $classes[] = "type-".trim(sanitize_title($type));
+    }
+
+    $itemgroup = get_post_meta($post_id, '_itemgroup_id', true);
+    if( ! empty($itemgroup) ){
+      $classes[] = "itemgroup-".trim($itemgroup);
+    }
+
+    $town = get_post_meta($post_id, '_town', true);
+    if( ! empty($town) ){
+      $classes[] = "town-".trim(sanitize_title($town));
+    }
+
+    $lotholding = get_post_meta($post_id, '_rc_lotholding_id', true);
+    if( ! empty($lotholding) ){
+      $classes[] = "lotholding-".trim($lotholding);
+    }
+
+    $tradetype = get_post_meta($post_id, '_tradetype_id', true);
+    if( ! empty($tradetype) ){
+      $classes[] = "tradetype-".trim($tradetype);
+    }
+
+    $publish_date = get_post_meta($post_id, '_homepage_publish_date', true);
+    if( $publish_date > date('Y-m-d H:i:s', strtotime('-1 days')) ){
+      $classes[] = "new-24h";
+    }
+    elseif( $publish_date > date('Y-m-d H:i:s', strtotime('-7 days')) ){
+      $classes[] = "new-7d";
+    }
+    elseif( $publish_date > date('Y-m-d H:i:s', strtotime('-14 days')) ){
+      $classes[] = "new-14d";
+    }
+    elseif( $publish_date > date('Y-m-d H:i:s', strtotime('-30 days')) ){
+      $classes[] = "new-30d";
+    }
+
+    $assigntype = get_post_meta($post_id, '_assignment_type', true);
+    if( ! empty($assigntype) ){
+      $classes[] = "assigment-type-".trim(sanitize_title($assigntype));
+    }
+
+    $investment = get_post_meta($post_id, '_investment_flag', true);
+    if( ! empty($investment) ){
+      $classes[] = "investment-item";
+    }
+
+    $video = get_post_meta($post_id, '_realty_vi_presentation', true);
+    if( ! empty($video) ){
+      $classes[] = "video-pre";
+    }
+
+    $presentations_arr = get_post_meta( $post_id, '_vi_presentations', true );
+    if( ! empty($presentations_arr) && is_array($presentations_arr) ) {
+      foreach( $presentations_arr as $presentation ) {
+        if ( ! empty($presentation['vi_pre_extralink_seq'])) {
+          $classes[] = "has-pre-extra-info";
+        }
+        if ( ! empty($presentation['vi_pre_video_flag'])) {
+          $classes[] = "has-pre-video";
+        }
+        if ( empty($presentation['vi_pre_video_flag']) && empty($presentation['vi_pre_extralink_seq'])) {
+          $classes[] = "has-pre-virtual";
+        }
+      }
+    }
+
+    return esc_attr(" ".implode(" ", $classes));
+  }
+
+  /**
+   * Returns future presentations if any. A presentation held earlier today is considered future.
+   * @param $post_id
+   * @param bool $strict True future only
+   * @return mixed
+   */
+  static function getFuturePresentations( $post_id, $strict = false ){
+    $presentations = get_post_meta( $post_id, '_presentations', true );
+    foreach($presentations as $key => $presentation){
+
+      if($strict){
+        if ($presentation['presentation_end'] < date("Y-m-d H:i:s")) {
+          unset($presentations[$key]);
+        }
+      }
+      else {
+        if ($presentation['presentation_date'] < date("Y-m-d H:i:s")) {
+          unset($presentations[$key]);
+        }
+      }
+    }
+    return $presentations;
+  }
+
+  /**
+   * Return next presentation: today or in the future.
+   * @param $post_id
+   * @return mixed
+   */
+  static function getNextPresentation( $post_id ){
+    $presentations = self::getFuturePresentations( $post_id );
+    usort($presentations, function($a, $b) {
+      return $a['presentation_date'] - $b['presentation_date'];
+    });
+    return reset($presentations);
+  }
+
   static function map_post_meta($meta_field) {
     $meta_field = substr($meta_field, 1);
     $arr = array(
@@ -249,8 +376,6 @@ class Kivi_Public {
       "parkingcharge_type_id" => __("Autopaikkamaksun tarkenne","kivi"),
       "transfer_restriction" => __("Muut käyttö- ja luovutusrajoitukset","kivi"),
       "watercharge_type_id" => __("Vesimaksun tarkenne","kivi"),
-      "rc_buildyear" => __("Taloyhtiön Rakennusvuosi (aloitettu)","kivi"),
-      "rc_buildyear2" => __("Rakennusvuosi","kivi"),
       "rc_carplug_count" => __("(Taloyhtiön) Sähköpistokepaikkoja kpl","kivi"),
       "rc_carshelter_count" => __("Autokatospaikkoja","kivi"),
       "rc_constructionmaterial_other" => __("Taloyhtiön Rakennusmateriaali, muu","kivi"),
@@ -370,7 +495,7 @@ class Kivi_Public {
       "realty_free_type_id" => __("Kohde vapautuu","kivi"),
       "realty_free_type_other" => __("Kohde vapautuu, muu ehto","kivi"),
       "realtygroup_id" => __("Kategoria, johon toimitila kuuluu","kivi"),
-      "realtytype_id" => __("Tyyppi","kivi"),
+      "realtytype_id" => __("Tyyppi","kivi"), // rivitalo, ...
       "rent_m2_month_max" => __("Neliövuokra, max","kivi"),
       "rent_m2_month_min" => __("Neliövuokra, min","kivi"),
       "rentprice_max" => __("Vuokrahinta, max","kivi"),

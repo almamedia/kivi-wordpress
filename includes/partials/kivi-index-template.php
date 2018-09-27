@@ -168,7 +168,7 @@ else{
       if ( have_posts() ) :
         ?><div class="kivi-index-item-list">
           <?php while ( have_posts() ) : the_post(); ?>
-            <div class="kivi-index-item">
+            <div class="kivi-index-item <?php echo Kivi_Public::getCssClasses( get_the_id() ); ?>">
 				<a href="<?php the_permalink(); ?>" class="kivi-item-image-link">					
                   <?php
                   if ( has_post_thumbnail() ) { the_post_thumbnail('medium_large'); }

@@ -16,7 +16,7 @@
 get_header(); ?>
 
   <div id="primary" class="content-area">
-    <main id="main" class="site-main kivi-template-single" role="main">
+    <main id="main" class="site-main kivi-template-single <?php echo Kivi_Public::getCssClasses( get_the_id() ); ?>" role="main">
       <div class="kivi-single-item-header">
         <div id="wrapper">
           <h1 class="kivi-single-item-title">
