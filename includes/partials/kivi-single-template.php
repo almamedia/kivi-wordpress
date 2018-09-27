@@ -18,7 +18,6 @@ get_header(); ?>
   <div id="primary" class="content-area">
     <main id="main" class="site-main kivi-template-single <?php echo Kivi_Public::getCssClasses( get_the_id() ); ?>" role="main">
       <div class="kivi-single-item-header">
-        <div id="wrapper">
           <h1 class="kivi-single-item-title">
             <?php
               the_title();
@@ -47,7 +46,6 @@ get_header(); ?>
             ?>
           </p>
         </div>
-      </div>
       <?php
       if ( have_posts() ) : the_post();
 
@@ -95,129 +93,107 @@ get_header(); ?>
       <?php
       if(trim(get_the_content()) != "") {
       ?>
-        <section class="kivi-single-item-body">
-          <div class="wrapper">
+        <section class="kivi-single-item-body kivi-single-the-content">
             <div class="kivi-header-wrapper">
               <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>><?php _e('Kuvaus', 'kivi'); ?></h3>
             </div>
             <?php the_content(); ?>
-          </div>
         </section>
         <?php
         }
         ?>
 
-        <section class="kivi-single-item-body">
-          <div class="wrapper">
+        <?php if(view_contact_info( $post->ID)): ?>
+        <section class="kivi-single-item-body kivi-single-contact-info">
             <div class="kivi-header-wrapper">
               <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>><?php _e('Yhteystiedot ja esittelyt', 'kivi'); ?></h3>
             </div>
             <table class="kivi-item-table">
               <tbody>
-                <?php view_contact_info( $post->ID);?>
+                <?php echo view_contact_info( $post->ID);?>
               </tbody>
             </table>
-          </div>
         </section>
+        <?php endif; ?>
 
-        <section class="kivi-single-item-body">
-          <div class="wrapper">
+        <section class="kivi-single-item-body kivi-single-basic-info">
             <div class="kivi-header-wrapper">
               <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>><?php _e('Asunnon perustiedot', 'kivi'); ?></h3>
             </div>
             <table class="kivi-item-table">
               <tbody>
-                <?php
-                  view_basic_info( $post->ID);
-                ?>
+                <?php echo view_basic_info( $post->ID); ?>
               </tbody>
             </table>
-          </div>
         </section>
 
-        <section class="kivi-single-item-body">
-          <div class="wrapper">
+        <section class="kivi-single-item-body kivi-single-cost-info">
             <div class="kivi-header-wrapper">
               <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>><?php _e('Hinta ja kustannukset', 'kivi'); ?></h3>
             </div>
             <table class="kivi-item-table">
               <tbody>
-                <?php
-                  view_cost_info( $post->ID);
-                ?>
+                <?php echo view_cost_info( $post->ID); ?>
               </tbody>
             </table>
-          </div>
         </section>
 
-        <section class="kivi-single-item-body">
-          <div class="wrapper">
+        <section class="kivi-single-item-body kivi-single-additional-info">
             <div class="kivi-header-wrapper">
               <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>><?php _e('Asunnon lisätiedot', 'kivi'); ?></h3>
             </div>
             <table class="kivi-item-table">
               <tbody>
-                <?php
-                  view_additional_info( $post->ID);
-                ?>
+                <?php echo view_additional_info( $post->ID); ?>
               </tbody>
             </table>
-          </div>
         </section>
 
-        <section class="kivi-single-item-body">
-          <div class="wrapper">
+        <?php if( $materials = view_materials_info( $post->ID) ): ?>
+        <section class="kivi-single-item-body kivi-single-materials-info">
             <div class="kivi-header-wrapper">
               <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>><?php _e('Asunnon tilat ja materiaalit', 'kivi'); ?></h3>
             </div>
             <table class="kivi-item-table">
               <tbody>
-                <?php
-                  view_materials_info( $post->ID);
-                ?>
+                <?php echo $materials; ?>
               </tbody>
             </table>
-          </div>
         </section>
+        <?php endif; ?>
 
-        <section class="kivi-single-item-body">
-          <div class="wrapper">
+        <?php if( $housingco = view_housing_company_info( $post->ID) ): ?>
+        <section class="kivi-single-item-body kivi-single-housing-company-info">
             <div class="kivi-header-wrapper">
               <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>><?php _e('Taloyhtiö', 'kivi'); ?></h3>
             </div>
             <table class="kivi-item-table">
               <tbody>
-                <?php
-                  view_housing_company_info( $post->ID);
-                ?>
+                <?php echo $housingco; ?>
               </tbody>
             </table>
-          </div>
         </section>
+        <?php endif; ?>
 
-		<section class="kivi-single-item-body kivi-single-services-info">
-          <div class="wrapper">
+        <?php if( $services = view_services_info( $post->ID) ): ?>
+		    <section class="kivi-single-item-body kivi-single-services-info">
             <div class="kivi-header-wrapper">
               <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>><?php _e('Palvelut ja liikenneyhteydet', 'kivi'); ?></h3>
             </div>
             <table class="kivi-item-table">
               <tbody>
-                <?php
-                  view_services_info( $post->ID);
-                ?>
+                <?php echo $services; ?>
               </tbody>
             </table>
-          </div>
         </section>
+        <?php endif; ?>
 		
         <?php if( get_kivi_option('kivi-gmap-id') ){ ?>
-        <section class="kivi-single-item-body">
-          <div class="wrapper">
+        <section class="kivi-single-item-body kivi-single-gmap">
             <div class="kivi-header-wrapper">
               <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>><?php _e('Kartta kaikki tiedot', 'kivi'); ?></h3>
             </div>
               <div id="map"></div>
-          </div>
           <script type="text/javascript">
 
             function initMap() {

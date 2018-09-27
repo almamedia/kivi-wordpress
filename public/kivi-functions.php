@@ -106,7 +106,7 @@
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_usageyear' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_assignmentsale_free_other' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_assignmentsale_free_type_name' ) );
-    echo  $box;
+    return  $box;
   }
 
 
@@ -123,12 +123,12 @@
     $view->add( New Kivi_Property( $post_id, '_charges_water') );
     $view->add( New Kivi_Property( $post_id, '_watercharge_type_id') );
     $box->add( $view );
-	$box->add( Kivi_Viewable::asSingle( $post_id, '_charges_eheating' ) );
-	$box->add( Kivi_Viewable::asSingle( $post_id, '_charges_sewage' ) );
-	$box->add( Kivi_Viewable::asSingle( $post_id, '_charges_road' ) );
-	$box->add( Kivi_Viewable::asSingle( $post_id, '_charges_streetcleansing' ) );
-	$box->add( Kivi_Viewable::asSingle( $post_id, '_charges_other' ) );
-    echo $box;
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_charges_eheating' ) );
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_charges_sewage' ) );
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_charges_road' ) );
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_charges_streetcleansing' ) );
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_charges_other' ) );
+    return $box;
   }
 
 
@@ -147,9 +147,9 @@
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_lotholding_id' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_carshelter_count' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_garage_count' ) );
-	$box->add( Kivi_Viewable::asSingle( $post_id, '_rc_renovation_made' ) );
-	$box->add( Kivi_Viewable::asSingle( $post_id, '_rc_renovation_planned' ) );
-    echo $box;
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_renovation_made' ) );
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_renovation_planned' ) );
+    return $box;
   }
 
   function view_additional_info( $post_id){
@@ -176,31 +176,31 @@
     $box->add( $view );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_condition_id' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_condition' ) );
-	$box->add( Kivi_Viewable::asSingle( $post_id, '_renovation_made' ) );
-	$box->add( Kivi_Viewable::asSingle( $post_id, '_energyclass_name' ) );
+  	$box->add( Kivi_Viewable::asSingle( $post_id, '_renovation_made' ) );
+  	$box->add( Kivi_Viewable::asSingle( $post_id, '_energyclass_name' ) );
     $view = New Kivi_Viewable( $label=__("Lämmitysjärjestelmän kuvaus","kivi"));
     $view->add( New Kivi_Property( $post_id,  $name='', $type="realtyoption", 'Lämmitysjärjestelmä', '' ) );
     $box->add( $view );
 	
-	$property = New Kivi_Property( $post_id, '_vi_presentations','vi_presentations' );
-	if( ! empty($property) ) {
-		$view = New Kivi_Viewable( $label=__("Videoesittelyt","kivi"));
-		$view->add($property);
-		$box->add($view);
-	}
+    $property = New Kivi_Property( $post_id, '_vi_presentations','vi_presentations' );
+    if( ! empty($property) ) {
+      $view = New Kivi_Viewable( $label=__("Videoesittelyt","kivi"));
+      $view->add($property);
+      $box->add($view);
+    }
 	
-	$box->add( Kivi_Viewable::asSingle( $post_id, '_other_important_info' ) );
-	echo $box;
+	  $box->add( Kivi_Viewable::asSingle( $post_id, '_other_important_info' ) );
+	  return $box;
   }
 
   function view_services_info( $post_id){
     $box = New Kivi_Fact_Box();
-	$box->add( Kivi_Viewable::asSingle( $post_id, '_services' ) );
-	$box->add( Kivi_Viewable::asSingle( $post_id, '_services_other' ) );
-	$box->add( Kivi_Viewable::asSingle( $post_id, '_connections' ) );
-	$box->add( Kivi_Viewable::asSingle( $post_id, '_daycare' ) );
-	$box->add( Kivi_Viewable::asSingle( $post_id, '_school' ) );
-	echo $box;
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_services' ) );
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_services_other' ) );
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_connections' ) );
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_daycare' ) );
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_school' ) );
+    return $box;
   }
 
 
@@ -261,8 +261,8 @@
     $view->add( New Kivi_Property( $post_id,  $name=__('Lattiamateriaalit','kivi'), $type="realtyoption", 'Makuuhuoneen lattiamateriaali', ''  ) );
     $view->add( New Kivi_Property( $post_id,  $name=__('Seinämateriaalit','kivi'), $type="realtyoption", 'Makuuhuoneen seinämateriaali', ''  ) );
     $box->add( $view );
-	$box->add( Kivi_Viewable::asSingle( $post_id, '_storage_condition' ) );
-    echo $box;
+	  $box->add( Kivi_Viewable::asSingle( $post_id, '_storage_condition' ) );
+    return $box;
   }
 
   function view_contact_info( $post_id){
@@ -276,7 +276,7 @@
     $s = New Kivi_Viewable( $label=__("Esittelyt","kivi"));
     $s->add( New Kivi_Property( $post_id, '_presentations','presentation' ) );
     $box->add($s);
-    echo $box;
+    return $box;
   }
   
 ?>
