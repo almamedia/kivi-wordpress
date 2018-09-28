@@ -159,9 +159,10 @@ else{
               </select>
             </label>
           </div>
-          <div class="kivi-filter-cell kivi-filter-cell-15">
+          <div class="kivi-filter-cell kivi-filter-cell">
             <label><?php _e('Toimeksiannon tyyppi', 'kivi'); ?></label>
-            <select name="kivi-item-toimeksianto-tyyppi" style="display: block;">
+            <select name="kivi-item-toimeksianto-tyyppi">
+              <option value="">-</option>
               <option value="myyntitoimeksianto" <?php if ($toim_tyyppi == 'myyntitoimeksianto') echo 'selected'; ?>>Myynti</option>
               <option value="vuokranantaja" <?php if ($toim_tyyppi == 'vuokranantaja') echo 'selected'; ?>>Vuokra</option>
               <option value="uudiskohde" <?php if ($toim_tyyppi == 'uudiskohde') echo 'selected'; ?>>Vain uudiskohteet</option>

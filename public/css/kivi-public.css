@@ -168,6 +168,9 @@ input[type="submit"].button-kivi {
     padding: 5px;
     margin: 16px auto;
   }
+  .kivi-filter-cell {
+    width: 100%;
+  }
 }
 
 .kivi-item-table {

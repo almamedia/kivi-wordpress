@@ -175,7 +175,7 @@ get_header(); ?>
         </section>
         <?php endif; ?>
 
-        <?php if( $services = view_services_info( $post->ID) ): ?>
+        <?php if( $services = view_services_info( $post->ID)->__toString() ): ?>
 		    <section class="kivi-single-item-body kivi-single-services-info">
             <div class="kivi-header-wrapper">
               <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>><?php _e('Palvelut ja liikenneyhteydet', 'kivi'); ?></h3>
