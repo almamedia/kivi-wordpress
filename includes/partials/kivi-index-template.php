@@ -22,8 +22,9 @@ $areaminval ="";
 $areamaxval ="";
 $realtytypeval ="";
 $townval = "";
+$toim_tyyppival = "";
 
-if ( isset($_GET["submit"]) ){
+if ( ! empty($_GET) ){
   /* There's a GET request and we need to filter the items to show */
   $roomcount = array();
   $pricemin = array();
@@ -34,6 +35,7 @@ if ( isset($_GET["submit"]) ){
   $town =  array();
   $postcode = array();
   $realtytype = array();
+  $toim_tyyppi = array();
 
   populate_searchcriteria( $roomcount, $_GET, 'kivi-item-asunto-huoneluku-select', '_flattype_id', '=');
   populate_searchcriteria( $pricemin, $_GET, 'kivi-item-asunto-hintamin', '_unencumbered_price', '>=', true);
@@ -44,6 +46,7 @@ if ( isset($_GET["submit"]) ){
   populate_searchcriteria( $town, $_GET, 'kivi-item-asunto-osoite', '_town', 'LIKE');
   populate_searchcriteria( $postcode, $_GET, 'kivi-item-asunto-osoite', '_postcode', '=');
   populate_searchcriteria( $realtytype, $_GET, 'kivi-item-asunto-type-select', '_realtytype_id','=');
+  populate_searchcriteria( $toim_tyyppi, $_GET, 'kivi-item-toimeksianto-tyyppi', '_assignment_type','LIKE');
 
   $args = array(
     'post_type' => 'kivi_item',
@@ -56,6 +59,7 @@ if ( isset($_GET["submit"]) ){
       $areamin,
       $areamax,
       $realtytype,
+      $toim_tyyppi,
       array(
         'relation' => 'OR',
         $street,
@@ -79,6 +83,7 @@ if ( isset($_GET["submit"]) ){
   $areamaxval = get_posted_value( $_GET, 'kivi-item-asunto-pamax' );
   $realtytypeval = get_posted_value( $_GET, 'kivi-item-asunto-type-select' );
   $townval = get_posted_value( $_GET, 'kivi-item-asunto-osoite' );
+  $toim_tyyppi = get_posted_value( $_GET, 'kivi-item-toimeksianto-tyyppi' );
 
 }
 else{
@@ -113,6 +118,7 @@ else{
                 <option <?php if ($realtytypeval == 'erillistalo') echo 'selected'; ?> value="erillistalo" name="erillistalo"><?php _e("Erillistalo", "kivi"); ?></option>
                 <option <?php if ($realtytypeval == 'puutalo') echo 'selected'; ?> value="puutalo" name="puutalo"><?php _e("Puutalo-osake", "kivi"); ?></option>
                 <option <?php if ($realtytypeval == 'luhtitalo') echo 'selected'; ?> value="luhtitalo" name="luhtitalo"><?php _e("Luhtitalo", "kivi"); ?></option>
+                <option <?php if ($realtytypeval == 'toimitila') echo 'selected'; ?> value="toimitila"><?php _e("Toimitila", "kivi"); ?></option>
               </select>
           </div>
           <div class="kivi-filter-cell kivi-filter-cell-50">
@@ -152,6 +158,14 @@ else{
                 <option name="6 h ja enemmän" value="6 h ja enemmän" <?php if ($huonelukuarvo == '6 h ja enemmän') echo 'selected'; ?>><?php _e('Yli 5 huonetta', 'kivi'); ?></option>
               </select>
             </label>
+          </div>
+          <div class="kivi-filter-cell kivi-filter-cell-15">
+            <label><?php _e('Toimeksiannon tyyppi', 'kivi'); ?></label>
+            <select name="kivi-item-toimeksianto-tyyppi" style="display: block;">
+              <option value="myyntitoimeksianto" <?php if ($toim_tyyppi == 'myyntitoimeksianto') echo 'selected'; ?>>Myynti</option>
+              <option value="vuokranantaja" <?php if ($toim_tyyppi == 'vuokranantaja') echo 'selected'; ?>>Vuokra</option>
+              <option value="uudiskohde" <?php if ($toim_tyyppi == 'uudiskohde') echo 'selected'; ?>>Vain uudiskohteet</option>
+            </select>
           </div>
           <div class="kivi-filter-cell">
             <input type="submit" name="submit" class="button button-primary button-kivi" id="kivi-index-search"<?php echo esc_attr($brand_styling); ?> value="<?php _e('Hae', 'kivi'); ?>" />
