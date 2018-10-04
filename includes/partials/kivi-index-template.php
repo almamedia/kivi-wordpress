@@ -70,12 +70,12 @@ if ( ! empty($_GET) ){
 	'orderby'	=> 'meta_value',
 	'meta_key' 	=> '_homepage_publish_date',
 	'meta_type'	=> 'DATETIME',
-	'order'		=> 'DESC',		
+	'order'		=> 'DESC',
   );
   query_posts($args);
-  
+
   /* Values for the form to match the filter criteria */
-  
+
   $huonelukuarvo = get_posted_value( $_GET, 'kivi-item-asunto-huoneluku-select');
   $priceminval = get_posted_value( $_GET, 'kivi-item-asunto-hintamin' );
   $pricemaxval = get_posted_value( $_GET, 'kivi-item-asunto-hintamax' );
@@ -184,18 +184,62 @@ else{
         ?><div class="kivi-index-item-list">
           <?php while ( have_posts() ) : the_post(); ?>
             <div class="kivi-index-item <?php echo Kivi_Public::getCssClasses( get_the_id() ); ?>">
-				<a href="<?php the_permalink(); ?>" class="kivi-item-image-link">					
+				      <a href="<?php the_permalink(); ?>" class="kivi-item-link">
+                <div class="kivi-item-image">
                   <?php
-                  if ( has_post_thumbnail() ) { the_post_thumbnail('medium_large'); }
+                    if ( has_post_thumbnail() ) { the_post_thumbnail('medium_large'); }
                   ?>
-                </a>
-                <div class="kivi-item-body">
-                  <a href="<?php the_permalink(); ?>" class="kivi-item-title-link">
-                    <?php the_title(); ?>
-                  </a>
                 </div>
-              </div>
-			<?php endwhile; ?></div>
+                <div class="kivi-item-body">
+                  <span class="kivi-item-body__structure">
+                    <?php echo ucfirst( get_post_meta( get_the_id(), '_realtytype_id', true ) ) ?>
+                    <?php if (get_post_meta( get_the_id(), '_flat_structure', true ) ) {
+                      echo "<span aria-hidden='true'> | </span>" . get_post_meta( get_the_id(), '_flat_structure', true ); }
+                    ?>
+                  </span>
+
+                  <h2>
+                    <?php echo ucfirst( get_post_meta( get_the_id(), '_street', true ) ) . ", " . ucfirst( get_post_meta( get_the_id(), '_quarteroftown', true ) ) . ", " .  get_post_meta( get_the_id(), '_town', true )?>
+                  </h2>
+                  <div class="kivi-item-details">
+                    <div class="div">
+                      <p><?php _e('Hinta', 'Kivi')?><br>
+                        <?php
+                          if ( get_post_meta($post->ID, '_unencumbered_price', true) != "" ) {
+                            echo number_format(intval(get_post_meta($post->ID, '_unencumbered_price', true)), 0, ",", " ").' €';
+                          }
+                          else {
+                            echo '-';
+                          } ?>
+                      </p>
+                    </div>
+                    <div class="div">
+                      <p><?php _e('Koko', 'Kivi')?><br>
+                        <?php
+                          if ( get_post_meta($post->ID, '_living_area_m2', true) != "" ) {
+                            echo get_post_meta($post->ID, '_living_area_m2', true).' m²';
+                          }
+                          else {
+                            echo '-';
+                          } ?>
+                      </p>
+                    </div>
+                    <div class="div">
+                      <p><?php _e('Vuosi', 'Kivi')?><br>
+                        <?php
+                          if ( get_post_meta($post->ID, '_rc_buildyear2', true) != "" ) {
+                            echo get_post_meta($post->ID, '_rc_buildyear2', true);
+                          }
+                          else {
+                            echo '-';
+                          } ?>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+			    <?php endwhile; ?></div>
 		</div>
         <div class="kivi-index-paginator">
 	  <?php else: ?>
