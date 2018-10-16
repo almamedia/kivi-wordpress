@@ -10,41 +10,37 @@
 		$('.slick-for').slick({
 		  slidesToShow: 1,
 		  slidesToScroll: 1,
-		  arrows: false,
-		  fade: true,
-		  adaptiveHeight: false,
+		  arrows: true,
+      fade: true,
+      adaptiveHeight: true,
+      infinite: false,
 		  asNavFor: '.slick-carousel'
 		});
 
 		$(".slick-carousel").slick({
 
-		  // normal options...
-		  infinite: true,
-		  autoplay: true,
-  		autoplaySpeed: 5000,
-  		slidesToShow: 4,
-  		slidesToScroll: 1,
-  		asNavFor: '.slick-for',
-  		adaptiveHeight: false,
-  		dots: false,
-  		centerMode: true,
-  		focusOnSelect: true,
+      asNavFor: '.slick-for',
+      slidesToShow: 8,
+      slidesToScroll: 8,
+      dots: false,
+      focusOnSelect: true,
+      infinite: false,
+      arrows: true,
+      variableWidth: true,
 
-		  // the magic
 		  responsive: [{
 
 		      breakpoint: 1024,
 		      settings: {
-		        slidesToShow: 3,
-		        infinite: true
+		        slidesToShow: 6,
+		        infinite: false
 		      }
 
 		    }, {
 
 		      breakpoint: 600,
 		      settings: {
-		        slidesToShow: 2,
-		        dots: false
+		        slidesToShow: 4,
 		      }
 
 		    }, {
@@ -53,8 +49,45 @@
 		      settings: "unslick" // destroys slick
 
 		    }]
-		});
+    });
+    $(".slick-carousel .slick-slide").on("click", function (e) {
+      $(".slick-carousel .slick-slide").removeClass("slick-current");
+      $(this).addClass('slick-current slick-active');
+    })
 
-	});
+    $(".slick-next").on("click", function () {
+      var active = $(".slick-for .slick-current.slick-active").data("slickIndex");
+      $(".slick-carousel .slick-slide").removeClass("slick-current");
+      $(".slick-carousel [data-slick-index='"+ active +"'] ").addClass('slick-current');
+    })
+
+    $(".slick-prev").on("click", function () {
+      var active = $(".slick-for .slick-current.slick-active").data("slickIndex");
+      $(".slick-carousel .slick-slide").removeClass("slick-current");
+      $(".slick-carousel [data-slick-index='"+ active +"'] ").addClass('slick-current');
+    })
+
+  });
 
 })( jQuery );
+
+
+document.addEventListener("DOMContentLoaded", function(){
+
+  var hideDefault = document.querySelectorAll(".hide-by-default");
+  hideDefault.forEach( function( item ) {
+    item.classList.add("is-hidden");
+    var select = item.dataset.target;
+    document.getElementById(select).classList.add("is-hidden");
+  } );
+
+  var toggles = document.querySelectorAll(".kivi-toggle");
+  toggles.forEach( function(toggle) {
+    toggle.addEventListener ( "click" ,  function(e) {
+      e.target.classList.toggle("is-hidden");
+      var select = e.target.dataset.target;
+      document.getElementById(select).classList.toggle("is-hidden");
+    });
+  });
+
+});

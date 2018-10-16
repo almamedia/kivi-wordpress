@@ -17,35 +17,6 @@ get_header(); ?>
 
   <div id="primary" class="content-area">
     <main id="main" class="site-main kivi-template-single <?php echo Kivi_Public::getCssClasses( get_the_id() ); ?>" role="main">
-      <div class="kivi-single-item-header">
-          <h1 class="kivi-single-item-title">
-            <?php
-              the_title();
-              if ( get_post_meta($post->ID, '_living_area_m2', true) != "" ) {
-                echo ', '.number_format(intval(get_post_meta($post->ID, '_living_area_m2', true)), 0, ".", " ").'m2';
-              }
-              if ( get_post_meta($post->ID, '_unencumbered_price', true) != "" ) {
-                echo ', <span style=white-space:nowrap;>'.number_format(intval(get_post_meta($post->ID, '_unencumbered_price', true)), 0, ".", " ").' €</span>';
-              }
-            ?>
-          </h1>
-          <p>
-            <?php
-              if ( get_post_meta($post->ID, '_realtytype_id', true) != "" ) {
-                echo ucfirst(get_post_meta($post->ID, '_realtytype_id', true));
-              }
-              if ( get_post_meta($post->ID, '_street', true) != "" ) {
-                echo ', '.get_post_meta($post->ID, '_street', true);
-              }
-              if ( get_post_meta($post->ID, '_postcode', true) != "" ) {
-                echo ', '.get_post_meta($post->ID, '_postcode', true);
-              }
-              if ( get_post_meta($post->ID, '_addr_town_area', true) != "" ) {
-                echo ', '.get_post_meta($post->ID, '_addr_town_area', true);
-              }
-            ?>
-          </p>
-        </div>
       <?php
       if ( have_posts() ) : the_post();
 
@@ -66,8 +37,7 @@ get_header(); ?>
             foreach ( $attachments as $attachment ) : ?>
               <div class="slick-for-image-wrapper">
                 <?php
-                  $image_attrs = wp_get_attachment_image_src( $attachment->ID, 'large' );
-                  echo '<img src="' . $image_attrs[0] . '" class="slick-for-image current" alt="item image">';
+                  echo wp_get_attachment_image( $attachment->ID, $size = array("1200", "800"), false, array( "class" => "slick-for-image", "alt" => "" ) );
                 ?>
               </div><?php
             endforeach;
@@ -78,9 +48,11 @@ get_header(); ?>
               foreach ( $attachments as $attachment ) {
                 ?>
                 <div class="slick-carousel-image-wrapper">
+
                 <?php
-                  echo '<img src="' . wp_get_attachment_thumb_url( $attachment->ID ) . '" class="slick-carousel-image current" alt="item image">';
+                  echo wp_get_attachment_image( $attachment->ID, $size = array("150", "100"), false, array( "class" => "slick-carousel-image", "alt" => "" ) );
                 ?>
+
                 </div><?php
               } ?>
           </div><?php
@@ -88,15 +60,54 @@ get_header(); ?>
 
         $brand_styling = ' style="background-color:'.get_option("kivi-brand-color").';"';
       ?>
-
+          <div class="kivi-single-item-header">
+      <p class="kivi-single-item-structure"> <?php echo ucfirst( get_post_meta( get_the_id(), '_realtytype_id', true ) ) ?>  <span aria-hidden='true'> | </span> <?php echo  get_post_meta( get_the_id(), '_flat_structure', true )  ?> </p>
+      <h1 class="kivi-single-item-title">
+        <?php
+          echo ucfirst( get_post_meta( get_the_id(), '_street', true ) ) . ", " . ucfirst( get_post_meta( get_the_id(), '_quarteroftown', true ) ) . ", " .  get_post_meta( get_the_id(), '_town', true );
+        ?>
+      </h1>
+      <div class="kivi-item-details">
+        <div class="div">
+          <p><?php _e('Hinta', 'Kivi')?><br>
+            <?php
+              if ( get_post_meta($post->ID, '_unencumbered_price', true) != "" ) {
+                echo number_format(intval(get_post_meta($post->ID, '_unencumbered_price', true)), 0, ",", " ").' €';
+              }
+              else {
+                echo '-';
+              } ?>
+          </p>
+        </div>
+        <div class="div">
+          <p><?php _e('Koko', 'Kivi')?><br>
+            <?php
+              if ( get_post_meta($post->ID, '_living_area_m2', true) != "" ) {
+                echo get_post_meta($post->ID, '_living_area_m2', true).' m²';
+              }
+              else {
+                echo '-';
+              } ?>
+          </p>
+        </div>
+        <div class="div">
+          <p><?php _e('Vuosi', 'Kivi')?><br>
+            <?php
+              if ( get_post_meta($post->ID, '_rc_buildyear2', true) != "" ) {
+                echo get_post_meta($post->ID, '_rc_buildyear2', true);
+              }
+              else {
+                echo '-';
+              } ?>
+          </p>
+        </div>
+      </div>
+    </div>
       <div class="kivi-single-item-infowrapper">
       <?php
       if(trim(get_the_content()) != "") {
       ?>
         <section class="kivi-single-item-body kivi-single-the-content">
-            <div class="kivi-header-wrapper">
-              <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>><?php _e('Kuvaus', 'kivi'); ?></h3>
-            </div>
             <?php the_content(); ?>
         </section>
         <?php
@@ -106,9 +117,11 @@ get_header(); ?>
         <?php if(view_contact_info( $post->ID)): ?>
         <section class="kivi-single-item-body kivi-single-contact-info">
             <div class="kivi-header-wrapper">
-              <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>><?php _e('Yhteystiedot ja esittelyt', 'kivi'); ?></h3>
+              <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
+                <button class="kivi-toggle" data-target="yhteystiedot"><?php _e('Yhteystiedot ja esittelyt', 'kivi'); ?></button>
+              </h3>
             </div>
-            <table class="kivi-item-table">
+            <table id="yhteystiedot" class="kivi-item-table">
               <tbody>
                 <?php echo view_contact_info( $post->ID);?>
               </tbody>
@@ -118,9 +131,11 @@ get_header(); ?>
 
         <section class="kivi-single-item-body kivi-single-basic-info">
             <div class="kivi-header-wrapper">
-              <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>><?php _e('Asunnon perustiedot', 'kivi'); ?></h3>
+              <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
+                <button class="kivi-toggle" data-target="perustiedot"><?php _e('Asunnon perustiedot', 'kivi'); ?></button>
+              </h3>
             </div>
-            <table class="kivi-item-table">
+            <table id="perustiedot" class="kivi-item-table">
               <tbody>
                 <?php echo view_basic_info( $post->ID); ?>
               </tbody>
@@ -129,9 +144,11 @@ get_header(); ?>
 
         <section class="kivi-single-item-body kivi-single-cost-info">
             <div class="kivi-header-wrapper">
-              <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>><?php _e('Hinta ja kustannukset', 'kivi'); ?></h3>
+              <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
+                <button class="kivi-toggle" data-target="hinta"><?php _e('Hinta ja kustannukset', 'kivi'); ?></button>
+              </h3>
             </div>
-            <table class="kivi-item-table">
+            <table id="hinta" class="kivi-item-table">
               <tbody>
                 <?php echo view_cost_info( $post->ID); ?>
               </tbody>
@@ -140,9 +157,11 @@ get_header(); ?>
 
         <section class="kivi-single-item-body kivi-single-additional-info">
             <div class="kivi-header-wrapper">
-              <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>><?php _e('Asunnon lisätiedot', 'kivi'); ?></h3>
+              <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
+                <button class="kivi-toggle hide-by-default" data-target="lisatiedot"><?php _e('Asunnon lisätiedot', 'kivi'); ?></button>
+              </h3>
             </div>
-            <table class="kivi-item-table">
+            <table id="lisatiedot" class="kivi-item-table">
               <tbody>
                 <?php echo view_additional_info( $post->ID); ?>
               </tbody>
@@ -152,9 +171,11 @@ get_header(); ?>
         <?php if( $materials = view_materials_info( $post->ID) ): ?>
         <section class="kivi-single-item-body kivi-single-materials-info">
             <div class="kivi-header-wrapper">
-              <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>><?php _e('Asunnon tilat ja materiaalit', 'kivi'); ?></h3>
+              <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
+                <button class="kivi-toggle hide-by-default" data-target="materiaalit"><?php _e('Asunnon tilat ja materiaalit', 'kivi'); ?></button>
+              </h3>
             </div>
-            <table class="kivi-item-table">
+            <table id="materiaalit" class="kivi-item-table">
               <tbody>
                 <?php echo $materials; ?>
               </tbody>
@@ -165,9 +186,11 @@ get_header(); ?>
         <?php if( $housingco = view_housing_company_info( $post->ID) ): ?>
         <section class="kivi-single-item-body kivi-single-housing-company-info">
             <div class="kivi-header-wrapper">
-              <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>><?php _e('Taloyhtiö', 'kivi'); ?></h3>
+              <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
+                <button class="kivi-toggle hide-by-default" data-target="taloyhtio"><?php _e('Taloyhtiö', 'kivi'); ?></button>
+              </h3>
             </div>
-            <table class="kivi-item-table">
+            <table id="taloyhtio" class="kivi-item-table">
               <tbody>
                 <?php echo $housingco; ?>
               </tbody>
@@ -178,16 +201,18 @@ get_header(); ?>
         <?php if( $services = view_services_info( $post->ID)->__toString() ): ?>
 		    <section class="kivi-single-item-body kivi-single-services-info">
             <div class="kivi-header-wrapper">
-              <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>><?php _e('Palvelut ja liikenneyhteydet', 'kivi'); ?></h3>
+              <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
+                <button class="kivi-toggle hide-by-default" data-target="palvelut"><?php _e('Palvelut ja liikenneyhteydet', 'kivi'); ?></button>
+              </h3>
             </div>
-            <table class="kivi-item-table">
+            <table id="palvelut" class="kivi-item-table">
               <tbody>
                 <?php echo $services; ?>
               </tbody>
             </table>
         </section>
         <?php endif; ?>
-		
+
         <?php if( get_kivi_option('kivi-gmap-id') ){ ?>
         <section class="kivi-single-item-body kivi-single-gmap">
             <div class="kivi-header-wrapper">
