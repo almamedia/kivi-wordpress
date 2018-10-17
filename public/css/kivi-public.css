@@ -116,7 +116,7 @@ input[type="submit"].button-kivi {
 }
 
 .slick-arrow {
-  /* right: -32px; */
+  right: 0;
   display: block;
   background: rgba(0,0,0,0.5);
   border-radius: 50%;
@@ -139,20 +139,8 @@ input[type="submit"].button-kivi {
 }
 
 .slick-prev {
-  left: -32px;
+  left: 0;
 }
-
-
-@media (max-width: 600px) {
-  /* .kivi-single-item-body {
-    padding: 5px;
-    margin: 16px auto;
-  } */
-  .kivi-filter-cell {
-    width: 100%;
-  }
-}
-
 
 .kivi-item-cell {
   font-size: 14px;
@@ -166,13 +154,11 @@ input[type="submit"].button-kivi {
 .kivi-item-cell.kivi-item-cell-header {
   width: 240px;
   padding: 8px;
-  /* font-weight: normal; */
-
+  text-align: left;
 }
 
 @media (max-width: 800px) {
   .kivi-item-cell {
-
     display: block;
   }
   /* .kivi-item-cell-value {
@@ -206,6 +192,7 @@ input[type="submit"].button-kivi {
 .kivi-item-cell-value ul {
   list-style: none;
   margin: 0 0 0 0;
+  padding-left: 0;
 }
 
 #map {
@@ -346,20 +333,14 @@ a.page-numbers:hover {
   padding: 0;
   border-bottom: 1px solid #e6e9ee;
 }
-.kivi-single-item-infowrapper {
-  /* margin-top: 64px; */
-}
 
 .kivi-single-item-body {
   width: 100%;
   max-width: 960px;
   margin: 16px auto;
-  /* background: #fff; */
   padding: 0 32px;
   font-size: 16px;
 }
-
-
 
 .kivi-single-item-structure {
   margin-bottom: 0;
@@ -378,19 +359,27 @@ a.page-numbers:hover {
   padding: 0 5px;
 }
 .kivi-single-item-body-header button::before {
-  content: "-";
+  content: "–";
   padding: 0 5px;
+  display: inline-block;
+  min-width: 28px;
+  text-align: center;
 }
 
 .kivi-single-item-body-header .is-hidden::before {
   content: "+";
   padding: 0 5px;
+  display: inline-block;
+  min-width: 28px;
+  text-align: center;
+
 }
 
 .kivi-single-item-body-header .kivi-toggle {
   all: inherit;
   border: none;
 }
+
 .kivi-single-item-body-header .kivi-toggle:focus {
   outline-style: dotted;
   outline-width: 1px;
@@ -422,8 +411,7 @@ a.page-numbers:hover {
   height: auto;
  }
 
- .slick-carousel .slick-slide.slick-current.slick-active {
-  box-sizing: border-box;
+ .slick-carousel .slick-slide.slick-current.slick-active img {
   box-shadow:inset 0px 0px 0px 2px #363636;
 }
 
@@ -433,4 +421,9 @@ a.page-numbers:hover {
 
 .slick-prev:before {
   content: url(../chevron_left.svg);
+}
+
+.slick-for .slick-slide.slick-current.slick-active img {
+  max-height: var(--img-height);
+  width: auto;
 }
