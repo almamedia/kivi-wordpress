@@ -343,7 +343,7 @@ class Kivi {
           }
         }
 
-        $html = $html.'<div class="kivi-item-list-item"><a href="'.get_the_permalink().'" class="kivi-item-list-item-image-wrapper"><img src="'.wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), "single-post-thumbnail" )[0].'" class="kivi-item-list-item-image"></a><div class="kivi-item-list-body"><h3 class="kivi-item-list-heading"><a class="kivi-item-list-link"'.$brand_styling.' href="'.get_the_permalink().'">'."<div class='kivi-item-shortcode-link-desc1'>".get_the_title()."</div>"."<div class='kivi-item-shortcode-link-desc2'>".$kivi_item_title_desc.'</div></a></h3><p class="kivi-item-list-item-meta">'.$kivi_item_desc.'</p></div></div>';
+        $html = $html.'<div class="kivi-item-list-item"><a href="'.get_the_permalink().'" class="kivi-item-list-item-image-wrapper"><img src="'.wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), "medium_large" )[0].'" class="kivi-item-list-item-image"></a><div class="kivi-item-list-body"><h3 class="kivi-item-list-heading"><a class="kivi-item-list-link"'.$brand_styling.' href="'.get_the_permalink().'">'."<div class='kivi-item-shortcode-link-desc1'>".get_the_title()."</div>"."<div class='kivi-item-shortcode-link-desc2'>".$kivi_item_title_desc.'</div></a></h3><p class="kivi-item-list-item-meta">'.$kivi_item_desc.'</p></div></div>';
       endwhile;
     endif;
     wp_reset_query();

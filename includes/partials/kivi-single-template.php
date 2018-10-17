@@ -16,7 +16,7 @@
 get_header(); ?>
 
   <div id="primary" class="content-area">
-    <main id="main" class="site-main kivi-template-single <?php echo Kivi_Public::getCssClasses( get_the_id() ); ?>" role="main">
+    <main id="main" class="site-main kivi-template-single <?php echo Kivi_Public::get_css_classes( get_the_id() ); ?>" role="main">
       <?php
       if ( have_posts() ) : the_post();
 
