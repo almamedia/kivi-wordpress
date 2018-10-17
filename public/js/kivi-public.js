@@ -67,6 +67,14 @@
       $(".slick-carousel [data-slick-index='"+ active +"'] ").addClass('slick-current');
     })
 
+    $('.slick-for').on('setPosition', function(event, slick, currentSlide, nextSlide){
+      var pic = document.querySelector(".slick-for [data-slick-index='0'] img ");
+      var rootElement = document.documentElement;
+      console.log("resized", pic.height);
+      if( pic.height > 150 ){
+        rootElement.style.setProperty('--img-height', pic.height + "px");
+      }
+    });
   });
 
 })( jQuery );
