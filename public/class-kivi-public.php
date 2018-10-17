@@ -271,7 +271,7 @@ class Kivi_Public {
       "arableland_area_ha" => __("Peltoala ha","kivi"),
       "constructionright" => __("Lisätietoja rakennusoikeudesta","kivi"),
       "constructionright_e" => __("Rakennusoikeus e-luku","kivi"),
-      "constructionright_m2" => __("Rakennusoikeus, m2","kivi"),
+      "constructionright_m2" => __("Rakennusoikeus, m²","kivi"),
       "country_id" => __("Maa","kivi"),
       "drainedflag" => __("Salaojitettu","kivi"),
       "estatename" => __("Kortteli/kiinteistön nimi","kivi"),
@@ -315,16 +315,16 @@ class Kivi_Public {
       "buildingtype_id" => __("Muut rakennukset","kivi"),
       "condition" => __("Lisätietoa kunnosta","kivi"),
       "constructionmaterial_desc" => __("Rakennusmateriaalien kuvaus","kivi"),
-      "floor_area_m2" => __("Kerrosala m2","kivi"),
+      "floor_area_m2" => __("Kerrosala m²","kivi"),
       "heating" => __("Lämmitysjärjestelmä ja sen kunto","kivi"),
-      "living_area_m2" => __("Asuinpinta-ala m2","kivi"),
-      "other_area_m2" => __("Muut tilat m2","kivi"),
+      "living_area_m2" => __("Asuinpinta-ala m²","kivi"),
+      "other_area_m2" => __("Muut tilat m²","kivi"),
       "rc_buildyear" => __("Rakennusvuosi (aloitettu)","kivi"),
       "rc_buildyear2" => __("Rakennusvuosi (päättynyt)","kivi"),
       "rc_usageyear" => __("Rakennuksen käyttöönottovuosi","kivi"),
       "renovation_made" => __("Tehdyt korjaukset","kivi"),
       "roof_condition" => __("Katon kunto","kivi"),
-      "total_area_m2" => __("Yhteensä m2","kivi"),
+      "total_area_m2" => __("Yhteensä m²","kivi"),
       "charges_eheating" => __("(Sähkölämmityksen) Keskimääräinen kokonaiskustannus","kivi"),
       "charges_heating" => __("Lämmityskustannukset, muu kuin sähkö (€/kk)","kivi"),
       "charges_other" => __("Lisätietoa maksuista","kivi"),
@@ -353,13 +353,13 @@ class Kivi_Public {
       "floors" => __("Kerroksia","kivi"),
       "holdingtype_id" => __("Hallintamuoto","kivi"),
       "holdingtype_other" => __("Hallintamuoto, muu","kivi"),
-      "living_area_m2" => __("Asuinpinta-ala m2","kivi"),
-      "other_area_m2" => __("Muut tilat m2","kivi"),
+      "living_area_m2" => __("Asuinpinta-ala m²","kivi"),
+      "other_area_m2" => __("Muut tilat m²","kivi"),
       "owningtype_id" => __("Omistusmuoto","kivi"),
       "presentation" => __("Esittelyteksti","kivi"),
       "stairway" => __("Rappu","kivi"),
       "stock_numbers" => __("Osakesarjojen numerot","kivi"),
-      "total_area_m2" => __("Yhteensä m2","kivi"),
+      "total_area_m2" => __("Yhteensä m²","kivi"),
       "view_desc" => __("Näkymät huoneistosta","kivi"),
       "charges_eheating" => __("(Sähkölämmityksen) Keskimääräinen kokonaiskustannus","kivi"),
       "charges_finance_base_month" => __("Rahoitusvastike","kivi"),
@@ -597,23 +597,23 @@ class Kivi_Public {
 
 		return $value;
 	}
-	
+
 	/**
 	* Hide presentations in the past
-	*/ 
+	*/
 	function filter_presentation_date( $value, $label, $properties ) {
-		
+
 		if('Esittelyt' == $label){
-			
+
 			$date_obj = null;
-			
-			// $value starts with date(d.m.Y) = 10 chars			
+
+			// $value starts with date(d.m.Y) = 10 chars
 			$date = substr(trim($value), 0, 10);
 			$date = trim($date);
 			if( !empty($date)){
 				$date_obj = DateTime::createFromFormat('d.m.Y H:i', $date." 23:59" ); // use late time of date in compare
 			}
-			
+
 			if( !empty($date_obj) ){
 				$cur_obj = new DateTime();
 				if($date_obj < $cur_obj){
@@ -621,8 +621,8 @@ class Kivi_Public {
 				}
 			}
 		}
-		
+
 		return $value;
 	}
-	
+
 }
