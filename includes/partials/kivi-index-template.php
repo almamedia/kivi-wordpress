@@ -183,7 +183,7 @@ else{
       if ( have_posts() ) :
         ?><div class="kivi-index-item-list">
           <?php while ( have_posts() ) : the_post(); ?>
-            <div class="kivi-index-item <?php echo Kivi_Public::getCssClasses( get_the_id() ); ?>">
+            <div class="kivi-index-item <?php echo Kivi_Public::get_css_classes(get_the_id()); ?>">
 				      <a href="<?php the_permalink(); ?>" class="kivi-item-link">
                 <div class="kivi-item-image">
                   <?php
@@ -194,30 +194,26 @@ else{
                   <span class="kivi-item-body__structure">
                     <?php echo ucfirst( get_post_meta( get_the_id(), '_realtytype_id', true ) ) ?>
                     <?php if (get_post_meta( get_the_id(), '_flat_structure', true ) ) {
-                      echo "<span aria-hidden='true'> | </span>" . get_post_meta( get_the_id(), '_flat_structure', true ); }
+                      echo "<span aria-hidden='true'> | </span>" . get_post_meta(get_the_id(), '_flat_structure', true ); }
                     ?>
                   </span>
 
                   <h2>
-                    <?php echo ucfirst( get_post_meta( get_the_id(), '_street', true ) ) . ", " . ucfirst( get_post_meta( get_the_id(), '_quarteroftown', true ) ) . ", " .  get_post_meta( get_the_id(), '_town', true )?>
+                    <?php echo ucfirst( get_post_meta( get_the_id(), '_street', true ) ) . ", " . ucfirst( get_post_meta(get_the_id(), '_quarteroftown', true ) ) . ", " .  get_post_meta( get_the_id(), '_town', true )?>
                   </h2>
                   <div class="kivi-item-details">
                     <div class="div">
-                      <p><?php _e('Hinta', 'Kivi')?><br>
-                        <?php
-                          if ( get_post_meta($post->ID, '_unencumbered_price', true) != "" ) {
-                            echo number_format(intval(get_post_meta($post->ID, '_unencumbered_price', true)), 0, ",", " ").' €';
-                          }
-                          else {
-                            echo '-';
-                          } ?>
+                      <p>
+                      <?php ( Kivi_Public::is_for_rent_assignment(get_the_id()) ) ? _e('Vuokra', 'Kivi') :  _e('Hinta', 'Kivi'); ?>
+                      <br>
+                        <?php echo ( $price = Kivi_Public::get_display_price(get_the_id()) ) ? $price : '-'; ?>
                       </p>
                     </div>
                     <div class="div">
                       <p><?php _e('Koko', 'Kivi')?><br>
                         <?php
-                          if ( get_post_meta($post->ID, '_living_area_m2', true) != "" ) {
-                            echo get_post_meta($post->ID, '_living_area_m2', true).' m²';
+                          if ( get_post_meta(get_the_id(), '_living_area_m2', true) != "" ) {
+                            echo intval(get_post_meta(get_the_id(), '_living_area_m2', true)).' m²';
                           }
                           else {
                             echo '-';
@@ -227,8 +223,8 @@ else{
                     <div class="div">
                       <p><?php _e('Vuosi', 'Kivi')?><br>
                         <?php
-                          if ( get_post_meta($post->ID, '_rc_buildyear2', true) != "" ) {
-                            echo get_post_meta($post->ID, '_rc_buildyear2', true);
+                          if ( get_post_meta(get_the_id(), '_rc_buildyear2', true) != "" ) {
+                            echo get_post_meta(get_the_id(), '_rc_buildyear2', true);
                           }
                           else {
                             echo '-';

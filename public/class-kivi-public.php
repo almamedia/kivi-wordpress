@@ -135,11 +135,90 @@ class Kivi_Public {
   }
 
   /**
+   * Get item price in a clean format. For rental assignment returns rent and for sale unencumbered price.
+   * @param $post_id
+   * @param string $postfix default " €"
+   * @return string price or empty string
+   */
+  public static function get_display_price($post_id , $postfix = " €" ) {
+    $price = "";
+    if( self::is_for_rent_assignment( $post_id ) ) {
+      $rent_price = get_post_meta($post_id, '_assignmentrent_rent', true);
+      if( $rent_price ) {
+        $price = $rent_price;
+      }
+    }
+    else{
+      $price = get_post_meta($post_id, '_unencumbered_price', true);
+    }
+
+    if( $price ){
+
+      if( is_float($price) || intval($price) < 1000 ){
+        $price = number_format($price, 2, ',', ' '); // to 2 decimal price string with thousand separators
+      }
+      elseif( intval($price) > 999 ){
+        $price = intval($price);
+        $price = number_format($price, 0, '', ' '); // with thousands separated
+      }
+
+      return $price.$postfix;
+    }
+    return "";
+  }
+
+
+  /**
+   * Return boolean true if assignment type is for rent
+   * @param $post_id
+   * @return bool
+   */
+  public static function is_for_rent_assignment( $post_id ) {
+    $assigntype = get_post_meta($post_id, '_assignment_type', true);
+    if( ! empty($assigntype) ){
+      if( strpos($assigntype, 'vuokranantaja') !== false) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Return boolean true if assignment type is property ( ei osake vaan kiinteistö )
+   * @param $post_id
+   * @return bool
+   */
+  public static function is_property_assignment($post_id ) {
+    $assigntype = get_post_meta($post_id, '_assignment_type', true);
+    if( ! empty($assigntype) ){
+      if( strpos($assigntype, 'kiinteistö') !== false) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Return boolean true if assignment type is new building
+   * @param $post_id
+   * @return bool
+   */
+  public static function is_newbuild_assignment($post_id ) {
+    $assigntype = get_post_meta($post_id, '_assignment_type', true);
+    if( ! empty($assigntype) ){
+      if( strpos($assigntype, 'uudiskohde') !== false) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * Return a string used inside class element of a kivi item.
    * @param $post_id
    * @return string
    */
-  static function getCssClasses( $post_id ) {
+  public static function get_css_classes( $post_id ) {
     $classes = array();
     $classes[] = "kivi-no-".get_post_meta( $post_id, '_realty_unique_no', true );
 
@@ -148,13 +227,25 @@ class Kivi_Public {
       $classes[] ="bid-wanted";
     }
 
-    if( is_array(self::getNextPresentation( $post_id )) ){
+    if( is_array(self::get_next_presentation( $post_id )) ){
       $classes[] = "has-presentation";
     }
 
     $type = get_post_meta($post_id, '_realtytype_id', true);
     if( ! empty($type) ){
       $classes[] = "type-".trim(sanitize_title($type));
+    }
+
+    if( self::is_for_rent_assignment( $post_id ) ) {
+      $classes[] = "assignment-for-rent";
+    }
+
+    if( self::is_property_assignment( $post_id ) ) {
+      $classes[] = "assignment-property";
+    }
+
+    if( self::is_newbuild_assignment( $post_id ) ) {
+      $classes[] = "assignment-for-new-building";
     }
 
     $itemgroup = get_post_meta($post_id, '_itemgroup_id', true);
@@ -230,7 +321,7 @@ class Kivi_Public {
    * @param bool $strict True future only
    * @return mixed
    */
-  static function getFuturePresentations( $post_id, $strict = false ){
+  static function get_future_presentations($post_id, $strict = false ){
     $presentations = get_post_meta( $post_id, '_presentations', true );
     foreach($presentations as $key => $presentation){
 
@@ -253,8 +344,8 @@ class Kivi_Public {
    * @param $post_id
    * @return mixed
    */
-  static function getNextPresentation( $post_id ){
-    $presentations = self::getFuturePresentations( $post_id );
+  public static function get_next_presentation($post_id ){
+    $presentations = self::get_future_presentations( $post_id );
     usort($presentations, function($a, $b) {
       return $a['presentation_date'] - $b['presentation_date'];
     });

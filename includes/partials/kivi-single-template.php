@@ -16,7 +16,7 @@
 get_header(); ?>
 
   <div id="primary" class="content-area">
-    <main id="main" class="site-main kivi-template-single <?php echo Kivi_Public::getCssClasses( get_the_id() ); ?>" role="main">
+    <main id="main" class="site-main kivi-template-single <?php echo Kivi_Public::get_css_classes( get_the_id() ); ?>" role="main">
       <?php
       if ( have_posts() ) : the_post();
 
@@ -71,14 +71,9 @@ get_header(); ?>
       </h1>
       <div class="kivi-item-details">
         <div class="div">
-          <p><?php _e('Hinta', 'Kivi')?><br>
-            <?php
-              if ( get_post_meta($post->ID, '_unencumbered_price', true) != "" ) {
-                echo number_format(intval(get_post_meta($post->ID, '_unencumbered_price', true)), 0, ",", " ").' €';
-              }
-              else {
-                echo '-';
-              } ?>
+          <p><?php ( Kivi_Public::is_for_rent_assignment(get_the_id()) ) ? _e('Vuokra', 'Kivi') :  _e('Hinta', 'Kivi'); ?>
+            <br>
+            <?php echo ( $price = Kivi_Public::get_display_price(get_the_id()) ) ? $price : '-'; ?>
           </p>
         </div>
         <div class="div">
