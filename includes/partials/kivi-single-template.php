@@ -32,29 +32,31 @@ get_header(); ?>
         $attachments = get_children( $args );
         if ( $attachments ) {
           ?>
-          <div class="slick-for">
-            <?php
-            foreach ( $attachments as $attachment ) : ?>
-              <div class="slick-for-image-wrapper">
-                <?php
-                  echo wp_get_attachment_image( $attachment->ID, $size = array("1200", "800"), false, array( "class" => "slick-for-image", "alt" => "" ) );
-                ?>
-              </div><?php
-            endforeach;
-            ?>
-          </div>
-          <div class="slick-carousel">
+          <div class="kivi-img-container">
+            <div class="slick-for">
               <?php
-              foreach ( $attachments as $attachment ) {
-                ?>
-                <div class="slick-carousel-image-wrapper">
-
-                <?php
-                  echo wp_get_attachment_image( $attachment->ID, $size = array("150", "100"), false, array( "class" => "slick-carousel-image", "alt" => "" ) );
-                ?>
-
+              foreach ( $attachments as $attachment ) : ?>
+                <div class="slick-for-image-wrapper">
+                  <?php
+                    echo wp_get_attachment_image( $attachment->ID, $size = array("1200", "800"), false, array( "class" => "slick-for-image", "alt" => "" ) );
+                  ?>
                 </div><?php
-              } ?>
+              endforeach;
+              ?>
+            </div>
+            <div class="slick-carousel">
+                <?php
+                foreach ( $attachments as $attachment ) {
+                  ?>
+                  <div class="slick-carousel-image-wrapper">
+
+                  <?php
+                    echo wp_get_attachment_image( $attachment->ID, $size = array("150", "100"), false, array( "class" => "slick-carousel-image", "alt" => "" ) );
+                  ?>
+
+                  </div><?php
+                } ?>
+            </div>
           </div><?php
         }
 
@@ -124,6 +126,13 @@ get_header(); ?>
             <table id="yhteystiedot" class="kivi-item-table">
               <tbody>
                 <?php echo view_contact_info( $post->ID);?>
+                <tr class="kivi-iv-person">
+                  <th>
+                    <div class="kivi-iv-person-container">
+                      <img class="kivi-iv-person-image" src="<?php echo get_iv_person_image($post->ID); ?>" alt="välittäjä" />
+                    </div>
+                  </th>
+                </tr>
               </tbody>
             </table>
         </section>

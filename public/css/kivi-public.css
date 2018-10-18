@@ -427,3 +427,33 @@ a.page-numbers:hover {
   max-height: var(--img-height);
   width: auto;
 }
+
+
+/* Kivi-single-template: real estate agent image */
+#yhteystiedot tr {
+  display: inline-block;
+  vertical-align: top;
+}
+
+#yhteystiedot tr:first-child {
+  margin-right: 2rem;
+}
+
+.kivi-iv-person th {
+  border: none;
+}
+
+.kivi-iv-person-container {
+  height: 140px;
+  width: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.kivi-iv-person-image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: top;
+}
