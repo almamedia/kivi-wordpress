@@ -305,8 +305,6 @@ class Kivi {
   }
 
   public function kivi_list_shortcode( $meta_query, $attributes = array() ){
-    $html = '<div class="kivi-item-list"><div class="kivi-item-list-wrapper">';
-
 
     $per_page = -1;
     if( isset( $attributes['count'] ) && intval($attributes['count']) ){
@@ -328,41 +326,20 @@ class Kivi {
 
     $items = query_posts($args);
 
-    $brand_styling = ' style="color:'.get_option("kivi-brand-color").';"';
-
     if ( have_posts() ) :
+      ob_start();
       while (have_posts()) : the_post();
-        $kivi_item_desc = ucfirst(get_post_meta(get_the_ID(), '_realtytype_id', true));
-        if ( get_post_meta(get_the_ID(), '_street', true) != "" ) {
-          $kivi_item_desc = $kivi_item_desc . ' | '.get_post_meta(get_the_ID(), '_street', true);
-        }
-        if ( get_post_meta(get_the_ID(), '_postcode', true) != "" ) {
-          $kivi_item_desc = $kivi_item_desc . ' | '.get_post_meta(get_the_ID(), '_postcode', true);
-        }
-        if ( get_post_meta(get_the_ID(), '_addr_town_area', true) != "" ) {
-          $kivi_item_desc = $kivi_item_desc . ' | '.get_post_meta(get_the_ID(), '_addr_town_area', true);
+
+        if ( $overridden_template = locate_template( 'kivi-single-item-part.php' ) ) {
+          load_template( $overridden_template, false );
+        } else {
+          load_template( dirname( __FILE__ ) . '/partials/kivi-single-item-part.php', false );
         }
 
-        $kivi_item_title_desc = '';
-        if ( get_post_meta(get_the_ID(), '_living_area_m2', true) != "" ) {
-          $kivi_item_title_desc = $kivi_item_title_desc .get_post_meta(get_the_ID(), '_living_area_m2', true).'m2';
-        }
-        if( get_kivi_option('kivi-use-debt-free-price-on-shortcode')) {
-          if ( get_post_meta(get_the_ID(), '_unencumbered_price', true) != "" ) {
-            $kivi_item_title_desc = $kivi_item_title_desc . ', '.number_format(intval(get_post_meta(get_the_ID(), '_unencumbered_price', true)), 0, ".", " ").' €';
-          }
-        }else{
-          if ( get_post_meta(get_the_ID(), '_price', true) != "" ) {
-            $kivi_item_title_desc = $kivi_item_title_desc . ', '.number_format(intval(get_post_meta(get_the_ID(), '_price', true)), 0, ".", " ").' €';
-          }
-        }
-
-        $html = $html.'<div class="kivi-item-list-item"><a href="'.get_the_permalink().'" class="kivi-item-list-item-image-wrapper"><img src="'.wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), "medium_large" )[0].'" class="kivi-item-list-item-image"></a><div class="kivi-item-list-body"><h3 class="kivi-item-list-heading"><a class="kivi-item-list-link"'.$brand_styling.' href="'.get_the_permalink().'">'."<div class='kivi-item-shortcode-link-desc1'>".get_the_title()."</div>"."<div class='kivi-item-shortcode-link-desc2'>".$kivi_item_title_desc.'</div></a></h3><p class="kivi-item-list-item-meta">'.$kivi_item_desc.'</p></div></div>';
       endwhile;
     endif;
     wp_reset_query();
-    $html = $html.'</div></div>';
-    return $html;
+    return ob_get_clean();
   }
 
   /**
@@ -482,5 +459,4 @@ class Kivi {
     );
     return $this->kivi_list_shortcode($meta_query);
   }
-
 }
