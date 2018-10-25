@@ -126,7 +126,7 @@ get_header(); ?>
                 <tr class="kivi-iv-person">
                   <th>
                     <div class="kivi-iv-person-container">
-                      <img class="kivi-iv-person-image" src="<?php echo get_iv_person_image($post->ID); ?>" alt="välittäjä" />
+                      <img class="kivi-iv-person-image" src="<?php echo get_iv_person_image($post->ID); ?>" alt="<?php echo get_post_meta($post->ID, '_iv_person_name', true); ?>" />
                     </div>
                   </th>
                 </tr>
