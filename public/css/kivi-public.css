@@ -74,16 +74,6 @@ input[type="submit"].button-kivi {
   width: 82px;
 }
 
-
-@media (max-width: 600px) {
-	.kivi-index-item, .grid-sizer{
-		width:100%;
-	}
-  .kivi-template-single {
-    padding: 5px !important;
-  }
-}
-
 .kivi-single-item-title {
   font-size: 2em;
 }
@@ -98,7 +88,6 @@ input[type="submit"].button-kivi {
 
 .slick-for-image.current {
   height: auto;
-  /* max-height: 574px; */
   max-height: 800px;
   display: inline-block;
   text-align: center;
@@ -144,11 +133,9 @@ input[type="submit"].button-kivi {
 
 .kivi-item-cell {
   font-size: 14px;
-  /* display: inline-block; */
   padding: 8px;
   border: 0;
   vertical-align: top;
-
 }
 
 .kivi-item-cell.kivi-item-cell-header {
@@ -161,29 +148,17 @@ input[type="submit"].button-kivi {
   .kivi-item-cell {
     display: block;
   }
-  /* .kivi-item-cell-value {
-    padding-bottom: 8px;
-  } */
+
   .kivi-item-cell-value {
     padding: 0 8px 8px 8px;
   }
+
   .kivi-item-cell.kivi-item-cell-header {
     padding-bottom: 0;
     width: 100%;
-    font-weight: bold;
   }
 }
 
-/* .kivi-header-wrapper {
-  display: inline-block;
-  background: #333;
-  margin-bottom: 24px;
-} */
-
-/* .kivi-single-item-body-header {
-  color: #fff;
-  padding: 8px 16px;
-} */
 
 .kivi-item-cell-value-wrap {
   word-break: break-all;
@@ -232,62 +207,6 @@ input[type="submit"].button-kivi {
   flex: 0 1 200px;
 }
 
-.kivi-item-list-item {
-  border: 1px solid #f2f2f2;
-  padding: 30px;
-  margin-top: 1em;
-}
-
-.kivi-item-list-item:first-child {
-  border-top: 1px solid #f2f2f2;
-}
-
-.kivi-item-list-body {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.kivi-item-list-heading {
-  margin: 0 !important;
-  padding: 0 !important;
-  /* font-size: 1em !important; */
-}
-
-.kivi-item-list-link {
-  border: 0 !important;
-}
-
-.kivi-item-list-link:hover {
-  color: #222 !important;
-}
-
-.kivi-item-list-item-image-wrapper {
-  width: 160px;
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 16px !important;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  border: 1px solid #f2f2f2 !important;
-  border-bottom: 2px solid #f2f2f2 !important;
-}
-
-.kivi-item-list-item-image-wrapper:hover {
-  border: 1px solid #e0e0e0 !important;
-  border-bottom: 2px solid #e0e0e0 !important;
-}
-
-.kivi-item-list-item-image {
-  width: 100%;
-  border: 0;
-}
-
-.kivi-item-list-item-meta {
-  font-style: italic;
-  /* font-size: 14px; */
-  margin-bottom: 0;
-}
-
 .kivi-index-paginator {
   max-width: 600px;
   display: flex;
@@ -323,7 +242,6 @@ a.page-numbers:hover {
 
 
 /* Kivi-single-template */
-
 .kivi-header-wrapper {
   display: block;
   margin-bottom: 8px;
@@ -353,7 +271,6 @@ a.page-numbers:hover {
   padding: 32px;
 }
 
-
 .kivi-single-item-body-header button::after {
   content: "";
   padding: 0 5px;
@@ -372,7 +289,6 @@ a.page-numbers:hover {
   display: inline-block;
   min-width: 28px;
   text-align: center;
-
 }
 
 .kivi-single-item-body-header .kivi-toggle {
@@ -407,6 +323,7 @@ a.page-numbers:hover {
   transition: all .3s;
  }
 
+ /* Kivi-single-template: slick slider */
  .slick-for-image.current {
   height: auto;
  }
@@ -428,29 +345,14 @@ a.page-numbers:hover {
   width: auto;
 }
 
-
 /* Kivi-single-template: real estate agent image */
-/* #yhteystiedot tr {
-  display: inline-block;
-  vertical-align: top;
-}
-
-#yhteystiedot tr:first-child {
-  margin-right: 2rem;
-} */
-
-/* #yhteystiedot tbody, #yhteystiedot tfoot {
-  float: left;
-} */
-
-.kivi-item-table.yhteystiedot {
+.kivi-item-table.kivi-contact {
   display: flex;
   flex-wrap: wrap;
 }
 
-.yhteystiedot tbody {
+.kivi-contact tbody {
   margin-right: 6rem;
-
 }
 
 .kivi-iv-person th {
@@ -470,4 +372,52 @@ a.page-numbers:hover {
   width: 100%;
   object-fit: cover;
   object-position: top;
+}
+
+/*Shortcode spesific styles*/
+.kivi-item-list-item {
+  border: 1px solid #f2f2f2;
+  padding: 30px;
+  margin-top: 1em;
+}
+.kivi-item-list-item:first-child {
+  border-top: 1px solid #f2f2f2;
+}
+.kivi-item-list-body {
+  display: inline-block;
+  vertical-align: middle;
+}
+.kivi-item-list-heading {
+  margin: 0;
+  padding: 0;
+  font-size: 1em;
+}
+.kivi-item-list-link {
+  border: 0;
+}
+.kivi-item-list-link:hover {
+  color: #222;
+}
+.kivi-item-list-item-image-wrapper {
+  width: 160px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 16px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  border: 1px solid #f2f2f2;
+  border-bottom: 2px solid #f2f2f2;
+}
+.kivi-item-list-item-image-wrapper:hover {
+  border: 1px solid #e0e0e0;
+  border-bottom: 2px solid #e0e0e0;
+}
+.kivi-item-list-item-image {
+  width: 100%;
+  border: 0;
+}
+.kivi-item-list-item-meta {
+  font-style: italic;
+  font-size: 14px;
+  margin-bottom: 0;
 }

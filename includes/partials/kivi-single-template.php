@@ -71,13 +71,13 @@ get_header(); ?>
       </h1>
       <div class="kivi-item-details">
         <div class="div">
-          <p><?php ( Kivi_Public::is_for_rent_assignment(get_the_id()) ) ? _e('Vuokra', 'Kivi') :  _e('Hinta', 'Kivi'); ?>
+          <p><span class="kivi-item-details__heading"><?php ( Kivi_Public::is_for_rent_assignment(get_the_id()) ) ? _e('Vuokra', 'Kivi') :  _e('Hinta', 'Kivi'); ?></span>
             <br>
             <?php echo ( $price = Kivi_Public::get_display_price(get_the_id()) ) ? $price : '-'; ?>
           </p>
         </div>
         <div class="div">
-          <p><?php _e('Koko', 'Kivi')?><br>
+          <p><span class="kivi-item-details__heading"><?php _e('Koko', 'Kivi')?></span><br>
             <?php
               if ( get_post_meta($post->ID, '_living_area_m2', true) != "" ) {
                 echo get_post_meta($post->ID, '_living_area_m2', true).' m²';
@@ -88,7 +88,7 @@ get_header(); ?>
           </p>
         </div>
         <div class="div">
-          <p><?php _e('Vuosi', 'Kivi')?><br>
+          <p><span class="kivi-item-details__heading"><?php _e('Vuosi', 'Kivi')?></span><br>
             <?php
               if ( get_post_meta($post->ID, '_rc_buildyear2', true) != "" ) {
                 echo get_post_meta($post->ID, '_rc_buildyear2', true);
@@ -115,10 +115,10 @@ get_header(); ?>
         <section class="kivi-single-item-body kivi-single-contact-info">
             <div class="kivi-header-wrapper">
               <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
-                <button class="kivi-toggle" data-target="yhteystiedot"><?php _e('Yhteystiedot ja esittelyt', 'kivi'); ?></button>
+                <button class="kivi-toggle" data-target="kiviContact"><?php _e('Yhteystiedot ja esittelyt', 'kivi'); ?></button>
               </h3>
             </div>
-            <table id="yhteystiedot" class="kivi-item-table yhteystiedot">
+            <table id="kiviContact" class="kivi-item-table kivi-contact">
               <tbody>
                 <?php echo view_contact_info( $post->ID);?>
               </tbody>
@@ -138,10 +138,10 @@ get_header(); ?>
         <section class="kivi-single-item-body kivi-single-basic-info">
             <div class="kivi-header-wrapper">
               <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
-                <button class="kivi-toggle" data-target="perustiedot"><?php _e('Asunnon perustiedot', 'kivi'); ?></button>
+                <button class="kivi-toggle" data-target="kiviBasic"><?php _e('Asunnon perustiedot', 'kivi'); ?></button>
               </h3>
             </div>
-            <table id="perustiedot" class="kivi-item-table">
+            <table id="kiviBasic" class="kivi-item-table">
               <tbody>
                 <?php echo view_basic_info( $post->ID); ?>
               </tbody>
@@ -151,10 +151,10 @@ get_header(); ?>
         <section class="kivi-single-item-body kivi-single-cost-info">
             <div class="kivi-header-wrapper">
               <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
-                <button class="kivi-toggle" data-target="hinta"><?php _e('Hinta ja kustannukset', 'kivi'); ?></button>
+                <button class="kivi-toggle" data-target="kiviPrice"><?php _e('Hinta ja kustannukset', 'kivi'); ?></button>
               </h3>
             </div>
-            <table id="hinta" class="kivi-item-table">
+            <table id="kiviPrice" class="kivi-item-table">
               <tbody>
                 <?php echo view_cost_info( $post->ID); ?>
               </tbody>
@@ -164,10 +164,10 @@ get_header(); ?>
         <section class="kivi-single-item-body kivi-single-additional-info">
             <div class="kivi-header-wrapper">
               <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
-                <button class="kivi-toggle hide-by-default" data-target="lisatiedot"><?php _e('Asunnon lisätiedot', 'kivi'); ?></button>
+                <button class="kivi-toggle hide-by-default" data-target="kiviMoreInfo"><?php _e('Asunnon lisätiedot', 'kivi'); ?></button>
               </h3>
             </div>
-            <table id="lisatiedot" class="kivi-item-table">
+            <table id="kiviMoreInfo" class="kivi-item-table">
               <tbody>
                 <?php echo view_additional_info( $post->ID); ?>
               </tbody>
@@ -178,10 +178,10 @@ get_header(); ?>
         <section class="kivi-single-item-body kivi-single-materials-info">
             <div class="kivi-header-wrapper">
               <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
-                <button class="kivi-toggle hide-by-default" data-target="materiaalit"><?php _e('Asunnon tilat ja materiaalit', 'kivi'); ?></button>
+                <button class="kivi-toggle hide-by-default" data-target="kiviMaterials"><?php _e('Asunnon tilat ja materiaalit', 'kivi'); ?></button>
               </h3>
             </div>
-            <table id="materiaalit" class="kivi-item-table">
+            <table id="kiviMaterials" class="kivi-item-table">
               <tbody>
                 <?php echo $materials; ?>
               </tbody>
@@ -193,10 +193,10 @@ get_header(); ?>
         <section class="kivi-single-item-body kivi-single-housing-company-info">
             <div class="kivi-header-wrapper">
               <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
-                <button class="kivi-toggle hide-by-default" data-target="taloyhtio"><?php _e('Taloyhtiö', 'kivi'); ?></button>
+                <button class="kivi-toggle hide-by-default" data-target="kiviHousing"><?php _e('Taloyhtiö', 'kivi'); ?></button>
               </h3>
             </div>
-            <table id="taloyhtio" class="kivi-item-table">
+            <table id="kiviHousing" class="kivi-item-table">
               <tbody>
                 <?php echo $housingco; ?>
               </tbody>
@@ -208,10 +208,10 @@ get_header(); ?>
 		    <section class="kivi-single-item-body kivi-single-services-info">
             <div class="kivi-header-wrapper">
               <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
-                <button class="kivi-toggle hide-by-default" data-target="palvelut"><?php _e('Palvelut ja liikenneyhteydet', 'kivi'); ?></button>
+                <button class="kivi-toggle hide-by-default" data-target="kiviServices"><?php _e('Palvelut ja liikenneyhteydet', 'kivi'); ?></button>
               </h3>
             </div>
-            <table id="palvelut" class="kivi-item-table">
+            <table id="kiviServices" class="kivi-item-table">
               <tbody>
                 <?php echo $services; ?>
               </tbody>
