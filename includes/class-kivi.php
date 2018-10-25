@@ -301,14 +301,28 @@ class Kivi {
     add_shortcode('tyyppi', array($this, 'realtytype_shortcode'));
     add_shortcode('toimeksianto', array($this, 'assignmenttype_shortcode'));
     add_shortcode('tuoteryhma', array($this, 'itemgroup_shortcode'));
+    add_shortcode('kivi', array($this, 'kivi_shortcode'));
   }
 
-  public function kivi_list_shortcode( $meta_query ){
+  public function kivi_list_shortcode( $meta_query, $attributes = array() ){
     $html = '<div class="kivi-item-list"><div class="kivi-item-list-wrapper">';
 
+
+    $per_page = -1;
+    if( isset( $attributes['count'] ) && intval($attributes['count']) ){
+      $per_page = intval($attributes['count']);
+    }
+    $order = "ASC";
+    if( isset( $attributes['order'] ) && !empty($attributes['order']) ){
+      if( trim(strtolower($attributes['order'])) == "desc" ){
+        $order = "DESC";
+      }
+    }
     $args = array(
       'post_type' => 'kivi_item',
-      'posts_per_page' => -1,
+      'orderby' => 'publish_date',
+      'order' => $order,
+      'posts_per_page' => $per_page,
       'meta_query' => $meta_query
     );
 
@@ -349,6 +363,46 @@ class Kivi {
     wp_reset_query();
     $html = $html.'</div></div>';
     return $html;
+  }
+
+  /**
+   * A generic shortcode [kivi].
+   * Any attributes will do the filtering, ex. [kivi town="Helsinki" assignment_type="vuokra"] will display all rentals
+   * in Helsinki. An attribute count="X" can be used to limit results.
+   * Relation is hard coded to "AND" and attribute must be found. If results is 0, it's propably either mistyped
+   * attribute name or too many filters resulting zero items.
+   * There are two custom attributes:
+   *  - count int (Default: no limit -1)
+   *  - order "desc|asc" (Default: asc)
+   * @param $attributes shortcode attributes
+   * @return string
+   */
+  public function kivi_shortcode($attributes ) {
+    $meta_query = array( 'relation' => 'AND' );
+
+    $nofilter = array("count", "order");
+
+    // compare should be "LIKE" with these
+    $like = array('assignment_type');
+
+    foreach( $attributes as $key=>$value ){
+
+      $compare = "=";
+      if(in_array($key, $like)){
+        $compare = "LIKE";
+      }
+
+      if( ! in_array( strtolower($key), $nofilter ) ){ // do not filter all attributes
+        $meta_query[] = array(
+          'key' => '_'.$key,
+          'value' => $value,
+          'compare' => $compare
+        );
+      }
+
+    }
+
+    return $this->kivi_list_shortcode($meta_query, $attributes);
   }
 
   public function assignmenttype_shortcode($attributes){
