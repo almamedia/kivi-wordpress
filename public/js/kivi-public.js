@@ -11,7 +11,7 @@
 		  slidesToShow: 1,
 		  slidesToScroll: 1,
 		  arrows: true,
-      fade: true,
+      fade: false,
       adaptiveHeight: true,
       infinite: false,
 		  asNavFor: '.slick-carousel'
@@ -70,7 +70,6 @@
     $('.slick-for').on('setPosition', function(event, slick, currentSlide, nextSlide){
       var pic = document.querySelector(".slick-for [data-slick-index='0'] img ");
       var rootElement = document.documentElement;
-      console.log("resized", pic.height);
       if( pic.height > 150 ){
         rootElement.style.setProperty('--img-height', pic.height + "px");
       }
