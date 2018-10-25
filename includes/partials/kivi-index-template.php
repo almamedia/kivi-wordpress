@@ -187,7 +187,7 @@ else{
             if ( $overridden_template = locate_template( 'kivi-single-item-part.php' ) ) {
               load_template( $overridden_template, false );
             } else {
-              load_template( dirname( __FILE__ ) . '/partials/kivi-single-item-part.php', false );
+              load_template( dirname( __FILE__ ) . '/kivi-single-item-part.php', false );
             }
           }?>
           </div>
