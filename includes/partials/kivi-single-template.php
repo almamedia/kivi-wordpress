@@ -118,9 +118,11 @@ get_header(); ?>
                 <button class="kivi-toggle" data-target="yhteystiedot"><?php _e('Yhteystiedot ja esittelyt', 'kivi'); ?></button>
               </h3>
             </div>
-            <table id="yhteystiedot" class="kivi-item-table">
+            <table id="yhteystiedot" class="kivi-item-table yhteystiedot">
               <tbody>
                 <?php echo view_contact_info( $post->ID);?>
+              </tbody>
+              <tfoot>
                 <tr class="kivi-iv-person">
                   <th>
                     <div class="kivi-iv-person-container">
@@ -128,7 +130,7 @@ get_header(); ?>
                     </div>
                   </th>
                 </tr>
-              </tbody>
+              </tfoot>
             </table>
         </section>
         <?php endif; ?>
