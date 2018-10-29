@@ -221,9 +221,7 @@ get_header(); ?>
 
         <?php if( get_kivi_option('kivi-gmap-id') ){ ?>
         <section class="kivi-single-item-body kivi-single-gmap">
-            <div class="kivi-header-wrapper">
-              <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>><?php _e('Kartta kaikki tiedot', 'kivi'); ?></h3>
-            </div>
+
               <div id="map"></div>
           <script type="text/javascript">
 
