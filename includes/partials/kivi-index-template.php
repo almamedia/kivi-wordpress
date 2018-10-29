@@ -93,7 +93,7 @@ else{
 		'meta_key' 	=> '_homepage_publish_date',
 		'meta_type'	=> 'DATETIME',
 		'order'		=> 'DESC',
-		'posts_per_page' => 10,
+		'posts_per_page' => 30,
 	);
 	$args['paged'] = ( get_query_var('paged') ? get_query_var('paged') : 1 );
 	query_posts($args);
