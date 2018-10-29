@@ -256,12 +256,10 @@ get_header(); ?>
 
 
               var mapOptions = {
-                zoom: 8,
-                center: {lat: -34.397, lng: 150.644},
+                zoom: 15,
                 scrollwheel: false,
                 // Apply the map style array to the map.
                 styles: styleArray,
-                zoom: 8
               }
               var map = new google.maps.Map(document.getElementById("map"), mapOptions);
               <?php echo 'var address = "' . get_post_meta($post->ID, "_street", true) . ', '. get_post_meta($post->ID, "_town", true) . '";';  ?>
