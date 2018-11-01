@@ -437,6 +437,61 @@ class Kivi_Admin {
     flush_rewrite_rules();
   }
 
+  /**
+   * Add new meta box for kivi_item edit page.
+   * Meta box contains table for all items metadata, including all data exported from Kivi.
+   * @param $post_type
+   */
+  public function register_metadata_metabox( $post_type ){
+
+    //if ( 'kivi_item' == $post_type || 'attachment' == $post_type ) {
+    if ( 'kivi_item' == $post_type ) {
+      add_meta_box(
+        'Metadata',
+        __( 'Kohteen metatiedot', 'kivi' ),
+        function( $post ){
+
+          $updatedate = get_post_meta( $post->ID, '_updatedate', true );
+          if($updatedate){
+            echo "<p>".__( 'Tiedot tallennettu Kiviin: ', 'kivi' );
+            echo mysql2date( get_option('date_format') . ' ' . get_option('time_format'), $updatedate ) ;
+            echo "</p>";
+          }
+
+          $metadata = get_metadata( 'post', $post->ID );
+          echo "<table style='width:100%;'>";
+          foreach( $metadata as $key => $value ){
+            echo "<tr><th style='vertical-align: top; text-align: left; border-bottom: 1px solid #efefef;'>$key</th>";
+            echo "<td style='border-bottom: 1px solid #efefef; vertical-align: top;'>";
+            echo Kivi_Public::map_post_meta($key);
+            echo "</td>";
+            echo "<td style='border-bottom: 1px solid #efefef; vertical-align: top;'>";
+            if(count($value) == 1 && isset($value[0])){
+              $value = maybe_unserialize($value[0]);
+              if(is_array($value)){
+                echo "Serialisoituna: ";
+                var_dump($value);
+              }
+              else{
+                echo $value;
+              }
+            }
+            else{
+              echo "Multiple: ";
+              var_dump($value);
+            }
+            echo "</td></tr>";
+          }
+          echo "</table>";
+
+        },
+        $post_type,
+        'advanced',
+        'low'
+      );
+    }
+  }
+
   /*
   * Start the scheduler that runs the background process ie. checks
   * the new xml and does it's stuff every 30 minutes.
