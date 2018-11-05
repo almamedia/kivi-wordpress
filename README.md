@@ -55,7 +55,25 @@ The plugin has default templates for listing properties and displaying a single 
 
 You can use shortcodes to display KIVI data in your own custom WordPress pages by adding a shortcode defined by the plugin in the content of the page.
 
+### List items by any attribute
+`[kivi]` Lists all items
+
+There is a template file `/includes/partials/kivi-single-item-part.php` which is used to display
+single item in listings, both kivi_item archive index and shortcode listing. You can create
+your own custom template in (child) theme root with same file name.
+
+Any meta data field can be a filter attribute. See data fields and values from any kivi_item edit screen and choose attributes to use.
+
+#### Examples
+`[kivi assignment_type="myynti" realtytype_id="rivitalo"]`
+Lists townhouses for sale.
+
+`[kivi assignment_type="vuokra" realtytype_id="rivitalo"]`
+Lists townhouses for rent.
+
+
 ### List items by town
+
 `[kunta nimi='<city>']`
 
 for example:
@@ -91,6 +109,7 @@ for example:
 `[toimeksianto tyyppi="vuokra"]`
 or
 `[toimeksianto tyyppi="myynti"]`
+
 
 
 ## Feature Requests and Contributing
