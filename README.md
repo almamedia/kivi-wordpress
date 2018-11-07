@@ -111,6 +111,18 @@ or
 `[toimeksianto tyyppi="myynti"]`
 
 
+## Updating plugin
+Replace all plugin files by FTP. 
+
+If using WP admin, follow these steps:
+
+1. Get new version from Github as zip file.
+2. Go to WP admin plugins page, and disable Kivi plugin.
+3. From the same page, delete Kivi plugin.
+4. Add Kivi as new plugin by uploading the zip file.
+5. Activate Kivi plugin.
+6. Ready. Settings and items are kept in database.
+
 
 ## Feature Requests and Contributing
 
@@ -120,6 +132,8 @@ We are also happy to accept any pull requests if they are generic enough and see
 
 ## Changelog
 
+**1.1.0**
+- Introduce new cleaner layout and lots of improvements for developers
 
 **1.0.10**
 - Add support for featured image change among images already uploaded to Kivi and WP
