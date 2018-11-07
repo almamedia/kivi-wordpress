@@ -6,6 +6,10 @@
  * This file is used to markup the public-facing aspects of the plugin.
  * Privides a simple index page with somee filtering options.
  *
+ * Default ordering is "publish_date" "DESC" : new items in WP will come first.
+ * If multiple items are downloaded at once, their order might be random.
+ * To reorder items, you can modify publish_date in WP admin for any item.
+ *
  * @link       https://kivi.etuovi.com/
  * @since      1.0.0
  *
@@ -50,7 +54,7 @@ if ( ! empty($_GET) ){
 
   $args = array(
     'post_type' => 'kivi_item',
-    'posts_per_page' => 10,
+    'posts_per_page' => 30,
     'meta_query' => array(
       'relation' => 'AND',
       $roomcount,
@@ -67,9 +71,8 @@ if ( ! empty($_GET) ){
         $postcode,
       )
     ),
-	'orderby'	=> 'meta_value',
-	'meta_key' 	=> '_homepage_publish_date',
-	'meta_type'	=> 'DATETIME',
+	'orderby'	=> 'publish_date', // or 'meta_key'
+	'meta_key' 	=> '_realty_unique_no', // with meta_key, any attribute ex. _homepage_publish_date
 	'order'		=> 'DESC',
   );
   query_posts($args);
@@ -89,9 +92,7 @@ if ( ! empty($_GET) ){
 else{
 	$args = array(
 		'post_type' => 'kivi_item',
-		'orderby'	=> 'meta_value',
-		'meta_key' 	=> '_homepage_publish_date',
-		'meta_type'	=> 'DATETIME',
+		'orderby'	=> 'publish_date',
 		'order'		=> 'DESC',
 		'posts_per_page' => 30,
 	);
