@@ -470,7 +470,7 @@ class Kivi_Admin {
               $value = maybe_unserialize($value[0]);
               if(is_array($value)){
                 echo "Serialisoituna: ";
-                var_dump($value);
+                echo "<pre>".print_r($value, true)."</pre>";
               }
               else{
                 echo $value;
@@ -478,7 +478,7 @@ class Kivi_Admin {
             }
             else{
               echo "Multiple: ";
-              var_dump($value);
+              echo "<pre>".print_r($value, true)."</pre>";
             }
             echo "</td></tr>";
           }
