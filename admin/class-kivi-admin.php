@@ -125,34 +125,20 @@ class Kivi_Admin {
       $node = simplexml_import_dom($doc->importNode($z->expand(), true));
       foreach ($node->children() as $foo) {
         if ( $foo->getName() == "image" ) {
-          if ( $result != "" ) {
-            $this->image_func( $foo, $result );
-          }
+          $this->image_func( $foo, $result );
         } elseif( $foo->getName() == "realtyrealtyoption") {
-          if ( $result != "" ) {
-            $this->realtyrealtyoption_func( $foo, $result );
-          }
+          $this->realtyrealtyoption_func( $foo, $result );
         }elseif( $foo->getName() == "areabasis_id") {
-          if ( $result != "" ) {
-            $this->areabasis_func( $foo, $result );
-          }
+          $this->areabasis_func( $foo, $result );
         }elseif( $foo->getName() == "kivipresentation") {
-          if ( $result != "" ) {
-            $this->presentation_func( $foo, $result );
-          }
+          $this->presentation_func( $foo, $result );
         }elseif( $foo->getName() == "realty_vi_presentation") {
-          if ( $result != "" ) {
-            $this->realty_vi_presentation_func( $foo, $result );
-          }
+          $this->realty_vi_presentation_func( $foo, $result );
         }elseif( in_array( $foo->getName(), [ "unencumbered_price","price","debt"] )) {
-          if ( $result != "" ) {
-            $this->copy_int_func( $foo, $result );
-          }
+          $this->copy_int_func( $foo, $result );
         }
         else {
-          if ( $result != "" ) {
-            $this->copy_func( $foo, $result );
-          }
+          $this->copy_func( $foo, $result );
         }
       }
 
@@ -330,12 +316,14 @@ class Kivi_Admin {
       '1225.20' => 'isännöitsijäntodistuksen mukainen',
       '1225.30' => 'tarkistusmitattu'
      );
+    $result['areabasis_id'] = "";
+    $prefix = "";
     foreach ($foo->children() as $opt) {
       if( $opt->getName() == 'areabasis_id_item'){
-        if( array_key_exists("$opt",$mappings) ){
-          $result['areabasis_id'] = $mappings["$opt"];
+        if( array_key_exists($opt->__toString(),$mappings) ){
+          $result['areabasis_id'] .= $prefix.$mappings[$opt->__toString()];
+          $prefix = ", ";
         }
-        break;
       }
     }
   }
