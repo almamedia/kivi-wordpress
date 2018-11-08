@@ -138,7 +138,7 @@
 	public function item_update_content($post_id, &$item){
 		$postarr =  [];
 		$postarr['post_content'] = $item['presentation'];
-		$postarr['post_title'] = $item['flat_structure'] . ' ' . $item['town'] . ' ' . $item['street'] . ' ' . $item['stairway'] . ' ' . $item['door_number'];
+		$postarr['post_title'] = $item['flat_structure'] . ' ' . $item['town'] . ' ' . $item['street'];
 		$postarr['ID'] = $post_id;
 		wp_update_post( $postarr );
 	}
@@ -215,7 +215,7 @@
       $postarr['post_type'] = 'kivi_item';
       $postarr['post_status'] = 'draft';
       $postarr['post_content'] = $item['presentation'];
-      $postarr['post_title'] = $item['flat_structure'] . ' ' . $item['town'] . ' ' . $item['street'] . ' ' . $item['stairway'] . ' ' . $item['door_number'];
+      $postarr['post_title'] = $item['flat_structure'] . ' ' . $item['town'] . ' ' . $item['street'];
       $post_id = wp_insert_post ( $postarr );
 	  add_post_meta ( $post_id, '_realty_unique_no', $item['realty_unique_no'], true );
       foreach ( $item as $key => $value ) {

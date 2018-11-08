@@ -85,10 +85,7 @@
     $box->add( Kivi_Viewable::asSingle( $post_id, '_realty_unique_no' ) );
     $view = New Kivi_Viewable( $label=__("Sijainti","kivi"));
     $view->add( New Kivi_Property( $post_id, '_quarteroftown') );
-    $p = Kivi_Property::withPrefix( New Kivi_Property( $post_id, '_street') , $post_id, '_stairway');
-    $s = Kivi_Property::withPrefix( $p , $post_id, '_door_number');
-    $view->add($s);
-    //$view->add( New Kivi_Property( $post_id, '_street') );
+    $view->add( New Kivi_Property( $post_id, '_street'));
     $view->add( New Kivi_Property( $post_id, '_postcode') );
     $view->add( New Kivi_Property( $post_id, '_town') );
     $box->add( $view );
