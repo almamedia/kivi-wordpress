@@ -50,9 +50,6 @@
             <input type="checkbox" id="kivi-show-sidebar" <?php if(get_kivi_option('kivi-show-sidebar')){echo "checked=''";} ?> name="kivi-show-sidebar" value=""><?php _e('Näytä sivupalkki kohdesivulla')?>
           </label>
           <label>
-            <input type="checkbox" id="kivi-use-www-size" <?php if(get_kivi_option('kivi-use-www-size')){echo "checked=''";} ?> name="kivi-use-www-size" value=""><?php _e('Käytä www-kokoisia kuvia siirrossa (oletus: original)')?>
-          </label>
-          <label>
             <input type="checkbox" id="kivi-use-debt-free-price-on-shortcode" <?php if(get_kivi_option('kivi-use-debt-free-price-on-shortcode')){echo "checked=''";} ?> name="kivi-use-debt-free-price-on-shortcode" value=""><?php _e('Näytä velaton hinta shortcode-listauksissa (oletus: myyntihinta)')?>
            </label>
 		  <label>

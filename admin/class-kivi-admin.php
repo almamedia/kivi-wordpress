@@ -207,7 +207,6 @@ class Kivi_Admin {
     update_option( 'kivi-show-statusbar', $_POST['kivi-show-statusbar'] );
     set_kivi_option('kivi-show-sidebar',  $_POST['kivi-show-sidebar'] );
     set_kivi_option('kivi-use-debt-free-price-on-shortcode',  $_POST['kivi-use-debt-free-price-on-shortcode'] );
-    set_kivi_option('kivi-use-www-size',  $_POST['kivi-use-www-size'] );
 	set_kivi_option('kivi-clean-values',  $_POST['kivi-clean-values'] );
     set_kivi_option('kivi-prefilter-name',  $_POST['kivi-prefilter-name'] );
     set_kivi_option('kivi-prefilter-value',  $_POST['kivi-prefilter-value'] );
@@ -251,7 +250,6 @@ class Kivi_Admin {
 
   /* Copy images from the parsed object to the result obbject. Only originals. */
   public function image_func(&$foo, &$result){
-    $use_www_size = get_kivi_option('kivi-use-www-size');
     $images=[];
     foreach ($foo->children() as $image) {
       $i=[];
@@ -260,10 +258,7 @@ class Kivi_Admin {
           $this->copy_func($prop, $i);
         }
       }
-      if( $use_www_size && $i['image_itemimagetype_name'] == 'kivirealty-www'){
-        array_push($images,$i);
-      }
-      if( ! $use_www_size && $i['image_itemimagetype_name'] == 'kivirealty-original'){
+      if( $i['image_itemimagetype_name'] == 'kivirealty-original'){
         array_push($images,$i);
       }
     }
