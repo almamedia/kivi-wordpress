@@ -233,7 +233,10 @@
         }
       }
       /* Publish the post when all metadata and stuff is in place */
-      wp_publish_post( $post_id );
+      $postarr =  [];
+      $postarr['ID'] = $post_id;
+      $postarr['post_status'] = 'publish';
+      wp_update_post( $postarr );
     }
 
     /*
