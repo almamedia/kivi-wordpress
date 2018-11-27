@@ -140,12 +140,15 @@
     $box->add($view);
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_has_other' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_energyclass_name' ) );
-    $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_lot_area_m2' ) );
-    $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_lotholding_id' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_carshelter_count' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_garage_count' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_renovation_made' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_renovation_planned' ) );
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_lot_area_m2' ) );
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_lotholding_id' ) );
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_lot_renter' ) );
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_lot_rent' ) );
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_lot_renttime' ) );
     return $box;
   }
 
