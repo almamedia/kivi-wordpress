@@ -670,7 +670,6 @@ class Kivi_Public {
 					$price = number_format($value, 2, ',', ' '); // to 2 decimal price string with thousand separators
 				}
 				elseif( intval($value) > 999 ){
-					$price = intval($value);
 					$price = number_format($value, 0, '', ' '); // with thousands separated
 				}
 				else{
@@ -681,7 +680,7 @@ class Kivi_Public {
 
 			// check for property name ending "_m2"
 			if( stripos(strrev($kivi_property->name), "2m_") === 0 ){
-				return intval($value) . " m²";
+				return floatval($value) . " m²";
 			}
 
 		}
