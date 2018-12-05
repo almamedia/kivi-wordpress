@@ -257,8 +257,6 @@
     * Is used to delete (sold) items that no longer exist in the incoming XML.
     */
     public function items_delete( &$active_items = [] ){
-      error_log("Items delete called");
-      global $wpdb;
       $args = array(
         'post_type' => 'kivi_item',
         'numberposts' => -1,
