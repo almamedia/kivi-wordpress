@@ -260,9 +260,9 @@
       error_log("Items delete called");
       global $wpdb;
       $args = array(
-        'meta_key' => '_realty_unique_no',
         'post_type' => 'kivi_item',
         'numberposts' => -1,
+        'post_status' => get_post_stati(),
       );
       $posts = get_posts( $args );
       foreach ($posts as $post) {
