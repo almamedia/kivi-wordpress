@@ -100,7 +100,17 @@
 
     /* Add the media to media library */
     public function add_media( &$image_url, &$image_type, &$image_order, &$post_id ){
-      $ret = $this->kivi_save_image($image_url, $image_type, $image_order, $post_id);
+		// add only if not already in WP ( search for original_image_url )
+	   $args = array(
+		 'meta_key' => 'original_image_url',
+		 'meta_value' => $image_url,
+		 'post_type' => 'attachment',
+		 'post_status' =>'any',
+	   );
+	   $posts = get_posts( $args );
+	   if( empty($posts) ) {
+		 $ret = $this->kivi_save_image($image_url, $image_type, $image_order, $post_id); 
+	   }
     }
 
     /**
