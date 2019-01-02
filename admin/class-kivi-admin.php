@@ -204,8 +204,6 @@ class Kivi_Admin {
   public function kivi_save_settings() {
     update_option( 'kivi-brand-color', $_POST['kivi-brand-color'] );
     update_option( 'kivi-slug', $_POST['kivi-slug'] );
-    update_option( 'kivi-show-statusbar', $_POST['kivi-show-statusbar'] );
-    set_kivi_option('kivi-show-sidebar',  $_POST['kivi-show-sidebar'] );
     set_kivi_option('kivi-use-debt-free-price-on-shortcode',  $_POST['kivi-use-debt-free-price-on-shortcode'] );
 	set_kivi_option('kivi-clean-values',  $_POST['kivi-clean-values'] );
     set_kivi_option('kivi-prefilter-name',  $_POST['kivi-prefilter-name'] );

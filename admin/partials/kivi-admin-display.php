@@ -47,9 +47,6 @@
             <input type="text" name="kivi-slug" id="kivi-slug" class="text-input" value="<?php echo esc_attr( get_option('kivi-slug') ); ?>" placeholder="<?php _e('esim. kohde', 'kivi'); ?>"><?php _e("Polkutunnus", "kivi"); ?>
           </label>
           <label>
-            <input type="checkbox" id="kivi-show-sidebar" <?php if(get_kivi_option('kivi-show-sidebar')){echo "checked=''";} ?> name="kivi-show-sidebar" value=""><?php _e('Näytä sivupalkki kohdesivulla')?>
-          </label>
-          <label>
             <input type="checkbox" id="kivi-use-debt-free-price-on-shortcode" <?php if(get_kivi_option('kivi-use-debt-free-price-on-shortcode')){echo "checked=''";} ?> name="kivi-use-debt-free-price-on-shortcode" value=""><?php _e('Näytä velaton hinta shortcode-listauksissa (oletus: myyntihinta)')?>
            </label>
 		  <label>

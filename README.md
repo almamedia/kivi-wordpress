@@ -36,8 +36,6 @@ Just drop extract the package in the `plugins` directory of your WP installation
 
 - Slug. Define a slug for the kivi_item post type. This is basically a piece of the url structure for your KIVI-items. For example in item url http://www.example.com/kohde/5hks-tampere-jokupolku-4/ the 'kohde' would be the slug. Also the list of all the items can be accessed using the url `<site url>/<slug>`.
 
-- Show sidebar on item page. This controls if the default item template will call `get_sidebar()` or not.
-
 - 'Use www sized images in transfer (default: original)' Use www-size images when transferring the items to WP. Www-sized are smaller than originals. This is useful for in development phase as the www images download quicker. Using originals in production is a good idea.
 
 - Clean values. Alters property data to look better. Replaces "m2" with "m²", addds euro sign to prices and formats numbers. For additional formatting, use the filter "kivi_viewable_value" ( with up to three attributes: value, label, properties).

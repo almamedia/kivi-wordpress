@@ -296,8 +296,6 @@ get_header(); ?>
   </div><!-- #primary -->
 
 <?php
-if(get_kivi_option('kivi-show-sidebar')){
-  get_sidebar();
-}
+//get_sidebar();
 
-get_footer(); ?>
+get_footer();
