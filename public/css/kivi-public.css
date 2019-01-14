@@ -61,6 +61,7 @@
   font-size: 16px;
   line-height: 1.5;
   padding-top: 8px;
+  box-sizing: border-box;
 }
 .kivi-item-body h2 {
   margin-top: 8px;
@@ -270,6 +271,7 @@ a.page-numbers:hover {
   max-width: 960px;
   margin: 16px auto;
   padding: 32px;
+  box-sizing: border-box;
 }
 
 .kivi-single-item-body-header button::after {
