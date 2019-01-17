@@ -121,6 +121,13 @@ If using WP admin, follow these steps:
 5. Activate Kivi plugin.
 6. Ready. Settings and items are kept in database.
 
+## Wordpress Core updates
+1. Disable Kivi plugin.
+2. Update Wordpress Core.
+3. Activate Kivi plugin.
+4. Ready. Settings and items are kept in database.
+
+If property data stops updating from Kivi (this might happen after WP Core update), disable and then activate plugin once. Settings and items are kept in database.
 
 ## Feature Requests and Contributing
 
