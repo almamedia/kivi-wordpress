@@ -323,6 +323,11 @@ class Kivi_Public {
    */
   static function get_future_presentations($post_id, $strict = false ){
     $presentations = get_post_meta( $post_id, '_presentations', true );
+	
+	if( ! is_array($presentations) ) {
+		return "";
+	}
+	
     foreach($presentations as $key => $presentation){
 
       if($strict){
@@ -346,10 +351,13 @@ class Kivi_Public {
    */
   public static function get_next_presentation($post_id ){
     $presentations = self::get_future_presentations( $post_id );
-    usort($presentations, function($a, $b) {
-      return $a['presentation_date'] - $b['presentation_date'];
-    });
-    return reset($presentations);
+	if( is_array($presentations) ) {
+		usort($presentations, function($a, $b) {
+		  return $a['presentation_date'] - $b['presentation_date'];
+		});
+		return reset($presentations);
+	}
+	return "";
   }
 
   static function map_post_meta($meta_field) {
