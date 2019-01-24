@@ -129,6 +129,18 @@ If using WP admin, follow these steps:
 
 If property data stops updating from Kivi (this might happen after WP Core update), disable and then activate plugin once. Settings and items are kept in database.
 
+## Recommended plugins
+### DX Delete Attached Media
+Helps to keep media library clean. With this plugin, media attached to items will be removed when item is deleted. This might or might not be the wanted behaviour. 
+If the images dowloaded by Kivi plugin are used in posts or pages, the images will stop working after the item is deleted.
+
+### WordPress Share Buttons Plugin – AddThis
+An easy way to include share buttons for 
+
+### Some contact form plugin?
+There is a need for contact form plugin, that could embed contact form to single item page and on form submit send the message to the correct email address.
+The email is stored as meta data for the item.
+
 ## Feature Requests and Contributing
 
 We are not too actively developing individual features for the plugin as it's meant to be a starting point for development anyways. However, we do fix bugs and for example add support for new data if such data appears in the source system. If there are specific needs you can of course contact our sales.
