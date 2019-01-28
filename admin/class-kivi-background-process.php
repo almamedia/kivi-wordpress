@@ -109,8 +109,15 @@
 	   );
 	   $posts = get_posts( $args );
 	   if( empty($posts) ) {
-		 $ret = $this->kivi_save_image($image_url, $image_type, $image_order, $post_id); 
+		  $ret = $this->kivi_save_image($image_url, $image_type, $image_order, $post_id);
 	   }
+	   elseif( 1 == count($posts) ) {
+       $attachment = array(
+         'ID' => $posts[0]->ID,
+         'post_parent' => $post_id
+       );
+       wp_insert_attachment( $attachment );
+     }
     }
 
     /**
