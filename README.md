@@ -135,11 +135,11 @@ Helps to keep media library clean. With this plugin, media attached to items wil
 If the images dowloaded by Kivi plugin are used in posts or pages, the images will stop working after the item is deleted.
 
 ### WordPress Share Buttons Plugin – AddThis
-An easy way to include share buttons for 
+An easy way to include share buttons for Kivi item pages. Just install and configure settings.
 
 ### Some contact form plugin?
 There is a need for contact form plugin, that could embed contact form to single item page and on form submit send the message to the correct email address.
-The email is stored as meta data for the item.
+The email is stored as meta data for the item ( metadata "_sc_itempage_email" ). 
 
 ## Feature Requests and Contributing
 
