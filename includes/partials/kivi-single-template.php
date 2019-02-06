@@ -193,7 +193,16 @@ get_header(); ?>
         <section class="kivi-single-item-body kivi-single-housing-company-info">
             <div class="kivi-header-wrapper">
               <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
-                <button class="kivi-toggle hide-by-default" data-target="kiviHousing"><?php _e('Taloyhtiö', 'kivi'); ?></button>
+                <button class="kivi-toggle hide-by-default" data-target="kiviHousing">
+                  <?php
+                    if( get_post_meta($post->ID, '_realtycompany', true)) {
+                      echo _e('Taloyhtiö', 'kivi');
+                    }
+                    else {
+                      echo _e('Tontti', 'kivi');
+                    }
+                  ?>
+                </button>
               </h3>
             </div>
             <table id="kiviHousing" class="kivi-item-table">
