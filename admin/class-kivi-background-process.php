@@ -147,7 +147,12 @@
         $this->item_update_metadata( $post->ID, $item );
 		    $this->item_update_content( $post->ID, $item ); // comment this line to disable automatic updates for post_content and post_title.
       }
-      wp_publish_post( $post->ID );
+
+      /* Publish the post */
+      $postarr = array();
+      $postarr['ID'] = $post->ID;
+      $postarr['post_status'] = 'publish';
+      wp_update_post( $postarr );
     }
 
 	/*
