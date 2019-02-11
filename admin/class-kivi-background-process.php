@@ -100,7 +100,24 @@
 
     /* Add the media to media library */
     public function add_media( &$image_url, &$image_type, &$image_order, &$post_id ){
-      $ret = $this->kivi_save_image($image_url, $image_type, $image_order, $post_id);
+		// add only if not already in WP ( search for original_image_url )
+	   $args = array(
+		 'meta_key' => '_original_image_url',
+		 'meta_value' => $image_url,
+		 'post_type' => 'attachment',
+		 'post_status' =>'any',
+	   );
+	   $posts = get_posts( $args );
+	   if( empty($posts) ) {
+		  $ret = $this->kivi_save_image($image_url, $image_type, $image_order, $post_id);
+	   }
+	   elseif( 1 == count($posts) ) {
+       $attachment = array(
+         'ID' => $posts[0]->ID,
+         'post_parent' => $post_id
+       );
+       wp_insert_attachment( $attachment );
+     }
     }
 
     /**
@@ -128,8 +145,14 @@
 		  
       }else {
         $this->item_update_metadata( $post->ID, $item );
-		$this->item_update_content( $post->ID, $item ); // comment this line to disable automatic updates for post_content and post_title. 
+		    $this->item_update_content( $post->ID, $item ); // comment this line to disable automatic updates for post_content and post_title.
       }
+
+      /* Publish the post */
+      $postarr = array();
+      $postarr['ID'] = $post->ID;
+      $postarr['post_status'] = 'publish';
+      wp_update_post( $postarr );
     }
 
 	/*
@@ -138,7 +161,7 @@
 	public function item_update_content($post_id, &$item){
 		$postarr =  [];
 		$postarr['post_content'] = $item['presentation'];
-		$postarr['post_title'] = $item['flat_structure'] . ' ' . $item['town'] . ' ' . $item['street'] . ' ' . $item['stairway'] . ' ' . $item['door_number'];
+		$postarr['post_title'] = $item['flat_structure'] . ' ' . $item['town'] . ' ' . $item['street'];
 		$postarr['ID'] = $post_id;
 		wp_update_post( $postarr );
 	}
@@ -147,7 +170,7 @@
     * Update all the metadata in the item, in case the item has any
     * modifications.
     */
-    public function item_update_metadata($post_id, &$item){
+    public function item_update_metadata( $post_id, &$item ) {
       foreach ( $item as $key => $value ) {
         if( $key == 'images' ){
           $new_images = array_column( $item['images'], 'image_url' );
@@ -182,7 +205,24 @@
                }
              }
           }
-        }else {
+        } elseif( $key == 'iv_person_image_url' && $value ) {
+			$image_url = get_post_meta( $post_id, '_sc_image_url', $single=true );
+			if ( $image_url  !== $value ) {
+			  $this->kivi_save_image( $value, 'iv_person_image_url', 0, $post_id );
+			  // And delete old file here too...
+			  $args = array(
+				'meta_key' => '_sc_image_url',
+				'meta_value' => $image_url,
+				'post_type' => 'attachment',
+			  );
+			  $posts = get_posts( $args );
+			  foreach( $posts as $attachment ) {
+				  if( wp_get_post_parent_id( $attachment->ID ) == $post->ID ) {
+					  wp_delete_attachment( $attachment->ID, false ); // move to trash (true -> force delete)
+				  }
+			  }
+			}
+		} else {
           update_post_meta( $post_id, '_'.$key, $value );
         }
       }
@@ -198,7 +238,7 @@
       $postarr['post_type'] = 'kivi_item';
       $postarr['post_status'] = 'draft';
       $postarr['post_content'] = $item['presentation'];
-      $postarr['post_title'] = $item['flat_structure'] . ' ' . $item['town'] . ' ' . $item['street'] . ' ' . $item['stairway'] . ' ' . $item['door_number'];
+      $postarr['post_title'] = $item['flat_structure'] . ' ' . $item['town'] . ' ' . $item['street'];
       $post_id = wp_insert_post ( $postarr );
 	  add_post_meta ( $post_id, '_realty_unique_no', $item['realty_unique_no'], true );
       foreach ( $item as $key => $value ) {
@@ -239,12 +279,10 @@
     * Is used to delete (sold) items that no longer exist in the incoming XML.
     */
     public function items_delete( &$active_items = [] ){
-      error_log("Items delete called");
-      global $wpdb;
       $args = array(
-        'meta_key' => '_realty_unique_no',
         'post_type' => 'kivi_item',
         'numberposts' => -1,
+        'post_status' => get_post_stati(),
       );
       $posts = get_posts( $args );
       foreach ($posts as $post) {
@@ -293,7 +331,7 @@
           $attachment_data = wp_generate_attachment_metadata( $attachment_id, $upload_file['file'] );
           wp_update_attachment_metadata( $attachment_id,  $attachment_data );
           if( $image_type == 'iv_person_image_url'){
-            add_post_meta ( $post_id, '_kivi_iv_person_image', $attachment_id );
+            update_post_meta ( $post_id, '_kivi_iv_person_image', $attachment_id );
           }else{
             add_post_meta ( $post_id, '_kivi_item_image', $attachment_id );
           }

@@ -1,10 +1,10 @@
 # KIVI WP-plugin
 - Requires at least: 4.0
-- Tested up to: 4.9.4
-- Stable tag: 1.0.8
+- Tested up to: 5.0.2
+- Stable tag: 1.0.11
 - License: GPLv2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
 
-- *PHP >= 5.5.0 required*, 5.5.9 tested
+- *PHP >= 5.5.0 required*, 7.2 tested
 - php GD support required
 - php DOM required (http://php.net/manual/en/book.dom.php)
 - php settings:
@@ -101,6 +101,8 @@ We are also happy to accept any pull requests if they are generic enough and see
 
 ## Changelog
 
+**1.0.11**
+- Merge background process fixings made for ui-update branch.
 
 **1.0.10**
 - Add support for featured image change among images already uploaded to Kivi and WP
