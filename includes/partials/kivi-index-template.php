@@ -37,6 +37,7 @@ if ( ! empty($_GET) ){
   $areamax = array();
   $street =  array();
   $town =  array();
+  $realty_id =  array();
   $postcode = array();
   $realtytype = array();
   $toim_tyyppi = array();
@@ -48,6 +49,7 @@ if ( ! empty($_GET) ){
   populate_searchcriteria( $areamax, $_GET, 'kivi-item-asunto-pamax', '_living_area_m2', '<=', true);
   populate_searchcriteria( $street, $_GET, 'kivi-item-asunto-osoite', '_street', 'LIKE');
   populate_searchcriteria( $town, $_GET, 'kivi-item-asunto-osoite', '_town', 'LIKE');
+  populate_searchcriteria( $realty_id, $_GET, 'kivi-item-asunto-osoite', '_realty_unique_no', '=');
   populate_searchcriteria( $postcode, $_GET, 'kivi-item-asunto-osoite', '_postcode', '=');
   populate_searchcriteria( $realtytype, $_GET, 'kivi-item-asunto-type-select', '_realtytype_id','=');
   populate_searchcriteria( $toim_tyyppi, $_GET, 'kivi-item-toimeksianto-tyyppi', '_assignment_type','LIKE');
@@ -69,6 +71,7 @@ if ( ! empty($_GET) ){
         $street,
         $town,
         $postcode,
+        $realty_id,
       )
     ),
 	'orderby'	=> 'publish_date', // or 'meta_key'
@@ -124,7 +127,7 @@ else{
           </div>
           <div class="kivi-filter-cell kivi-filter-cell-50">
             <label><?php _e('Sijainti', 'kivi'); ?>
-              <input type="text" name="kivi-item-asunto-osoite" id="kivi-item-asunto-osoite" value="<?php echo esc_attr($townval); ?>" class="kivi-item-input" placeholder="<?php _e('Sijainti: esim. Tampere tai 00100', 'kivi'); ?>">
+              <input type="text" name="kivi-item-asunto-osoite" id="kivi-item-asunto-osoite" value="<?php echo esc_attr($townval); ?>" class="kivi-item-input" placeholder="<?php _e('Sijainti tai kohde', 'kivi'); ?>">
           </label>
           </div>
           <div class="kivi-filter-cell kivi-filter-cell-15">
