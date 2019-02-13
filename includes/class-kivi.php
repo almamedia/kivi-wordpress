@@ -352,10 +352,11 @@ class Kivi {
    * There are two custom attributes:
    *  - count int (Default: no limit -1)
    *  - order "desc|asc" (Default: asc)
-   * @param $attributes shortcode attributes
+   * @param $attributes shortcode attributes as an array
    * @return string
    */
-  public function kivi_shortcode($attributes ) {
+  public function kivi_shortcode( $attributes = array() ) {
+
     $meta_query = array( 'relation' => 'AND' );
 
     $nofilter = array("count", "order");
@@ -363,21 +364,21 @@ class Kivi {
     // compare should be "LIKE" with these
     $like = array('assignment_type');
 
-    foreach( $attributes as $key=>$value ){
+    if( is_array( $attributes ) ) {
+      foreach ($attributes as $key => $value) {
+        $compare = "=";
+        if (in_array($key, $like)) {
+          $compare = "LIKE";
+        }
 
-      $compare = "=";
-      if(in_array($key, $like)){
-        $compare = "LIKE";
+        if (!in_array(strtolower($key), $nofilter)) { // do not filter all attributes
+          $meta_query[] = array(
+            'key' => '_' . $key,
+            'value' => $value,
+            'compare' => $compare
+          );
+        }
       }
-
-      if( ! in_array( strtolower($key), $nofilter ) ){ // do not filter all attributes
-        $meta_query[] = array(
-          'key' => '_'.$key,
-          'value' => $value,
-          'compare' => $compare
-        );
-      }
-
     }
 
     return $this->kivi_list_shortcode($meta_query, $attributes);
