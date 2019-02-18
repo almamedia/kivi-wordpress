@@ -59,7 +59,7 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
     public function save() {
       $key = $this->generate_key();
       if ( ! empty( $this->data ) ) {
-        update_site_option( $key, $this->data );
+        update_option( $key, $this->data );
       }
       return $this;
     }
@@ -73,7 +73,7 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
      */
     public function update( $key, $data ) {
       if ( ! empty( $data ) ) {
-        update_site_option( $key, $data );
+        update_option( $key, $data );
       }
       return $this;
     }
@@ -85,7 +85,7 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
      * @return $this
      */
     public function delete( $key ) {
-      delete_site_option( $key );
+      delete_option( $key );
       return $this;
     }
     /**
@@ -150,7 +150,7 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
      * in a background process.
      */
     protected function is_process_running() {
-      if ( get_site_transient( $this->identifier . '_process_lock' ) ) {
+      if ( get_transient( $this->identifier . '_process_lock' ) ) {
         // Process already running
         return true;
       }
@@ -167,7 +167,7 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
       $this->start_time = time(); // Set start time of current process
       $lock_duration = ( property_exists( $this, 'queue_lock_time' ) ) ? $this->queue_lock_time : 60; // 1 minute
       $lock_duration = apply_filters( $this->identifier . '_queue_lock_time', $lock_duration );
-      set_site_transient( $this->identifier . '_process_lock', microtime(), $lock_duration );
+      set_transient( $this->identifier . '_process_lock', microtime(), $lock_duration );
     }
     /**
      * Unlock process
@@ -177,7 +177,7 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
      * @return $this
      */
     protected function unlock_process() {
-      delete_site_transient( $this->identifier . '_process_lock' );
+      delete_transient( $this->identifier . '_process_lock' );
       return $this;
     }
     /**
