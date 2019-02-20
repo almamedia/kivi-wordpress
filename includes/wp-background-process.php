@@ -131,10 +131,12 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
       global $wpdb;
       $table  = $wpdb->options;
       $column = 'option_name';
-      if ( is_multisite() ) {
+      /*
+      if (is_multisite() ) {
         $table  = $wpdb->sitemeta;
         $column = 'meta_key';
       }
+      */
       $key = $this->identifier . '_batch_%';
       $count = $wpdb->get_var( $wpdb->prepare( "
       SELECT COUNT(*)
@@ -191,12 +193,14 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
       $column       = 'option_name';
       $key_column   = 'option_id';
       $value_column = 'option_value';
+      /*
       if ( is_multisite() ) {
         $table        = $wpdb->sitemeta;
         $column       = 'meta_key';
         $key_column   = 'meta_id';
         $value_column = 'meta_value';
       }
+      */
       $key = $this->identifier . '_batch_%';
       $query = $wpdb->get_row( $wpdb->prepare( "
       SELECT *
