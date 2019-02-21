@@ -191,18 +191,32 @@
              if( ! in_array( $i['image_url'], $current_images) ){
                $this->add_media( $i['image_url'], $i['image_realtyimagetype_id'], $i['image_iv_order'],  $post_id );
              }
-             elseif( 'pääkuva' == $i['image_realtyimagetype_id'] ) {
-               // get attachment id for this image (already in WP)
-               $args = array(
-                 'meta_key' => 'original_image_url',
-                 'meta_value' => $i['image_url'],
-                 'post_type' => 'attachment',
-               );
-               $posts = get_posts( $args );
-               if( isset( $posts[0] ) && count($posts) == 1 ) {
-                 $post = $posts[0];
-                 set_post_thumbnail( $post_id, $post->ID );
-               }
+             else{ // current image
+                 $args = array( // find current image
+                     'meta_key' => 'original_image_url',
+                     'meta_value' => $i['image_url'],
+                     'post_type' => 'attachment',
+                 );
+                 $posts = get_posts( $args );
+                 if( isset( $posts[0] ) && count($posts) == 1 ) { // should be only one
+                     $posty = $posts[0];
+                     if( get_post_meta( $posty->ID, 'image_order', true) != $i['image_iv_order']){
+                         update_post_meta( $posty->ID, 'image_order', intval($i['image_iv_order']) );
+                     }
+
+                     // update post excerpt with image description ( post excerpt == attachment caption )
+                     $post_arr = array(
+                         'ID'           => $posty->ID,
+                         'post_excerpt' => sanitize_text_field($i['image_desc']),
+                     );
+                     wp_update_post( $post_arr );
+
+                     // maybe set as featured image
+                     if( $i['image_iv_order'] == 1 || 'pääkuva' == $i['image_realtyimagetype_id'] ) {
+                         set_post_thumbnail( $post_id, $posty->ID );
+                     }
+                 }
+
              }
           }
         } elseif( $key == 'iv_person_image_url' && $value ) {
