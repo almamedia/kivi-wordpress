@@ -87,85 +87,91 @@ class Kivi_Admin {
    * 4. Non-existent items are deleted from wp
    * 5. background processing is dispatched
    */
-  public function kivi_sync() {
+public function kivi_sync() {
 
-    error_log('plugin activated!');
+    error_log('kivi sync!');
 
     update_option('kivi-show-statusbar', 1);
 
     /**
      * Stop multiple processes from being dispatched.
      */
+
     if ( $this->process->is_process_already_running() ) {
       wp_send_json(array('message'=>'Tausta-ajo jo käynnissä'));
       wp_die();
     }
 
+	$baseurl_input_value = esc_attr(get_option('kivi-remote-url'));
+	$baseurl_trimmed = trim( preg_replace( '/\/$/', '', $baseurl_input_value ) );
+	$baseurl_array = explode(",", $baseurl_trimmed);
     $active_items=[];
-    $result = [];
 
-    $baseurl = trim(preg_replace('/\/$/','', esc_attr(get_option('kivi-remote-url'))));
-    $latest = trim( file_get_contents( $baseurl . '/LATEST.txt' ));
-    $theurl = $baseurl . '/' . $latest;
+	foreach ($baseurl_array as $baseurl) {
 
-    $doc = new DOMDocument();
-    $z = new XMLReader;
-    $res = $z->open(  $theurl );
+		$latest = trim( file_get_contents( $baseurl . '/LATEST.txt' ));
+		$theurl = $baseurl . '/' . $latest;
+		$doc = new DOMDocument();
+		$z = new XMLReader;
 
-    if( !$res ){
-      error_log("Reading of the incoming XML failed.");
-      update_option('kivi-show-statusbar', 0);
-      wp_send_json(array('message'=>'Tiedoston lukeminen epäonnistui'));
-      wp_die();
-    }
+		$res = $z->open(  $theurl );
 
-    while ($z->read() && $z->name !== 'item');
+		if( !$res ){
+		  error_log("Reading of the incoming XML failed.");
+		  update_option('kivi-show-statusbar', 0);
+		  wp_send_json(array('message'=>'Tiedoston lukeminen epäonnistui'));
+		  wp_die();
+		}
 
-    while ($z->name === 'item'){
-      $node = simplexml_import_dom($doc->importNode($z->expand(), true));
-      foreach ($node->children() as $foo) {
-        if ( $foo->getName() == "image" ) {
-          $this->image_func( $foo, $result );
-        } elseif( $foo->getName() == "realtyrealtyoption") {
-          $this->realtyrealtyoption_func( $foo, $result );
-        }elseif( $foo->getName() == "areabasis_id") {
-          $this->areabasis_func( $foo, $result );
-        }elseif( $foo->getName() == "kivipresentation") {
-          $this->presentation_func( $foo, $result );
-        }elseif( $foo->getName() == "realty_vi_presentation") {
-          $this->realty_vi_presentation_func( $foo, $result );
-        }elseif( in_array( $foo->getName(), [ "unencumbered_price","price","debt"] )) {
-          $this->copy_int_func( $foo, $result );
-        }
-        else {
-          $this->copy_func( $foo, $result );
-        }
-      }
+		while ($z->read() && $z->name !== 'item');
 
-      $z->next('item');
+		while ($z->name === 'item'){
+			$result = [];
+			$node = simplexml_import_dom($doc->importNode($z->expand(), true));
 
-      if( ! empty( get_kivi_option('kivi-prefilter-name' )) && ! empty(get_kivi_option('kivi-prefilter-value'))  ) {
-        $filtername = get_kivi_option('kivi-prefilter-name');
-        if( isset( $result[$filtername] ) && $result[$filtername] == get_kivi_option('kivi-prefilter-value' )){
-          /* Filters match */
-        }else {
-          /* Filters don't match, ignore this item */
-          continue;
-        }
-      }
+			foreach ($node->children() as $foo) {
+				if ( $foo->getName() == "image" ) {
+					$this->image_func( $foo, $result );
+				} elseif( $foo->getName() == "realtyrealtyoption") {
+					$this->realtyrealtyoption_func( $foo, $result );
+				}elseif( $foo->getName() == "areabasis_id") {
+					$this->areabasis_func( $foo, $result );
+				}elseif( $foo->getName() == "kivipresentation") {
+					$this->presentation_func( $foo, $result );
+				}elseif( $foo->getName() == "realty_vi_presentation") {
+					$this->realty_vi_presentation_func( $foo, $result );
+				}elseif( in_array( $foo->getName(), [ "unencumbered_price","price","debt"] )) {
+					$this->copy_int_func( $foo, $result );
+				}
+				else {
+					$this->copy_func( $foo, $result );
+				}
+			}
 
-      array_push($active_items, $result['realty_unique_no']);
-      $this->process->push_to_queue( $result );
-    }
+		  $z->next('item');
 
+		  if( ! empty( get_kivi_option('kivi-prefilter-name' )) && ! empty(get_kivi_option('kivi-prefilter-value'))  ) {
+			$filtername = get_kivi_option('kivi-prefilter-name');
+			if( isset( $result[$filtername] ) && $result[$filtername] == get_kivi_option('kivi-prefilter-value' )){
+			  /* Filters match */
+			}else {
+			  /* Filters don't match, ignore this item */
+			  continue;
+			}
+		  }
+
+		  array_push($active_items, $result['realty_unique_no']);
+		  $this->process->push_to_queue( $result );
+		}
+	} // /foreach $baseurl_array
+	
+	$this->process->save()->dispatch();
     $this->process->items_delete( $active_items );
-
-    $this->process->save()->dispatch();
-
     wp_send_json(array('message'=>'Tausta-ajo käynnistetty'));
 
     wp_die();
   }
+
 
   public function show_status_bar() {
     if ( get_option('kivi-show-statusbar') == 1 ) {
