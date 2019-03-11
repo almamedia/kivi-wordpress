@@ -306,7 +306,7 @@ class Kivi {
   }
 
   public function kivi_list_shortcode( $meta_query, $attributes = array() ){
-
+	$ret_str  = "";
     $per_page = -1;
     if( isset( $attributes['count'] ) && intval($attributes['count']) ){
       $per_page = intval($attributes['count']);
@@ -338,9 +338,10 @@ class Kivi {
         }
 
       endwhile;
+	  $ret_str = ob_get_clean();
     endif;
     wp_reset_query();
-    return ob_get_clean();
+    return $ret_str;
   }
 
   /**
@@ -373,8 +374,8 @@ class Kivi {
 
         if (!in_array(strtolower($key), $nofilter)) { // do not filter all attributes
           $meta_query[] = array(
-            'key' => '_' . $key,
-            'value' => $value,
+            'key' => '_' . sanitize_text_field($key),
+            'value' => sanitize_text_field($value),
             'compare' => $compare
           );
         }
