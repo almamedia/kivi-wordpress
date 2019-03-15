@@ -323,11 +323,11 @@ class Kivi_Public {
    */
   static function get_future_presentations($post_id, $strict = false ){
     $presentations = get_post_meta( $post_id, '_presentations', true );
-	
+
 	if( ! is_array($presentations) ) {
 		return "";
 	}
-	
+
     foreach($presentations as $key => $presentation){
 
       if($strict){
@@ -671,7 +671,8 @@ class Kivi_Public {
 				'_assignmentrent_rent',
 				'_chargesmaint2_month',
 				'_charges_finance_base_month',
-				'_charges_maint_base_month',
+        '_charges_maint_base_month',
+        '_rc_lot_rent',
 			);
 			if( in_array($kivi_property->name, $to_price) && is_numeric($value) ){
 				if( is_float($value) || intval($value) < 1000 ){
@@ -721,6 +722,19 @@ class Kivi_Public {
 		}
 
 		return $value;
-	}
+  }
+
+
+  function filter_rc_lot_renttime( $value, $label ) {
+
+		if('Taloyhtiön (Tontin) Vuokrasopimus päättyy' == $label) {
+      if( !empty($value)){
+        $date = new DateTime( $value );
+        $value = $date->format('d.m.Y');
+      }
+    }
+
+    return $value;
+  }
 
 }

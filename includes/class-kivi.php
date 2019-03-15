@@ -217,16 +217,17 @@ class Kivi {
     });
 
     add_action('init', array($this, 'register_shortcodes'));
-	
+
     if( get_kivi_option('kivi-clean-values') ) {
 		$this->loader->add_filter( 'kivi_viewable_value', $plugin_public, 'filter_viewable_values', 10, 3 );
-		$this->loader->add_filter( 'kivi_viewable_value', $plugin_public, 'filter_presentation_date', 10, 3 );
+    $this->loader->add_filter( 'kivi_viewable_value', $plugin_public, 'filter_presentation_date', 10, 3 );
+    $this->loader->add_filter( 'kivi_viewable_value', $plugin_public, 'filter_rc_lot_renttime', 10, 2 );
 	}
   }
 
   public function load_kivi_index_template( $index_template ) {
     $template_name = 'kivi-index-template.php';
-    
+
     if ( is_post_type_archive( "kivi_item" ) ) {
 		$theme_provided_template = get_stylesheet_directory() . "/" . $template_name;
 		if( file_exists( $theme_provided_template ) ) {
