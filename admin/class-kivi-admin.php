@@ -401,7 +401,7 @@ public function kivi_sync() {
       'label'                 => __( 'Item', 'kivi_item' ),
       'description'           => __( 'Item type', 'kivi_item' ),
       'labels'                => $labels,
-      'supports'              => array( 'title', 'editor', 'author', 'thumbnail', 'revisions', 'custom-fields', 'page-attributes', ),
+      'supports'              => array( 'title', 'editor', 'thumbnail', 'page-attributes' ),
       'taxonomies'            => array(),
       'hierarchical'          => false,
       'public'                => true,
