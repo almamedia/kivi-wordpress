@@ -154,7 +154,7 @@ class Kivi {
     add_action('admin_init', array($this, 'upload_file_size_increase'));
     add_action('admin_enqueue_scripts', array($this, 'kivi_enqueue_styles'));
 
-    $this->loader->add_action( 'activated_plugin', $plugin_admin, 'start_scheduler' );
+    $this->loader->add_action( 'init', $plugin_admin, 'start_scheduler' );
     $this->loader->add_action( 'deactivated_plugin', $plugin_admin, 'stop_scheduler' );
     $this->loader->add_action( 'init', $plugin_admin, 'register_kivi_item_post_type' );
     $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
