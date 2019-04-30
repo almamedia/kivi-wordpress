@@ -101,19 +101,18 @@ public function kivi_sync() {
       wp_send_json(array('message'=>'Tausta-ajo jo käynnissä'));
       wp_die();
     }
-
+	
 	$baseurl_input_value = esc_attr(get_option('kivi-remote-url'));
 	$baseurl_trimmed = trim( preg_replace( '/\/$/', '', $baseurl_input_value ) );
 	$baseurl_array = explode(",", $baseurl_trimmed);
     $active_items=[];
-
 	foreach ($baseurl_array as $baseurl) {
 
-		$latest = trim( file_get_contents( $baseurl . '/LATEST.txt' ));
+		$response = wp_remote_get( $baseurl . '/LATEST.txt' );
+		$latest = trim( wp_remote_retrieve_body( $response ));
 		$theurl = $baseurl . '/' . $latest;
 		$doc = new DOMDocument();
 		$z = new XMLReader;
-
 		$res = $z->open(  $theurl );
 
 		if( !$res ){
