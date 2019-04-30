@@ -61,6 +61,7 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
       if ( ! empty( $this->data ) ) {
         update_option( $key, $this->data );
       }
+	  unset($this->data);
       return $this;
     }
     /**
