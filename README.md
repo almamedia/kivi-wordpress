@@ -1,10 +1,10 @@
 # KIVI WP-plugin
 - Requires at least: 4.0
-- Tested up to: 4.9.4
-- Stable tag: 1.0.8
+- Tested up to: 5.1.1
+- Stable tag: 1.1.0
 - License: GPLv2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
 
-- *PHP >= 5.5.0 required*, 5.5.9 tested
+- *PHP >= 5.6.0 required*, 5.5.9 tested
 - php GD support required
 - php DOM required (http://php.net/manual/en/book.dom.php)
 - php settings:
@@ -148,6 +148,9 @@ We are not too actively developing individual features for the plugin as it's me
 We are also happy to accept any pull requests if they are generic enough and seem fit for our users.
 
 ## Changelog
+
+**1.1.1**
+- Refactor and fix warnings on background process
 
 **1.1.0**
 - Introduce new cleaner layout and lots of improvements for developers
