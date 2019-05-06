@@ -323,7 +323,11 @@
         $filename = $filename . '-' . sha1($filename);
       }
 
-      $upload_file = wp_upload_bits($filename, null, file_get_contents($url));
+	  $response = wp_remote_get($url);
+	  if ( is_wp_error( $response ) ) {
+		return;
+  	  }
+      $upload_file = wp_upload_bits($filename, null, wp_remote_retrieve_body( $response ));
       if (!$upload_file['error']) {
         $wp_filetype = wp_check_filetype($filename, null );
         $attachment = array(
