@@ -49,6 +49,10 @@ Just drop extract the package in the `plugins` directory of your WP installation
 
 The plugin has default templates for listing properties and displaying a single item. The templates might work with your theme just fine, or not. You can place your own templates in your theme's directory and these will override the ones defined by the plugin. The files sould be `kivi-index-template.php` and `kivi-single-template.php` for index page and single item page, respectively. You can of course use the default templates as a starting point for your own templates, the files are  `includes/partials/kivi-index-template.php` and `includes/partials/kivi-single-template.php`.
 
+### Displying data for item
+
+All data is stored as WP post meta with a "_"-prefix in key. For example "constructionright" becomes "_constructionright" and it's value is shown in template file with code: `get_post_meta( get_the_ID(), '_constructionright', true )`
+
 ## Shortcodes defined by the plugin
 
 You can use shortcodes to display KIVI data in your own custom WordPress pages by adding a shortcode defined by the plugin in the content of the page.
