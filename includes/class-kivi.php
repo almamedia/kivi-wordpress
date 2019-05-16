@@ -312,15 +312,15 @@ class Kivi {
     if( isset( $attributes['count'] ) && intval($attributes['count']) ){
       $per_page = intval($attributes['count']);
     }
-    $order = "ASC";
+    $order = "DESC";
     if( isset( $attributes['order'] ) && !empty($attributes['order']) ){
-      if( trim(strtolower($attributes['order'])) == "desc" ){
-        $order = "DESC";
+      if( trim(strtolower($attributes['order'])) == "asc" ){
+        $order = "ASC";
       }
     }
     $args = array(
       'post_type' => 'kivi_item',
-      'orderby' => 'publish_date',
+      'orderby' => 'date',
       'order' => $order,
       'posts_per_page' => $per_page,
       'meta_query' => $meta_query
@@ -353,7 +353,7 @@ class Kivi {
    * attribute name or too many filters resulting zero items.
    * There are two custom attributes:
    *  - count int (Default: no limit -1)
-   *  - order "desc|asc" (Default: asc)
+   *  - order "desc|asc" (Default: desc)
    * @param $attributes shortcode attributes as an array
    * @return string
    */
