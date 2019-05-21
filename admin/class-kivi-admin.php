@@ -242,7 +242,8 @@ public function kivi_sync() {
     if( "$item" &&  array_key_exists( $item->getName(), $mappings ) ){
       $result[$item->getName()] = $mappings[$item->getName()]["$item"];
     }else{
-      $result[$item->getName()] = "$item";
+		// Fix euro sign
+		$result[$item->getName()] = strtr("$item", array( chr(0xC2).chr(0x80) => '€' ));
     }
   }
 
