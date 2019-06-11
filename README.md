@@ -153,6 +153,11 @@ We are also happy to accept any pull requests if they are generic enough and see
 
 ## Changelog
 
+**1.1.2**
+- Fix image ordering on item data update
+- Fix euro sign
+- Use wp_remote_get instead of file_get_contents
+
 **1.1.1**
 - Refactor and fix warnings on background process
 
