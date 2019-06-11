@@ -100,7 +100,7 @@
 
     /* Add the media to media library */
     public function add_media( &$image_url, &$image_type, &$image_order, &$post_id ){
-		// add only if not already in WP ( search for original_image_url )
+		// add only if not already in WP ( search for _original_image_url )
 	   $args = array(
 		 'meta_key' => '_original_image_url',
 		 'meta_value' => $image_url,
@@ -178,7 +178,7 @@
           $images = get_post_meta ( $post_id, '_kivi_item_image', $single = false );
 
           foreach ($images as $i) {
-            $original_image_url = get_post_meta( $i, 'original_image_url', $single = true);
+            $original_image_url = get_post_meta( $i, '_original_image_url', $single = true);
             if( ! in_array( $original_image_url, $new_images )   ) {
               wp_delete_attachment( $i, $force_delete = true );
               delete_post_meta( $post_id, '_kivi_item_image', $meta_value = $i);
@@ -193,7 +193,7 @@
              }
              else{ // current image
                  $args = array( // find current image
-                     'meta_key' => 'original_image_url',
+                     'meta_key' => '_original_image_url',
                      'meta_value' => $i['image_url'],
                      'post_type' => 'attachment',
                  );
@@ -353,7 +353,7 @@
           }else{
             add_post_meta ( $post_id, '_kivi_item_image', $attachment_id );
           }
-          add_post_meta( $attachment_id, 'original_image_url', $url);
+          add_post_meta( $attachment_id, '_original_image_url', $url);
           add_post_meta( $attachment_id, 'image_type', $image_type);
           if( $image_type != 'iv_person_image_url'){
             add_post_meta( $attachment_id, 'image_order', $image_order);
