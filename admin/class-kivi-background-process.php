@@ -86,9 +86,13 @@
     /* Check if the item already exists in wp database */
     public function item_exists( &$item ){
       $args = array(
-        'meta_key' => '_realty_unique_no',
-        'meta_value' => $item['realty_unique_no'],
-		'meta_type' => 'NUMERIC',
+        'meta_query' => array(
+          array(
+            'key'   => '_realty_unique_no',
+            'value' => $item['realty_unique_no'],
+            'type' => 'NUMERIC',
+          )
+        ),
         'post_type' => 'kivi_item',
 		'post_status' => get_post_stati(),
       );
@@ -102,8 +106,12 @@
     public function add_media( &$image_url, &$image_type, &$image_order, &$post_id ){
 		// add only if not already in WP ( search for original_image_url )
 	   $args = array(
-		 'meta_key' => 'original_image_url',
-		 'meta_value' => $image_url,
+           'meta_query' => array(
+               array(
+                   'key'   => 'original_image_url',
+                   'value' => $image_url,
+               )
+           ),
 		 'post_type' => 'attachment',
 		 'post_status' =>'any',
 	   );
@@ -112,11 +120,11 @@
 		  $ret = $this->kivi_save_image($image_url, $image_type, $image_order, $post_id);
 	   }
 	   elseif( 1 == count($posts) ) {
-       $attachment = array(
-         'ID' => $posts[0]->ID,
-         'post_parent' => $post_id
-       );
-       wp_insert_attachment( $attachment );
+		   $attachment = array(
+			 'ID' => $posts[0]->ID,
+			 'post_parent' => $post_id
+		   );
+		   wp_insert_attachment( $attachment );
      }
     }
 
@@ -129,9 +137,13 @@
     */
     public function item_update(&$item){
        $args = array(
-        'meta_key' => '_realty_unique_no',
-        'meta_value' => $item['realty_unique_no'],
-		'meta_type' => 'NUMERIC',
+       'meta_query' => array(
+           array(
+               'key'   => '_realty_unique_no',
+               'value' => $item['realty_unique_no'],
+               'type' => 'NUMERIC',
+           )
+       ),
         'post_type' => 'kivi_item',
 		'post_status' => get_post_stati(),
       );
@@ -193,8 +205,12 @@
              }
              else{ // current image
                  $args = array( // find current image
-                     'meta_key' => 'original_image_url',
-                     'meta_value' => $i['image_url'],
+                     'meta_query' => array(
+                         array(
+                             'key'   => 'original_image_url',
+                             'value' => $i['image_url'],
+                         )
+                     ),
                      'post_type' => 'attachment',
                  );
                  $posts = get_posts( $args );
@@ -225,8 +241,12 @@
 			  $this->kivi_save_image( $value, 'iv_person_image_url', 0, $post_id );
 			  // And delete old file here too...
 			  $args = array(
-				'meta_key' => '_sc_image_url',
-				'meta_value' => $image_url,
+                  'meta_query' => array(
+                      array(
+                          'key'   => '_sc_image_url',
+                          'value' => $image_url,
+                      )
+                  ),
 				'post_type' => 'attachment',
 			  );
 			  $posts = get_posts( $args );
@@ -333,7 +353,7 @@
         $attachment = array(
           'post_mime_type' => $wp_filetype['type'],
           'post_parent' => $post_id,
-          'post_title' => preg_replace('/\.[^.]+$/', '', $filename),
+          'post_title' => 'Kohdekuva '.preg_replace('/\.[^.]+$/', '', $filename),
           'post_content' => '',
           'post_status' => 'inherit'
         );
@@ -363,6 +383,5 @@
         }
       }
     }
-
 
   }
