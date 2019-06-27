@@ -109,7 +109,7 @@ class Kivi_Background_Process extends WP_Background_Process
     }
 
     /* Add the media to media library */
-    public function add_media(&$image_url, &$image_type, &$image_order, &$post_id)
+    public function add_media($image_url, $image_type, $image_order, $post_id)
     {
         // add only if not already in WP ( search for original_image_url )
         $args = array(
@@ -123,14 +123,21 @@ class Kivi_Background_Process extends WP_Background_Process
             'post_status' => 'any',
         );
         $posts = get_posts($args);
-        if (empty($posts)) {
-            $ret = $this->kivi_save_image($image_url, $image_type, $image_order, $post_id);
-        } elseif (1 == count($posts)) {
-            $attachment = array(
-                'ID' => $posts[0]->ID,
-                'post_parent' => $post_id
-            );
-            wp_insert_attachment($attachment);
+        if ( is_array($posts) && empty($posts) ) { // empty array: image not in WP, save it
+            $this->kivi_save_image($image_url, $image_type, $image_order, $post_id);
+        }
+        elseif ( count($posts) ) { // images found even after retry, attach them if unattached
+            foreach($posts as $attachment_post) {
+                if ( 0 == $attachment_post->post_parent ) {
+                    // attach
+                    $attachment = array(
+                        'ID' => $attachment_post->ID,
+                        'post_parent' => $post_id
+                    );
+                    wp_update_post($attachment);
+                    add_post_meta($post_id, '_kivi_item_image', $attachment_post->ID, false);
+                }
+            }
         }
     }
 
