@@ -1,3 +1,7 @@
+
+Preferred version : https://github.com/almamedia/kivi-wordpress/tree/ui-update
+Both work, but "ui-update" has cleaner layout and new features are implemented there.
+
 # KIVI WP-plugin
 - Requires at least: 4.0
 - Tested up to: 5.0.2
