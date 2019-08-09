@@ -468,6 +468,7 @@ class Kivi_Public {
       "charges_sauna" => __("Saunamaksu","kivi"),
       "charges_tv" => __("Satelliittiantenni/Kaapeli-TV (€/kk)","kivi"),
       "charges_water" => __("Vesimaksu (€/kk)","kivi"),
+      "charges_condominium_total_mo" => __("Yhtiövastike","kivi"),
       "chargesmaint2_month" => __("Yhtiövastike","kivi"),
       "claim_right_company" => __("Lunastusoikeus yhtiöllä","kivi"),
       "claim_right_shareholder" => __("Lunastusoikeus osakkailla","kivi"),

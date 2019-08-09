@@ -113,7 +113,11 @@
     $box->add( Kivi_Viewable::asSingle( $post_id, '_unencumbered_price' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_price' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_debt' ) );
-    $box->add( Kivi_Viewable::asSingle( $post_id, '_chargesmaint2_month' ) );
+    if ( get_post_meta($post_id, '_chargesmaint2_month', true) > get_post_meta($post_id, '_charges_condominium_total_mo', true) ) {
+        $box->add( Kivi_Viewable::asSingle( $post_id, '_chargesmaint2_month' ) );
+    } else {
+        $box->add( Kivi_Viewable::asSingle( $post_id, '_charges_condominium_total_mo' ) );
+    }
     $box->add( Kivi_Viewable::asSingle( $post_id, '_charges_finance_base_month' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_charges_maint_base_month' ) );
     $view = New Kivi_Viewable( $label=__("Vesimaksu","kivi"));
@@ -181,14 +185,14 @@
     $view = New Kivi_Viewable( $label=__("Lämmitysjärjestelmän kuvaus","kivi"));
     $view->add( New Kivi_Property( $post_id,  $name='', $type="realtyoption", 'Lämmitysjärjestelmä', '' ) );
     $box->add( $view );
-	
+
     $property = New Kivi_Property( $post_id, '_vi_presentations','vi_presentations' );
     if( ! empty($property) ) {
       $view = New Kivi_Viewable( $label=__("Videoesittelyt","kivi"));
       $view->add($property);
       $box->add($view);
     }
-	
+
 	  $box->add( Kivi_Viewable::asSingle( $post_id, '_other_important_info' ) );
 	  return $box;
   }
@@ -278,5 +282,5 @@
     $box->add($s);
     return $box;
   }
-  
+
 ?>
