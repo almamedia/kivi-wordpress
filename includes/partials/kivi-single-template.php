@@ -122,6 +122,7 @@ get_header(); ?>
               <tbody>
                 <?php echo view_contact_info( $post->ID);?>
               </tbody>
+              <?php if( get_post_meta($post->ID, '_iv_supplier_user', true) == "true" ): ?>
               <tfoot>
                 <tr class="kivi-iv-person">
                   <th>
@@ -131,6 +132,7 @@ get_header(); ?>
                   </th>
                 </tr>
               </tfoot>
+              <?php endif; ?>
             </table>
         </section>
         <?php endif; ?>

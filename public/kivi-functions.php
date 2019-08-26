@@ -272,10 +272,15 @@
   function view_contact_info( $post_id){
     $box = New Kivi_Fact_Box();
     $view = New Kivi_Viewable( $label=__('Yhteystiedot','kivi'));
-    $view->add( New Kivi_Property( $post_id, '_iv_person_name') );
-    $view->add( New Kivi_Property( $post_id, '_iv_person_suppliername') );
-    $view->add( New Kivi_Property( $post_id, '_iv_person_email') );
-    $view->add( New Kivi_Property( $post_id, '_iv_person_mobilephone') );
+    if ( get_post_meta($post_id, '_iv_supplier_user', true) == "false" ) {
+        $view->add( New Kivi_Property( $post_id, '_supplier_name') );
+        $view->add( New Kivi_Property( $post_id, '_supplier_phone') );
+    } else {
+        $view->add( New Kivi_Property( $post_id, '_iv_person_name') );
+        $view->add( New Kivi_Property( $post_id, '_iv_person_suppliername') );
+        $view->add( New Kivi_Property( $post_id, '_iv_person_email') );
+        $view->add( New Kivi_Property( $post_id, '_iv_person_mobilephone') );
+    }
     $box->add($view);
     $s = New Kivi_Viewable( $label=__("Esittelyt","kivi"));
     $s->add( New Kivi_Property( $post_id, '_presentations','presentation' ) );
