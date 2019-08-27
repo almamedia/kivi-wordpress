@@ -612,6 +612,7 @@ class Kivi_Public {
       "realty_unique_no" => __("Kohdenumero","kivi"),
       "realty_vi_presentation" => __("Virtuaaliesittely","kivi"),
       "unencumbered_price" => __("Velaton hinta","kivi"),
+      "debt" => __("Velkaosuus","kivi"),
       "vi_pre_url" => __("Virtuaaliesittelyn osoite","kivi"),
       "realtyrealtyoption" => __("Moniarvoiset kohdetietovalinnat","kivi"),
       "realtyoption" => __("Arvon nimi","kivi"),
@@ -674,6 +675,7 @@ class Kivi_Public {
 				'_charges_finance_base_month',
         '_charges_maint_base_month',
         '_rc_lot_rent',
+        '_debt',
 			);
 			if( in_array($kivi_property->name, $to_price) && is_numeric($value) ){
 				if( is_float($value) || intval($value) < 1000 ){
