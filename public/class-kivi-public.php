@@ -609,6 +609,7 @@ class Kivi_Public {
       "assignmentrent_rent" => __("Kuukausivuokra","kivi"),
       "external_user_id" => __("Ulkopuolisen järjestelmän käyttäjä-ID","kivi"),
       "price" => __("Myyntihinta","kivi"),
+      "debt" => __("Velkaosuus","kivi"),
       "realty_unique_no" => __("Kohdenumero","kivi"),
       "realty_vi_presentation" => __("Virtuaaliesittely","kivi"),
       "unencumbered_price" => __("Velaton hinta","kivi"),
@@ -668,12 +669,14 @@ class Kivi_Public {
 			// format values to prices for listed names
 			$to_price = array(
 				'_unencumbered_price',
-				'_price',
+                '_price',
+                '_debt',
 				'_assignmentrent_rent',
-				'_chargesmaint2_month',
+                '_chargesmaint2_month',
+                '_charges_condominium_total_mo',
 				'_charges_finance_base_month',
-        '_charges_maint_base_month',
-        '_rc_lot_rent',
+                '_charges_maint_base_month',
+                '_rc_lot_rent',
 			);
 			if( in_array($kivi_property->name, $to_price) && is_numeric($value) ){
 				if( is_float($value) || intval($value) < 1000 ){
