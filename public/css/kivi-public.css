@@ -277,6 +277,7 @@ a.page-numbers:hover {
 .kivi-single-item-body-header button::after {
   content: "";
   padding: 0 5px;
+  display: inline-block;
 }
 .kivi-single-item-body-header button::before {
   content: "–";

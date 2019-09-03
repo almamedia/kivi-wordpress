@@ -628,7 +628,8 @@ class Kivi_Public {
       "igglo_silentsale_realty_flag" => __("Igglo","kivi"),
       "igglo_ad_id" => __("Igglo","kivi"),
       "assignmentsale_free_other" => __("Vapautuminen","kivi"),
-      "assignmentsale_free_type_name" =>  __("Vapautuminen","kivi")
+      "assignmentsale_free_type_name" =>  __("Vapautuminen","kivi"),
+      "assignmentsale_free_date"=>  __("Vapautuu","kivi")
     );
 
     return ( array_key_exists($meta_field, $arr) ) ? $arr[$meta_field] : false;
@@ -669,14 +670,14 @@ class Kivi_Public {
 			// format values to prices for listed names
 			$to_price = array(
 				'_unencumbered_price',
-                '_price',
-                '_debt',
+				'_price',
+				'_debt',
 				'_assignmentrent_rent',
-                '_chargesmaint2_month',
-                '_charges_condominium_total_mo',
+				'_chargesmaint2_month',
+				'_charges_condominium_total_mo',
 				'_charges_finance_base_month',
-                '_charges_maint_base_month',
-                '_rc_lot_rent',
+				'_charges_maint_base_month',
+				'_rc_lot_rent',
 			);
 			if( in_array($kivi_property->name, $to_price) && is_numeric($value) ){
 				if( is_float($value) || intval($value) < 1000 ){
@@ -726,19 +727,17 @@ class Kivi_Public {
 		}
 
 		return $value;
-  }
+	}
 
+	function filter_format_date( $value, $label ) {
 
-  function filter_rc_lot_renttime( $value, $label ) {
+		if( 'Taloyhtiön (Tontin) Vuokrasopimus päättyy' == $label || 'Vapautuu' == $label ) {
+			if( !empty($value) ){
+				$date = new DateTime( $value );
+				$value = $date->format('d.m.Y');
+			}
+		}
 
-		if('Taloyhtiön (Tontin) Vuokrasopimus päättyy' == $label) {
-      if( !empty($value)){
-        $date = new DateTime( $value );
-        $value = $date->format('d.m.Y');
-      }
-    }
-
-    return $value;
-  }
-
+        return $value;
+	}
 }

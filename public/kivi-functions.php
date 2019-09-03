@@ -101,8 +101,13 @@
     $box->add( Kivi_Viewable::asSingle( $post_id, '_floors' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_buildyear2' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_usageyear' ) );
-    $box->add( Kivi_Viewable::asSingle( $post_id, '_assignmentsale_free_other' ) );
-    $box->add( Kivi_Viewable::asSingle( $post_id, '_assignmentsale_free_type_name' ) );
+    if (get_post_meta($post_id, '_assignmentsale_free_type_name', true) == "(pp.kk.vvvv)") {
+        $box->add( Kivi_Viewable::asSingle( $post_id, '_assignmentsale_free_date' ) );
+    } elseif ( get_post_meta($post_id, '_assignmentsale_free_type_name', true) == "muu ehto" ) {
+        $box->add( Kivi_Viewable::asSingle( $post_id, '_assignmentsale_free_other' ) );
+    } else {
+        $box->add( Kivi_Viewable::asSingle( $post_id, '_assignmentsale_free_type_name' ) );
+    }
     return  $box;
   }
 
