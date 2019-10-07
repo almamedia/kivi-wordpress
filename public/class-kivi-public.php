@@ -755,7 +755,11 @@ class Kivi_Public {
 	}
 	
 	function filter_charges_eheating( $value, $label, $properties ){
-		
+
+        if( empty($value) ){
+            return $value;
+        }
+
 		// only check for single properties
 		if( count($properties) == 1 && isset($properties[0]) ){
 
