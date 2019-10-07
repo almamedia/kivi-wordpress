@@ -646,6 +646,11 @@ class Kivi_Public {
 		if( empty($value) ){
 			return $value;
 		}
+		
+		// change float value to integer if .00
+		if( is_numeric($value) && fmod($value, 1) === 0.00 ){
+			$value = intval($value);
+		}
 
 		// replace "m2" with square character
 		$value = str_replace('m2', 'm²', $value);
@@ -690,6 +695,14 @@ class Kivi_Public {
 					return $value;
 				}
 				return $price." €";
+			}
+
+			// custom solution for lot size
+			if( '_rc_lot_area_m2' == $kivi_property->name ){
+				$lot_measure = get_post_meta( $kivi_property->post_id, '_lot_measuretype_id', true );
+				if( !empty($lot_measure) ){ // could be: "", "m2" or "ha"
+					return str_replace('.', ',', $value). " " .str_replace('m2', 'm²', $lot_measure);
+				}
 			}
 
 			// check for property name ending "_m2"
@@ -739,5 +752,20 @@ class Kivi_Public {
 		}
 
         return $value;
+	}
+	
+	function filter_charges_eheating( $value, $label, $properties ){
+		
+		// only check for single properties
+		if( count($properties) == 1 && isset($properties[0]) ){
+
+			$kivi_property = $properties[0];
+		
+			if( '_charges_eheating' == $kivi_property->name ){
+				$value = $value . " € / " . __( "kk", "kivi" );
+			}
+		}
+		
+		return $value;
 	}
 }
