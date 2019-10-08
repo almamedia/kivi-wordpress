@@ -111,7 +111,7 @@ class Kivi_Background_Process extends WP_Background_Process
     /* Add the media to media library */
     public function add_media($image_url, $image_type, $image_order, $post_id)
     {
-        // add only if not already in WP ( search for original_image_url )
+        // add only if not already in WP ( search for original_image_url for current kivi_item )
         $args = array(
             'meta_query' => array(
                 array(
@@ -119,6 +119,7 @@ class Kivi_Background_Process extends WP_Background_Process
                     'value' => $image_url,
                 )
             ),
+			'post_parent' => $post_id,
             'post_type' => 'attachment',
             'post_status' => 'any',
         );
@@ -126,19 +127,30 @@ class Kivi_Background_Process extends WP_Background_Process
         if ( is_array($posts) && empty($posts) ) { // empty array: image not in WP, save it
             $this->kivi_save_image($image_url, $image_type, $image_order, $post_id);
         }
-        elseif ( count($posts) ) { // images found even after retry, attach them if unattached
-            foreach($posts as $attachment_post) {
-                if ( 0 == $attachment_post->post_parent ) {
-                    // attach
-                    $attachment = array(
-                        'ID' => $attachment_post->ID,
-                        'post_parent' => $post_id
-                    );
-                    wp_update_post($attachment);
-                    add_post_meta($post_id, '_kivi_item_image', $attachment_post->ID, false);
-                }
-            }
-        }
+		
+		// current image might be as unattached in WP media
+		$args = array(
+            'meta_query' => array(
+                array(
+                    'key' => 'original_image_url',
+                    'value' => $image_url,
+                )
+            ),
+			'post_parent' => 0,
+            'post_type' => 'attachment',
+            'post_status' => 'any',
+        );
+        $posts = get_posts($args);
+        // images found, attach them if unattached
+		foreach($posts as $attachment_post) {                
+			// attach
+			$attachment = array(
+				'ID' => $attachment_post->ID,
+				'post_parent' => $post_id
+			);
+			wp_update_post($attachment);
+			add_post_meta($post_id, '_kivi_item_image', $attachment_post->ID, false);
+		}
     }
 
     /**
