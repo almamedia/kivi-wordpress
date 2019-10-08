@@ -147,6 +147,8 @@
     $view->add( New Kivi_Property( $post_id,  $name='', $type="realtyoption", 'Taloyhtiössä on...', 'kellarikomero'  ) );
     $view->add( New Kivi_Property( $post_id,  $name='', $type="realtyoption", 'Taloyhtiössä on...', 'väestönsuoja'  ) );
     $box->add($view);
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_realtyidentifier' ) );
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_estatename' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_has_other' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_energyclass_name' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_carshelter_count' ) );
@@ -158,6 +160,8 @@
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_lot_renter' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_lot_rent' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_lot_renttime' ) );
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_constructionright' ) );
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_zoning_info' ) );
     return $box;
   }
 
