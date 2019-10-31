@@ -73,6 +73,9 @@ Lists townhouses for sale.
 `[kivi assignment_type="vuokra" realtytype_id="rivitalo"]`
 Lists townhouses for rent.
 
+`[kivi itemgroup_id="vuokra-asunnot"]`
+Lists apartments for rent.
+
 
 ### List items by town
 
