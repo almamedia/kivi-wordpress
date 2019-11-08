@@ -222,7 +222,8 @@ class Kivi {
 		$this->loader->add_filter( 'kivi_viewable_value', $plugin_public, 'filter_viewable_values', 10, 3 );
 		$this->loader->add_filter( 'kivi_viewable_value', $plugin_public, 'filter_presentation_date', 10, 3 );
 		$this->loader->add_filter( 'kivi_viewable_value', $plugin_public, 'filter_format_date', 10, 2 );
-		$this->loader->add_filter( 'kivi_viewable_value', $plugin_public, 'filter_charges_eheating', 10, 3 );
+        $this->loader->add_filter( 'kivi_viewable_value', $plugin_public, 'filter_charges_eheating', 10, 3 );
+        $this->loader->add_filter( 'kivi_viewable_value', $plugin_public, 'filter_bid_url', 10, 3 );
 	}
   }
 

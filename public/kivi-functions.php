@@ -116,6 +116,10 @@
     $box = New Kivi_Fact_Box();
     $box->add( Kivi_Viewable::asSingle( $post_id, '_assignmentrent_rent' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_unencumbered_price' ) );
+    if (get_post_meta($post_id, '_bid_wanted_flag', true) == "true") {
+        $box->add( Kivi_Viewable::asSingle( $post_id, '_highest_bid' ) );
+        $box->add( Kivi_Viewable::asSingle( $post_id, '_bids_page_url' ) );
+    }
     $box->add( Kivi_Viewable::asSingle( $post_id, '_price' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_debt' ) );
     if ( get_post_meta($post_id, '_chargesmaint2_month', true) > get_post_meta($post_id, '_charges_condominium_total_mo', true) ) {
