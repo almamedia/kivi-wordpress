@@ -71,13 +71,13 @@ get_header(); ?>
       </h1>
       <div class="kivi-item-details">
         <div class="div">
-          <p><span class="kivi-item-details__heading"><?php ( Kivi_Public::is_for_rent_assignment(get_the_id()) ) ? _e('Vuokra', 'Kivi') :  _e('Hinta', 'Kivi'); ?></span>
+          <p class="kivi-item-details__price"><span class="kivi-item-details__heading"><?php ( Kivi_Public::is_for_rent_assignment(get_the_id()) ) ? _e('Vuokra', 'Kivi') :  _e('Hinta', 'Kivi'); ?></span>
             <br>
             <?php echo ( $price = Kivi_Public::get_display_price(get_the_id()) ) ? $price : '-'; ?>
           </p>
         </div>
         <div class="div">
-          <p><span class="kivi-item-details__heading"><?php _e('Koko', 'Kivi')?></span><br>
+          <p class="kivi-item-details__area"><span class="kivi-item-details__heading"><?php _e('Koko', 'Kivi')?></span><br>
             <?php
               if ( get_post_meta($post->ID, '_living_area_m2', true) != "" ) {
                 echo get_post_meta($post->ID, '_living_area_m2', true).' m²';
@@ -88,7 +88,7 @@ get_header(); ?>
           </p>
         </div>
         <div class="div">
-          <p><span class="kivi-item-details__heading"><?php _e('Vuosi', 'Kivi')?></span><br>
+          <p class="kivi-item-details__buildyear"><span class="kivi-item-details__heading"><?php _e('Vuosi', 'Kivi')?></span><br>
             <?php
               if ( get_post_meta($post->ID, '_rc_buildyear2', true) != "" ) {
                 echo get_post_meta($post->ID, '_rc_buildyear2', true);
