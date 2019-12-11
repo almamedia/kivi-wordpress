@@ -104,6 +104,13 @@ public function kivi_sync() {
 	
 	$baseurl_input_value = esc_attr(get_option('kivi-remote-url'));
 	$baseurl_trimmed = trim( preg_replace( '/\/$/', '', $baseurl_input_value ) );
+
+	if( empty($baseurl_trimmed) ){
+        update_option('kivi-show-statusbar', 0);
+        wp_send_json( array('message'=>'Aineisto-URLia ei ole asetuksissa.') );
+        wp_die();
+    }
+
 	$baseurl_array = explode(",", $baseurl_trimmed);
     $active_items=[];
 	foreach ($baseurl_array as $baseurl) {
@@ -199,10 +206,11 @@ public function kivi_sync() {
   public function kivi_set_remote_url() {
     $new_value = $_POST['kivi-remote-url'];
 
-    if( !isset( $new_value ) || $new_value == '' ) {
+    update_option( 'kivi-remote-url', $new_value );
+    if( empty($new_value) ) {
       wp_send_json(array('status'=>0, 'message'=>'Päivitys epäonnistui.'));
     }
-    update_option( 'kivi-remote-url', $new_value );
+
     wp_send_json(array('status'=>1, 'message'=>$new_value));
   }
 
@@ -214,7 +222,8 @@ public function kivi_sync() {
     set_kivi_option('kivi-prefilter-name',  $_POST['kivi-prefilter-name'] );
     set_kivi_option('kivi-prefilter-value',  $_POST['kivi-prefilter-value'] );
     set_kivi_option('kivi-gmap-id', $_POST['kivi-gmap-id']);
-    wp_send_json( array('status'=>1, 'message'=>$_POST['kivi-brand-color'].', '.$_POST['kivi-slug'].', '.$_POST['kivi-show-statusbar']) );
+    update_option( 'kivi-remote-url', $_POST['kivi-remote-url'] );
+    wp_send_json( array('status'=>1, 'message'=>'Asetukset tallennettu') );
   }
 
   /*
@@ -421,7 +430,10 @@ public function kivi_sync() {
 
     register_post_type( 'kivi_item', $args );
 
-    flush_rewrite_rules();
+    if ( is_admin() ){
+        flush_rewrite_rules(false);
+    }
+
   }
 
   /**
