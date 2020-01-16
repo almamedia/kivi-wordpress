@@ -119,6 +119,18 @@
     if (get_post_meta($post_id, '_bid_wanted_flag', true) == "true") {
         $box->add( Kivi_Viewable::asSingle( $post_id, '_highest_bid' ) );
         $box->add( Kivi_Viewable::asSingle( $post_id, '_bids_page_url' ) );
+        add_filter( 'kivi_viewable_label', function( $label ) {
+            if( $label == "Velaton hinta" ) {
+                $label = "Velaton lähtöhinta";
+            }
+            return $label;
+        });
+        add_filter( 'kivi_viewable_label', function( $label ) {
+            if($label == "Myyntihinta") {
+                $label = "Lähtöhinta ilman velkaosuutta";
+            }
+            return $label;
+        });
     }
     $box->add( Kivi_Viewable::asSingle( $post_id, '_price' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_debt' ) );
