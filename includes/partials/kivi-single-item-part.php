@@ -33,14 +33,14 @@
       </h2>
       <div class="kivi-item-details">
         <div class="div">
-          <p>
+          <p class="kivi-item-details__price">
           <?php ( Kivi_Public::is_for_rent_assignment(get_the_id()) ) ? _e('Vuokra', 'Kivi') :  _e('Hinta', 'Kivi'); ?>
           <br>
             <?php echo ( $price = Kivi_Public::get_display_price(get_the_id()) ) ? $price : '-'; ?>
           </p>
         </div>
         <div class="div">
-          <p><?php _e('Koko', 'Kivi')?><br>
+          <p class="kivi-item-details__area"><?php _e('Koko', 'Kivi')?><br>
             <?php
               if ( get_post_meta(get_the_id(), '_living_area_m2', true) != "" ) {
                 echo intval(get_post_meta(get_the_id(), '_living_area_m2', true)).' m²';
@@ -51,7 +51,7 @@
           </p>
         </div>
         <div class="div">
-          <p><?php _e('Vuosi', 'Kivi')?><br>
+          <p class="kivi-item-details__buildyear"><?php _e('Vuosi', 'Kivi')?><br>
             <?php
               if ( get_post_meta(get_the_id(), '_rc_buildyear2', true) != "" ) {
                 echo get_post_meta(get_the_id(), '_rc_buildyear2', true);

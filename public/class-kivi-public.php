@@ -646,7 +646,7 @@ class Kivi_Public {
 		if( empty($value) ){
 			return $value;
 		}
-		
+
 		// change float value to integer if .00
 		if( is_numeric($value) && fmod($value, 1) === 0.00 ){
 			$value = intval($value);
@@ -682,7 +682,8 @@ class Kivi_Public {
 				'_charges_condominium_total_mo',
 				'_charges_finance_base_month',
 				'_charges_maint_base_month',
-				'_rc_lot_rent',
+                '_rc_lot_rent',
+                '_highest_bid',
 			);
 			if( in_array($kivi_property->name, $to_price) && is_numeric($value) ){
 				if( is_float($value) || intval($value) < 1000 ){
@@ -753,7 +754,7 @@ class Kivi_Public {
 
         return $value;
 	}
-	
+
 	function filter_charges_eheating( $value, $label, $properties ){
 
         if( empty($value) ){
@@ -764,12 +765,25 @@ class Kivi_Public {
 		if( count($properties) == 1 && isset($properties[0]) ){
 
 			$kivi_property = $properties[0];
-		
+
 			if( '_charges_eheating' == $kivi_property->name ){
 				$value = $value . " € / " . __( "kk", "kivi" );
 			}
 		}
-		
+
 		return $value;
-	}
+    }
+    function filter_bid_url( $value, $label ){
+
+        if( empty($value) ){
+            return $value;
+        }
+        if('Linkki kohteen seurantasivulle' == $label  && filter_var($value, FILTER_VALIDATE_URL) ){
+            $value = lcfirst( $value );
+            $value = '<a href="' . $value . '" target="_blank" rel="noopener noreferrer" class="kivi-bids-url">Seuraa kohteen tarjouskauppaa »</a>';
+        }
+
+        return $value;
+
+    }
 }

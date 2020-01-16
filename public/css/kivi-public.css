@@ -209,6 +209,11 @@ input[type="submit"].button-kivi {
   flex: 0 1 200px;
 }
 
+.bid-wanted .kivi-item-details__price::after {
+  content: "tarjouskauppa";
+  display: block;
+}
+
 .kivi-index-paginator {
   max-width: 600px;
   display: flex;
