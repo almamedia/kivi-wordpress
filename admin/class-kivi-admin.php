@@ -146,7 +146,7 @@ public function kivi_sync() {
 					$this->presentation_func( $foo, $result );
 				}elseif( $foo->getName() == "realty_vi_presentation") {
 					$this->realty_vi_presentation_func( $foo, $result );
-				}elseif( in_array( $foo->getName(), [ "unencumbered_price","price","debt"] )) {
+				}elseif( in_array( $foo->getName(), [ "unencumbered_price" ] )) {
 					$this->copy_int_func( $foo, $result );
 				}
 				else {
@@ -227,7 +227,7 @@ public function kivi_sync() {
   }
 
   /*
-  * Copy attributes from item to the result object just as thet are or mapped
+  * Copy attributes from item to the result object just as they are or mapped
   * values on some cases
   */
   public function copy_func(&$item, &$result){
