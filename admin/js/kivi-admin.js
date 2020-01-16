@@ -19,10 +19,11 @@
         'kivi-prefilter-name': $('#kivi-prefilter-name').val(),
         'kivi-prefilter-value': $('#kivi-prefilter-value').val(),
         'kivi-show-sidebar': $('#kivi-show-sidebar').is(':checked') ? true : "",
-				'kivi-use-www-size': $('#kivi-use-www-size').is(':checked') ? true : "",
+		'kivi-use-www-size': $('#kivi-use-www-size').is(':checked') ? true : "",
         'kivi-use-debt-free-price-on-shortcode': $('#kivi-use-debt-free-price-on-shortcode').is(':checked') ? true : "",
-				'kivi-clean-values': $('#kivi-clean-values').is(':checked') ? true : "",
-        'kivi-gmap-id': $('#kivi-gmap-id').val()
+		'kivi-clean-values': $('#kivi-clean-values').is(':checked') ? true : "",
+        'kivi-gmap-id': $('#kivi-gmap-id').val(),
+		'kivi-remote-url': $('#kivi-remote-url').val()
       };
 
       doAjax(opts, function(res, type) {
@@ -30,7 +31,7 @@
       });
     });
 
-		$('#xmlimport-sync').on('click', function() {
+	$('#xmlimport-sync').on('click', function() {
       $('body').css('opacity', '0.8');
       $('body').css('cursor', 'wait');
       $('#xmlimport-sync').css('cursor', 'wait');
@@ -48,7 +49,7 @@
           $('#xmlimport-sync').css('cursor', 'initial');
         });
       });
-		});
+	});
 
     $('#xmlimport-stop-sync').on('click', function() {
       if (confirm('Oletko varma että haluat keskeyttää?')) {

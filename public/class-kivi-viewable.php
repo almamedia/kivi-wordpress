@@ -53,9 +53,13 @@ class Kivi_Viewable {
     }
     return apply_filters( 'kivi_viewable_value', $ret, $this->label, $this->properties );
   }
+  
+  public function getLabel(){
+	  return apply_filters( 'kivi_viewable_label', $this->label, $this->properties );
+  }
 
   public function getTableRow(){
-    return '<tr><th class="kivi-item-cell kivi-item-cell-header">' . $this->label . '</th>' .
+    return '<tr><th class="kivi-item-cell kivi-item-cell-header">' . $this->getLabel() . '</th>' .
     '<td class="kivi-item-cell kivi-item-cell-value '.'" id="'. preg_replace("/[\s_]/", "-", $this->label ) .'">' . $this->getValue() . '</td></tr>';
   }
 

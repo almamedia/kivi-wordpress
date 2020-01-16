@@ -167,7 +167,6 @@ class Kivi {
     $this->loader->add_action( 'wp_ajax_kivi_reset', $plugin_admin, 'kivi_reset' );
     $this->loader->add_action( 'wp_ajax_kivi_set_remote_url', $plugin_admin, 'kivi_set_remote_url' );
     $this->loader->add_action( 'wp_ajax_kivi_save_settings', $plugin_admin, 'kivi_save_settings' );
-    $this->loader->add_action( 'wp_ajax_kivi_save_settings', $plugin_admin, 'register_kivi_item_post_type' );
 
     add_filter( 'cron_schedules', 'kivi_add_schedule' );
 
