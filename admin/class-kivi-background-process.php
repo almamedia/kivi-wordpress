@@ -94,8 +94,8 @@ class Kivi_Background_Process extends WP_Background_Process
         $args = array(
             'meta_query' => array(
                 array(
-                    'key' => '_realty_unique_no',
-                    'value' => $item['realty_unique_no'],
+                    'key' => '_uid',
+                    'value' => crc32($item['realty_unique_no'].$item['flattype_id']),
                     'type' => 'NUMERIC',
                 )
             ),
@@ -165,8 +165,8 @@ class Kivi_Background_Process extends WP_Background_Process
         $args = array(
             'meta_query' => array(
                 array(
-                    'key' => '_realty_unique_no',
-                    'value' => $item['realty_unique_no'],
+                    'key' => '_uid',
+                    'value' => crc32($item['realty_unique_no'].$item['flattype_id']),
                     'type' => 'NUMERIC',
                 )
             ),
@@ -302,7 +302,7 @@ class Kivi_Background_Process extends WP_Background_Process
         $postarr['post_content'] = $item['presentation'];
         $postarr['post_title'] = $item['flat_structure'] . ' ' . $item['town'] . ' ' . $item['street'];
         $post_id = wp_insert_post($postarr);
-        add_post_meta($post_id, '_realty_unique_no', $item['realty_unique_no'], true);
+        add_post_meta($post_id, '_uid', crc32($item['realty_unique_no'].$item['flattype_id']), true);
         foreach ($item as $key => $value) {
             if ($key == 'images') {
                 foreach ($item['images'] as $key => $value) {
@@ -350,7 +350,7 @@ class Kivi_Background_Process extends WP_Background_Process
         );
         $posts = get_posts($args);
         foreach ($posts as $post) {
-            $realtyid = get_post_meta($post->ID, '_realty_unique_no', $single = true);
+            $realtyid = get_post_meta($post->ID, '_uid', $single = true);
             if (!in_array($realtyid, $active_items)) {
                 $this->item_delete($post->ID);
             }

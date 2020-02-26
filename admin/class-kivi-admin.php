@@ -166,7 +166,7 @@ public function kivi_sync() {
 			}
 		  }
 
-		  array_push($active_items, $result['realty_unique_no']);
+		  array_push($active_items, crc32($result['realty_unique_no'].$result['flattype_id']));
 		  $this->process->push_to_queue( $result );
 		}
 	} // /foreach $baseurl_array
