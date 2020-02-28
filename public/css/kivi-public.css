@@ -144,6 +144,11 @@ input[type="submit"].button-kivi {
   width: 240px;
   padding: 8px;
   text-align: left;
+  word-break: break-word;
+}
+
+.kivi-item-cell-value {
+  word-break: break-word;
 }
 
 @media (max-width: 800px) {
@@ -333,6 +338,11 @@ a.page-numbers:hover {
  }
 
  /* Kivi-single-template: slick slider */
+ .kivi-img-container {
+    max-width: 1240px;
+    margin: auto;
+ }
+
  .slick-for-image.current {
   height: auto;
  }

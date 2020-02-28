@@ -187,7 +187,10 @@
     $view->add( New Kivi_Property( $post_id,  $name='', $type="realtyoption", 'Lisätieto-ominaisuudet', 'oma sauna'  ) );
     $view->add( New Kivi_Property( $post_id,  $name=__('taloyhtiössä sauna',"kivi"), $type="realtyoption", 'Taloyhtiössä on...', 'sauna'  ) );
     $box->add( $view );
-    $box->add( Kivi_Viewable::asSingle( $post_id, '_fireplace_other' ) );
+    $view = New Kivi_Viewable( $label=__("Tulisija","kivi"));
+    $view->add( New Kivi_Property( $post_id,  $name=__('','kivi'), $type="realtyoption", 'Takkatiedot', ''  ) );
+    $view->add( New Kivi_Property( $post_id, '_fireplace_other') );
+    $box->add( $view );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_otherspace_desc' ) );
     $view = New Kivi_Viewable( $label=__("Parveke","kivi"));
     $view->add( New Kivi_Property( $post_id,  $name=__('asunnossa on parveke',"kivi"), $type="realtyoption", 'Lisätieto-ominaisuudet', 'parveke'  ) );
@@ -206,7 +209,8 @@
     $box->add( Kivi_Viewable::asSingle( $post_id, '_condition_id' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_condition' ) );
   	$box->add( Kivi_Viewable::asSingle( $post_id, '_renovation_made' ) );
-  	$box->add( Kivi_Viewable::asSingle( $post_id, '_energyclass_name' ) );
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_energyclass_name' ) );
+    $box->add( Kivi_Viewable::asSingle( $post_id, '_heating' ) );
     $view = New Kivi_Viewable( $label=__("Lämmitysjärjestelmän kuvaus","kivi"));
     $view->add( New Kivi_Property( $post_id,  $name='', $type="realtyoption", 'Lämmitysjärjestelmä', '' ) );
     $box->add( $view );
