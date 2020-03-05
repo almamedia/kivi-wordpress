@@ -235,7 +235,14 @@ get_header(); ?>
 
               <div id="map"></div>
           <script type="text/javascript">
-
+            <?php
+                if ( get_post_meta($post->ID, "_lat", true) && get_post_meta($post->ID, "_lon", true) ):
+                    echo "var hasCoordinates = true;";
+                    echo 'var latlng = {lat:' . get_post_meta($post->ID, "_lat", true) . ', lng: '. get_post_meta($post->ID, "_lon", true) . '};';
+                else:
+                    echo "var hasCoordinates = false;";
+                endif;
+            ?>
             function initMap() {
 
               var geocoder = new google.maps.Geocoder();
@@ -267,6 +274,8 @@ get_header(); ?>
               var mapOptions = {
                 zoom: 15,
                 scrollwheel: false,
+                draggable: false,
+                draggableCursor: 'default',
                 // Apply the map style array to the map.
                 styles: styleArray,
               }
@@ -283,17 +292,27 @@ get_header(); ?>
             }
 
             function setMarker(geocoder, map, address) {
-              geocoder.geocode( { 'address': address}, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                  map.setCenter(results[0].geometry.location);
-                  var marker = new google.maps.Marker({
-                      map: map,
-                      position: results[0].geometry.location
-                  });
-                } else {
-                  console.log('Ceocode error: too many requests at once');
+                if ( hasCoordinates ) {
+                    map.setCenter(latlng);
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: latlng,
+                    });
+                    marker.setMap(map);
                 }
-              });
+                else {
+                    geocoder.geocode( { 'address': address}, function(results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                        map.setCenter(results[0].geometry.location);
+                        var marker = new google.maps.Marker({
+                            map: map,
+                            position: results[0].geometry.location
+                        });
+                        } else {
+                            console.log('Geocode error');
+                        }
+                    });
+                }
             }
           </script>
           <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo get_kivi_option('kivi-gmap-id'); ?>&callback=initMap" async defer></script>

@@ -40,7 +40,7 @@ Just drop extract the package in the `plugins` directory of your WP installation
 
 - Clean values. Alters property data to look better. Replaces "m2" with "m²", addds euro sign to prices and formats numbers. For additional formatting, use the filter "kivi_viewable_value" ( with up to three attributes: value, label, properties).
 
-- Google maps api key. If set, a google maps component is shown on the item page and the property is pinned on the map. The location is based on the address and geocoded using google's api. Note that there is a limit of geocoding requests for a single api key.
+- Google maps api key. If set, a Google maps component is shown on the item page and the property is pinned on the map. The location is based on coordinates set in KIVI system or the address geocoded using Google's Geocoding API.
 
 - Reset. This will reset the settings and remove all KIVI items.
 - Save settings. This will (obviously) save the settings.
@@ -117,7 +117,7 @@ or
 
 
 ## Updating plugin
-Replace all plugin files by FTP. 
+Replace all plugin files by FTP.
 
 If using WP admin, follow these steps:
 
@@ -138,7 +138,7 @@ If property data stops updating from Kivi (this might happen after WP Core updat
 
 ## Recommended plugins
 ### DX Delete Attached Media
-Helps to keep media library clean. With this plugin, media attached to items will be removed when item is deleted. This might or might not be the wanted behaviour. 
+Helps to keep media library clean. With this plugin, media attached to items will be removed when item is deleted. This might or might not be the wanted behaviour.
 If the images dowloaded by Kivi plugin are used in posts or pages, the images will stop working after the item is deleted.
 
 ### WordPress Share Buttons Plugin – AddThis
@@ -146,7 +146,7 @@ An easy way to include share buttons for Kivi item pages. Just install and confi
 
 ### Some contact form plugin?
 There is a need for contact form plugin, that could embed contact form to single item page and on form submit send the message to the correct email address.
-The email is stored as meta data for the item ( metadata "_sc_itempage_email" ). 
+The email is stored as meta data for the item ( metadata "_sc_itempage_email" ).
 
 ## Feature Requests and Contributing
 
