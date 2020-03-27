@@ -79,8 +79,8 @@ get_header(); ?>
         <div class="div">
           <p class="kivi-item-details__area"><span class="kivi-item-details__heading"><?php _e('Koko', 'Kivi')?></span><br>
             <?php
-              if ( get_post_meta($post->ID, '_living_area_m2', true) != "" ) {
-                echo get_post_meta($post->ID, '_living_area_m2', true).' m²';
+              if ( get_post_meta( get_the_id(), '_living_area_m2', true ) != "" ) {
+                echo get_post_meta( get_the_id(), '_living_area_m2', true ).' m²';
               }
               else {
                 echo '-';
@@ -90,8 +90,8 @@ get_header(); ?>
         <div class="div">
           <p class="kivi-item-details__buildyear"><span class="kivi-item-details__heading"><?php _e('Vuosi', 'Kivi')?></span><br>
             <?php
-              if ( get_post_meta($post->ID, '_rc_buildyear2', true) != "" ) {
-                echo get_post_meta($post->ID, '_rc_buildyear2', true);
+              if ( get_post_meta( get_the_id(), '_rc_buildyear2', true) != "" ) {
+                echo get_post_meta( get_the_id(), '_rc_buildyear2', true);
               }
               else {
                 echo '-';
@@ -111,7 +111,7 @@ get_header(); ?>
         }
         ?>
 
-        <?php if(view_contact_info( $post->ID)): ?>
+        <?php if( view_contact_info( get_the_id() ) ): ?>
         <section class="kivi-single-item-body kivi-single-contact-info">
             <div class="kivi-header-wrapper">
               <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
@@ -120,14 +120,14 @@ get_header(); ?>
             </div>
             <table id="kiviContact" class="kivi-item-table kivi-contact">
               <tbody>
-                <?php echo view_contact_info( $post->ID);?>
+                <?php echo view_contact_info( get_the_id() );?>
               </tbody>
-              <?php if( get_post_meta($post->ID, '_iv_supplier_user', true) == "true" ): ?>
+              <?php if( get_post_meta( get_the_id(), '_iv_supplier_user', true) == "true" ): ?>
               <tfoot>
                 <tr class="kivi-iv-person">
                   <th>
                     <div class="kivi-iv-person-container">
-                      <img class="kivi-iv-person-image" src="<?php echo get_iv_person_image($post->ID); ?>" alt="<?php echo get_post_meta($post->ID, '_iv_person_name', true); ?>" />
+                      <img class="kivi-iv-person-image" src="<?php echo get_iv_person_image(get_the_id()); ?>" alt="<?php echo get_post_meta( get_the_id(), '_iv_person_name', true ); ?>" />
                     </div>
                   </th>
                 </tr>
@@ -145,7 +145,7 @@ get_header(); ?>
             </div>
             <table id="kiviBasic" class="kivi-item-table">
               <tbody>
-                <?php echo view_basic_info( $post->ID); ?>
+                <?php echo view_basic_info( get_the_id() ); ?>
               </tbody>
             </table>
         </section>
@@ -158,7 +158,7 @@ get_header(); ?>
             </div>
             <table id="kiviPrice" class="kivi-item-table">
               <tbody>
-                <?php echo view_cost_info( $post->ID); ?>
+                <?php echo view_cost_info( get_the_id() ); ?>
               </tbody>
             </table>
         </section>
@@ -171,12 +171,12 @@ get_header(); ?>
             </div>
             <table id="kiviMoreInfo" class="kivi-item-table">
               <tbody>
-                <?php echo view_additional_info( $post->ID); ?>
+                <?php echo view_additional_info( get_the_id() ); ?>
               </tbody>
             </table>
         </section>
 
-        <?php if( $materials = view_materials_info( $post->ID) ): ?>
+        <?php if( $materials = view_materials_info( get_the_id() ) ): ?>
         <section class="kivi-single-item-body kivi-single-materials-info">
             <div class="kivi-header-wrapper">
               <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
@@ -191,13 +191,13 @@ get_header(); ?>
         </section>
         <?php endif; ?>
 
-        <?php if( $housingco = view_housing_company_info( $post->ID) ): ?>
+        <?php if( $housingco = view_housing_company_info( get_the_id() ) ): ?>
         <section class="kivi-single-item-body kivi-single-housing-company-info">
             <div class="kivi-header-wrapper">
               <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
                 <button class="kivi-toggle hide-by-default" data-target="kiviHousing">
                   <?php
-                    if( get_post_meta($post->ID, '_realtycompany', true)) {
+                    if( get_post_meta( get_the_id(), '_realtycompany', true ) ) {
                       echo _e('Taloyhtiö', 'kivi');
                     }
                     else {
@@ -215,7 +215,7 @@ get_header(); ?>
         </section>
         <?php endif; ?>
 
-        <?php if( $services = view_services_info( $post->ID)->__toString() ): ?>
+        <?php if( $services = view_services_info( get_the_id() )->__toString() ): ?>
 		    <section class="kivi-single-item-body kivi-single-services-info">
             <div class="kivi-header-wrapper">
               <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
@@ -280,7 +280,7 @@ get_header(); ?>
                 styles: styleArray,
               }
               var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-              <?php echo 'var address = "' . get_post_meta($post->ID, "_street", true) . ', '. get_post_meta($post->ID, "_town", true) . '";';  ?>
+              <?php echo 'var address = "' . get_post_meta( get_the_id(), "_street", true ) . ', '. get_post_meta( get_the_id(), "_town", true ) . '";';  ?>
 
               // Set the marker on the map for the first time
               setMarker(geocoder, map, address);
