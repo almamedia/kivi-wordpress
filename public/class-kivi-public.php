@@ -464,7 +464,7 @@ class Kivi_Public {
       "charges_finance_base_month" => __("Rahoitusvastike","kivi"),
       "charges_maint_base_month" => __("Hoitovastike","kivi"),
       "charges_other" => __("Lisätietoja maksuista","kivi"),
-      "charges_parkingspace" => __("Autopaikka","kivi"),
+      "charges_parkingspace" => __("Autopaikkamaksu","kivi"),
       "charges_sauna" => __("Saunamaksu","kivi"),
       "charges_tv" => __("Satelliittiantenni/Kaapeli-TV (€/kk)","kivi"),
       "charges_water" => __("Vesimaksu (€/kk)","kivi"),
