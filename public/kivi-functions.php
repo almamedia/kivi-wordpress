@@ -145,6 +145,7 @@
     $view->add( New Kivi_Property( $post_id, '_charges_water') );
     $view->add( New Kivi_Property( $post_id, '_watercharge_type_id') );
     $box->add( $view );
+	$box->add( Kivi_Viewable::asSingle( $post_id, '_charges_parkingspace' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_charges_eheating' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_charges_sewage' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_charges_road' ) );

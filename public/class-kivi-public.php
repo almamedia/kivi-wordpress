@@ -464,7 +464,7 @@ class Kivi_Public {
       "charges_finance_base_month" => __("Rahoitusvastike","kivi"),
       "charges_maint_base_month" => __("Hoitovastike","kivi"),
       "charges_other" => __("Lisätietoja maksuista","kivi"),
-      "charges_parkingspace" => __("Autopaikka (€/kk)","kivi"),
+      "charges_parkingspace" => __("Autopaikka","kivi"),
       "charges_sauna" => __("Saunamaksu","kivi"),
       "charges_tv" => __("Satelliittiantenni/Kaapeli-TV (€/kk)","kivi"),
       "charges_water" => __("Vesimaksu (€/kk)","kivi"),
@@ -777,6 +777,27 @@ class Kivi_Public {
 
 		return $value;
     }
+	
+	function filter_charges_parkingspace( $value, $label, $properties ){
+
+        if( empty($value) ){
+            return $value;
+        }
+
+		// only check for single properties
+		if( count($properties) == 1 && isset($properties[0]) ){
+			$kivi_property = $properties[0];
+			if( '_charges_parkingspace' == $kivi_property->name ){
+				$value .= " €";
+				$parkingcharge_type_id = get_post_meta( $kivi_property->post_id, '_parkingcharge_type_id', true ); // "kk" | "v"
+				if( $parkingcharge_type_id ) {
+					$value .= " / ".$parkingcharge_type_id;
+				}
+			}
+		}
+		return $value;
+    }
+	
     function filter_bid_url( $value, $label ){
 
         if( empty($value) ){
