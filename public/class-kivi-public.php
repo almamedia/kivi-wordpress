@@ -682,24 +682,29 @@ class Kivi_Public {
 				'_charges_condominium_total_mo',
 				'_charges_finance_base_month',
 				'_charges_maint_base_month',
+                '_charges_realtytax',
+                '_charges_heating',
+                '_charges_road',
                 '_rc_lot_rent',
                 '_highest_bid',
 			);
-			if( in_array($kivi_property->name, $to_price) && is_numeric($value) ){
+			if( in_array($kivi_property->name, $to_price) ){
 				$value = +$value;
-				if( is_float($value) || intval($value) < 1000 ){
-					$price = number_format($value, 2, ',', ' '); // to 2 decimal price string with thousand separators
-				}
-				elseif( is_float($value) && intval($value) > 999 ){
-					$price = number_format($value, 2, ',', ' '); // with thousands separated and two decimals
-				}
-				elseif( intval($value) > 999 ){
-					$price = number_format($value, 0, ',', ' '); // with thousands separated
-				}
-				else{
-					return $value;
-				}
-				return $price." €";
+				if( is_numeric($value) ){
+                    if( is_float($value) || intval($value) < 1000 ){
+                        $price = number_format($value, 2, ',', ' '); // to 2 decimal price string with thousand separators
+                    }
+                    elseif( is_float($value) && intval($value) > 999 ){
+                        $price = number_format($value, 2, ',', ' '); // with thousands separated and two decimals
+                    }
+                    elseif( intval($value) > 999 ){
+                        $price = number_format($value, 0, ',', ' '); // with thousands separated
+                    }
+                    else{
+                        return $value;
+                    }
+                    return $price." €";
+                }
 			}
 
 			// custom solution for lot size
