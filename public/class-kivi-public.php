@@ -520,7 +520,6 @@ class Kivi_Public {
       "not_sold_desc" => __("Kauppaan ei kuulu","kivi"),
       "other_equipment_desc" => __("Muuta kauppaan kuuluvaa","kivi"),
       "otherspace_desc" => __("Tilojen kuvaus","kivi"),
-      "renovation_made" => __("Toimeksiantajan aikana huoneistoon tehdyt toimenpiteet sekä niiden ajankohta","kivi"),
       "roofmaterial_info" => __("Kattomateriaalien kuvaus ja lisätiedot","kivi"),
       "sauna_desc" => __("Saunan kuvaus, lisätiedot ja varustus","kivi"),
       "saunaoven_id" => __("Saunan kiuas","kivi"),
@@ -782,7 +781,7 @@ class Kivi_Public {
 
 		return $value;
     }
-	
+
 	function filter_charges_parkingspace( $value, $label, $properties ){
 
         if( empty($value) ){
@@ -802,7 +801,7 @@ class Kivi_Public {
 		}
 		return $value;
     }
-	
+
     function filter_bid_url( $value, $label ){
 
         if( empty($value) ){
