@@ -30,38 +30,33 @@ get_header(); ?>
         );
 
         $attachments = get_children( $args );
-        if ( $attachments ) {
-          ?>
+        if ( $attachments ) : ?>
           <div class="kivi-img-container">
             <div class="slick-for">
-              <?php
-              foreach ( $attachments as $attachment ) : ?>
+              <?php foreach ( $attachments as $attachment ) : ?>
                 <div class="slick-for-image-wrapper">
-                  <?php
-                    echo wp_get_attachment_image( $attachment->ID, $size = array("1200", "800"), false, array( "class" => "slick-for-image", "alt" => "", "loading" => false ) );
-                  ?>
-                </div><?php
-              endforeach;
-              ?>
+                  <?php echo wp_get_attachment_image( 
+							$attachment->ID,
+							$size = array("1200", "800"),
+							false,
+							array( "class" => "slick-for-image", "alt" => "", "loading" => false ),
+				  ); ?>
+                </div>
+			  <?php endforeach; ?>
             </div>
             <div class="slick-carousel">
-                <?php
-                foreach ( $attachments as $attachment ) {
-                  ?>
+                <?php foreach ( $attachments as $attachment ) : ?>
                   <div class="slick-carousel-image-wrapper">
-
                   <?php
                     echo wp_get_attachment_image( $attachment->ID, $size = array("150", "100"), false, array( "class" => "slick-carousel-image", "alt" => "" ) );
                   ?>
-
-                  </div><?php
-                } ?>
+                  </div>
+			    <?php endforeach; ?>
             </div>
-          </div><?php
-        }
+          </div>
+	    <?php endif; ?>
 
-        $brand_styling = ' style="background-color:'.get_option("kivi-brand-color").';"';
-      ?>
+        <?php $brand_styling = ' style="background-color:'.get_option("kivi-brand-color").';"'; ?>
           <div class="kivi-single-item-header">
       <p class="kivi-single-item-structure"> <?php echo ucfirst( get_post_meta( get_the_id(), '_realtytype_id', true ) ) ?>  <span aria-hidden='true'> | </span> <?php echo  get_post_meta( get_the_id(), '_flat_structure', true )  ?> </p>
       <h1 class="kivi-single-item-title">
