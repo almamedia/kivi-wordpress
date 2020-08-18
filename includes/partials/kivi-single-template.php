@@ -38,7 +38,7 @@ get_header(); ?>
               foreach ( $attachments as $attachment ) : ?>
                 <div class="slick-for-image-wrapper">
                   <?php
-                    echo wp_get_attachment_image( $attachment->ID, $size = array("1200", "800"), false, array( "class" => "slick-for-image", "alt" => "" ) );
+                    echo wp_get_attachment_image( $attachment->ID, $size = array("1200", "800"), false, array( "class" => "slick-for-image", "alt" => "", "loading" => false ) );
                   ?>
                 </div><?php
               endforeach;
