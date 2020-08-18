@@ -39,7 +39,7 @@ get_header(); ?>
 							$attachment->ID,
 							$size = array("1200", "800"),
 							false,
-							array( "class" => "slick-for-image", "alt" => "", "loading" => false ),
+							array( "class" => "slick-for-image", "alt" => "", "loading" => false )
 				  ); ?>
                 </div>
 			  <?php endforeach; ?>
