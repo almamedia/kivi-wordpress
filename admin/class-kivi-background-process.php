@@ -264,26 +264,28 @@ class Kivi_Background_Process extends WP_Background_Process
                     }
                 }
             } elseif ($key == 'iv_person_image_url' && $value) {
-                $image_url = get_post_meta($post_id, '_sc_image_url', $single = true);
+                $image_url = get_post_meta($post_id, '_iv_person_image_url', $single = true);
                 if ($image_url !== $value) {
                     $this->kivi_save_image($value, 'iv_person_image_url', 0, $post_id);
                     // And delete old file here too...
                     $args = array(
                         'meta_query' => array(
                             array(
-                                'key' => '_sc_image_url',
+                                'key' => 'original_image_url',
                                 'value' => $image_url,
                             )
                         ),
                         'post_type' => 'attachment',
+						'post_parent' => $post_id,
                     );
                     $posts = get_posts($args);
                     foreach ($posts as $attachment) {
-                        if (wp_get_post_parent_id($attachment->ID) == $post->ID) {
+                        if (wp_get_post_parent_id($attachment->ID) == $post_id) {
                             wp_delete_attachment($attachment->ID, false); // move to trash (true -> force delete)
                         }
                     }
                 }
+				update_post_meta($post_id, '_iv_person_image_url', $value);
             } else {
                 update_post_meta($post_id, '_' . $key, $value);
             }
