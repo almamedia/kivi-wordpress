@@ -59,15 +59,17 @@ class Kivi_Property {
 
   private function getPresentationValue(){
     $opts = get_post_meta( $this->post_id, $this->name, true );
-    foreach ($opts as $pres) {
-      $p = "";
-      $d = new DateTime( $pres['presentation_date'] );
-      $s = new DateTime( $pres['presentation_start'] );
-      $e = new DateTime( $pres['presentation_end'] );
+	if( is_array($opts) ) {
+		foreach ($opts as $pres) {
+		  $p = "";
+		  $d = new DateTime( $pres['presentation_date'] );
+		  $s = new DateTime( $pres['presentation_start'] );
+		  $e = new DateTime( $pres['presentation_end'] );
 
-      $p = date_format($d, 'd.m.Y') . " " . date_format($s, 'H:i') . " - " . date_format($e, 'H:i') ;
-      return $p;
-    }
+		  $p = date_format($d, 'd.m.Y') . " " . date_format($s, 'H:i') . " - " . date_format($e, 'H:i') ;
+		  return $p;
+		}
+	}
   }
   
 	private function getViPresentationsValue(){
