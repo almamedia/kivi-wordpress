@@ -303,7 +303,7 @@ class Kivi_Background_Process extends WP_Background_Process
         $postarr['post_content'] = $item['presentation'];
         $postarr['post_title'] = $item['flat_structure'] . ' ' . $item['town'] . ' ' . $item['street'];
         $post_id = wp_insert_post($postarr);
-        add_post_meta($post_id, '_realty_unique_no', $item['realty_unique_no'], true);
+        update_post_meta($post_id, '_realty_unique_no', $item['realty_unique_no']);
         foreach ($item as $key => $value) {
             if ($key == 'images') {
                 foreach ($item['images'] as $value2) {
@@ -311,8 +311,9 @@ class Kivi_Background_Process extends WP_Background_Process
                 }
             } elseif ($key == 'iv_person_image_url' && $value) {
                 $this->kivi_save_image($value, 'iv_person_image_url', 0, $post_id);
+				update_post_meta($post_id, '_iv_person_image_url', $value);
             } elseif ($key == 'realty_unique_no' && $value) {
-                add_post_meta($post_id, '_' . $key, $value, true);
+                update_post_meta($post_id, '_' . $key, $value);
             } elseif ($value != "") {
                 add_post_meta($post_id, '_' . $key, $value);
             }
@@ -405,10 +406,10 @@ class Kivi_Background_Process extends WP_Background_Process
                 } else {
                     add_post_meta($post_id, '_kivi_item_image', $attachment_id);
                 }
-                add_post_meta($attachment_id, 'original_image_url', $url);
-                add_post_meta($attachment_id, 'image_type', $image_type);
+                update_post_meta($attachment_id, 'original_image_url', $url);
+                update_post_meta($attachment_id, 'image_type', $image_type);
                 if ($image_type != 'iv_person_image_url') {
-                    add_post_meta($attachment_id, 'image_order', $image_order);
+                    update_post_meta($attachment_id, 'image_order', $image_order);
                 }
 
                 return wp_get_attachment_url($attachment_id);
