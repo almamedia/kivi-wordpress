@@ -148,6 +148,18 @@ An easy way to include share buttons for Kivi item pages. Just install and confi
 There is a need for contact form plugin, that could embed contact form to single item page and on form submit send the message to the correct email address.
 The email is stored as meta data for the item ( metadata "_sc_itempage_email" ).
 
+## Setting archive title
+Plugin works with Yoast SEO and you should set better archive title in the Yoast SEO settings. ("Sisältötyypit" -> "KIVI items" -> last "SEO-title" )
+or, you can use filter like this:
+
+`add_filter( 'pre_get_document_title', function($title){
+    if ( is_post_type_archive('kivi_item') ){
+        $title = 'Kohteiden listailu - ' . get_bloginfo('name');
+        return $title;
+    }
+    return $title;
+}, 9999 );`
+
 ## Feature Requests and Contributing
 
 We are not too actively developing individual features for the plugin as it's meant to be a starting point for development anyways. However, we do fix bugs and for example add support for new data if such data appears in the source system. If there are specific needs you can of course contact our sales.
