@@ -22,7 +22,9 @@ for the job, but instead a starting point for development. With the plugin, simp
 
 KIVI Wordpress plugin imports KIVI data into Wordpress as a background process. The plugin is scheduled to read the active items in the KIVI system every hour. New items are added, deleted items are deleted and updated items are updated. In WordPress, the KIVI items are stored ad a custom post type named `kivi_item`. Item images are stored in the WordPress media gallery and referenced in the kivi_item posts. Kivi_item posts are not supposed to be edited using the WordPress editor as the scheduled update from the KIVI system will overwrite any changes if the item is changed in KIVI.
 
-For getting the correct export from KIVI system, a specific WordPress transfer needs to be opened first. For more information, contact the sales or the customer support kivi@almamedia.fi.
+For getting the correct export from KIVI system, a specific WordPress transfer needs to be opened first. For more information, contact the sales or the customer support kivi@almamedia.fi. 
+
+In case of technical issues, contact technical support at kivi-tekniikka@almamedia.fi
 
 ## Installation
 
