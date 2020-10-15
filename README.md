@@ -152,13 +152,15 @@ The email is stored as meta data for the item ( metadata "_sc_itempage_email" ).
 Plugin works with Yoast SEO and you should set better archive title in the Yoast SEO settings. ("Sisältötyypit" -> "KIVI items" -> last "SEO-title" )
 or, you can use filter like this:
 
-`add_filter( 'pre_get_document_title', function($title){
+```php
+add_filter( 'pre_get_document_title', function($title){
     if ( is_post_type_archive('kivi_item') ){
         $title = 'Kohteiden listailu - ' . get_bloginfo('name');
         return $title;
     }
     return $title;
-}, 9999 );`
+}, 9999 );
+```
 
 ## Feature Requests and Contributing
 
