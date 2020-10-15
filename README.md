@@ -156,10 +156,9 @@ or, you can use filter like this:
 add_filter( 'pre_get_document_title', function($title){
     if ( is_post_type_archive('kivi_item') ){
         $title = 'Kohteiden listailu - ' . get_bloginfo('name');
-        return $title;
     }
     return $title;
-}, 9999 );
+}, 99 );
 ```
 
 ## Feature Requests and Contributing
