@@ -97,6 +97,7 @@ class Kivi_Background_Process extends WP_Background_Process
                     'key' => '_realty_unique_no',
                     'value' => $item['realty_unique_no'],
                     'type' => 'NUMERIC',
+					'cache_results'  => false,
                 )
             ),
             'post_type' => 'kivi_item',
@@ -109,7 +110,7 @@ class Kivi_Background_Process extends WP_Background_Process
     }
 
     /* Add the media to media library */
-    public function add_media($image_url, $image_type, $image_order, $post_id)
+    public function add_media($image_url, $image_type, $image_order, $post_id, $caption = '')
     {
 		// current image might be as unattached in WP media
 		$args = array(
@@ -122,6 +123,7 @@ class Kivi_Background_Process extends WP_Background_Process
 			'post_parent' => 0,
 			'post_type' => 'attachment',
 			'post_status' => 'any',
+			'cache_results'  => false,
 		);
 		$posts = get_posts($args);
 		// images found, attach them if unattached
@@ -147,10 +149,11 @@ class Kivi_Background_Process extends WP_Background_Process
 			'post_parent' => $post_id,
             'post_type' => 'attachment',
             'post_status' => 'any',
+			'cache_results'  => false,
         );
         $posts = get_posts($args);
         if ( is_array($posts) && empty($posts) ) { // empty array: image not in WP, save it
-            $this->kivi_save_image($image_url, $image_type, $image_order, $post_id);
+            $this->kivi_save_image($image_url, $image_type, $image_order, $post_id, $caption);
         }
     }
 
@@ -230,7 +233,7 @@ class Kivi_Background_Process extends WP_Background_Process
 
                 foreach ($item['images'] as $i) {
                     if (!in_array($i['image_url'], $current_images)) {
-                        $this->add_media($i['image_url'], $i['image_realtyimagetype_id'], $i['image_iv_order'], $post_id);
+                        $this->add_media($i['image_url'], $i['image_realtyimagetype_id'], $i['image_iv_order'], $post_id, $i['image_desc']);
                     } else { // current image
                         $args = array( // find current image
                             'meta_query' => array(
@@ -309,7 +312,7 @@ class Kivi_Background_Process extends WP_Background_Process
         foreach ($item as $key => $value) {
             if ($key == 'images') {
                 foreach ($item['images'] as $value2) {
-                    $this->add_media($value2['image_url'], $value2['image_realtyimagetype_id'], $value2['image_iv_order'], $post_id);
+                    $this->add_media($value2['image_url'], $value2['image_realtyimagetype_id'], $value2['image_iv_order'], $post_id, $value2['image_desc']);
                 }
             } elseif ($key == 'iv_person_image_url' && $value) {
                 $this->kivi_save_image($value, 'iv_person_image_url', 0, $post_id);
@@ -365,9 +368,9 @@ class Kivi_Background_Process extends WP_Background_Process
     /*
     * Save image into media library as an attachment to the according KIVI item
     */
-    public function kivi_save_image($url, $image_type, $image_order = 0, $post_id = 0)
+    public function kivi_save_image($url, $image_type, $image_order = 0, $post_id = 0, $caption = '')
     {
-        $filename = basename($url);
+        $filename = $post_id.'-kivi-'.basename($url);
 
         $upload_dir = wp_upload_dir();
         $upload_basedir = $upload_dir['basedir'];
@@ -390,10 +393,22 @@ class Kivi_Background_Process extends WP_Background_Process
                 'post_parent' => $post_id,
                 'post_title' => 'Kohdekuva ' . preg_replace('/\.[^.]+$/', '', $filename),
                 'post_content' => '',
-                'post_status' => 'inherit'
+                'post_status' => 'inherit',
+				'post_excerpt' => sanitize_text_field($caption),
             );
-            $attachment_id = wp_insert_attachment($attachment, $upload_file['file'], $post_id);
+
+            $attachment_id = wp_insert_attachment($attachment, $upload_file['file'], $post_id, true);
+			if( is_wp_error($attachment_id) ){
+				error_log($attachment_id->get_error_message());
+				$attachment_id = 0;
+            }
+			
             if ($attachment_id) {
+
+				$qpost = get_post( $attachment_id );
+				if ( ! $qpost ) {
+					return false;
+				}
 
                 // Set featured image if not yet set
                 if ("pääkuva" == $image_type) {
@@ -402,7 +417,7 @@ class Kivi_Background_Process extends WP_Background_Process
 
                 require_once(ABSPATH . 'wp-admin/includes/image.php');
                 $attachment_data = wp_generate_attachment_metadata($attachment_id, $upload_file['file']);
-                wp_update_attachment_metadata($attachment_id, $attachment_data);
+				wp_update_attachment_metadata($attachment_id, $attachment_data);
                 if ($image_type == 'iv_person_image_url') {
                     update_post_meta($post_id, '_kivi_iv_person_image', $attachment_id);
                 } else {
