@@ -317,6 +317,8 @@ get_header(); ?>
 
       <?php endif; ?>
 
+      <?php do_action( 'kivi_single_item_after' ); ?>
+
     </main><!-- #main -->
   </div><!-- #primary -->
 
