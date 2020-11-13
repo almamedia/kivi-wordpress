@@ -404,9 +404,11 @@ class Kivi_Background_Process extends WP_Background_Process
             }
 			
             if ($attachment_id) {
+				update_post_meta($attachment_id, 'original_image_url', $url);
 
 				$qpost = get_post( $attachment_id );
 				if ( ! $qpost ) {
+					error_log("Ei löydy attachmenttia (kivi_save_image)");
 					return false;
 				}
 
@@ -423,7 +425,6 @@ class Kivi_Background_Process extends WP_Background_Process
                 } else {
                     add_post_meta($post_id, '_kivi_item_image', $attachment_id);
                 }
-                update_post_meta($attachment_id, 'original_image_url', $url);
                 update_post_meta($attachment_id, 'image_type', $image_type);
                 if ($image_type != 'iv_person_image_url') {
                     update_post_meta($attachment_id, 'image_order', $image_order);
