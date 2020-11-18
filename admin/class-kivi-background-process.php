@@ -102,7 +102,6 @@ class Kivi_Background_Process extends WP_Background_Process
             ),
             'post_type' => 'kivi_item',
             'post_status' => get_post_stati(),
-			'cache_results'  => false,
         );
 
         $count = count(get_posts($args));
@@ -177,7 +176,6 @@ class Kivi_Background_Process extends WP_Background_Process
             ),
             'post_type' => 'kivi_item',
             'post_status' => get_post_stati(),
-			'cache_results'  => false,
         );
         $posts = get_posts($args);
         if (!isset($posts[0])) {
@@ -245,7 +243,6 @@ class Kivi_Background_Process extends WP_Background_Process
                                 )
                             ),
                             'post_type' => 'attachment',
-							'cache_results'  => false,
                         );
                         $posts = get_posts($args);
                         if (isset($posts[0]) && count($posts) == 1) { // should be only one
@@ -283,7 +280,6 @@ class Kivi_Background_Process extends WP_Background_Process
                         ),
                         'post_type' => 'attachment',
 						'post_parent' => $post_id,
-						'cache_results'  => false,
                     );
                     $posts = get_posts($args);
                     foreach ($posts as $attachment) {
