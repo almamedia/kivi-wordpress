@@ -319,5 +319,3 @@
     $box->add($s);
     return $box;
   }
-
-?>
