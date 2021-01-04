@@ -204,7 +204,7 @@ public function kivi_sync() {
   }
 
   public function kivi_set_remote_url() {
-    $new_value = $_POST['kivi-remote-url'];
+    $new_value = esc_url_raw( $_POST['kivi-remote-url'], array('https', 'http') );
 
     update_option( 'kivi-remote-url', $new_value );
     if( empty($new_value) ) {
@@ -215,14 +215,14 @@ public function kivi_sync() {
   }
 
   public function kivi_save_settings() {
-    update_option( 'kivi-brand-color', $_POST['kivi-brand-color'] );
-    update_option( 'kivi-slug', $_POST['kivi-slug'] );
-    set_kivi_option('kivi-use-debt-free-price-on-shortcode',  $_POST['kivi-use-debt-free-price-on-shortcode'] );
-	set_kivi_option('kivi-clean-values',  $_POST['kivi-clean-values'] );
-    set_kivi_option('kivi-prefilter-name',  $_POST['kivi-prefilter-name'] );
-    set_kivi_option('kivi-prefilter-value',  $_POST['kivi-prefilter-value'] );
-    set_kivi_option('kivi-gmap-id', $_POST['kivi-gmap-id']);
-    update_option( 'kivi-remote-url', $_POST['kivi-remote-url'] );
+    update_option(	'kivi-brand-color',	sanitize_text_field( $_POST['kivi-brand-color'] ) );
+    update_option(	'kivi-slug',		sanitize_text_field( $_POST['kivi-slug'] ));
+    set_kivi_option('kivi-use-debt-free-price-on-shortcode', sanitize_text_field( $_POST['kivi-use-debt-free-price-on-shortcode'] ) );
+	set_kivi_option('kivi-clean-values',sanitize_text_field( $_POST['kivi-clean-values'] ) );
+    set_kivi_option('kivi-prefilter-name', sanitize_text_field( $_POST['kivi-prefilter-name'] ) );
+    set_kivi_option('kivi-prefilter-value', sanitize_text_field( $_POST['kivi-prefilter-value'] ) );
+    set_kivi_option('kivi-gmap-id', 	sanitize_text_field( $_POST['kivi-gmap-id'] ) );
+    update_option(	'kivi-remote-url', 	esc_url_raw( $_POST['kivi-remote-url'], array('https', 'http') ) );
     wp_send_json( array('status'=>1, 'message'=>'Asetukset tallennettu') );
   }
 
