@@ -119,7 +119,7 @@ or
 
 ### Changes to property info
 
-In template files, there are functions like view_<basic/cost/additional etc.>_info( $id ), that create info tables about propery.
+In template files, there are functions like view_<basic/cost/additional etc.>_info( $id ), that create info tables about property.
 
 If you need to change the table data, you can use filters: `kivi_viewable_label` and `kivi_viewable_value`, for example:
 
