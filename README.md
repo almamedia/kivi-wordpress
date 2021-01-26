@@ -117,6 +117,49 @@ for example:
 or
 `[toimeksianto tyyppi="myynti"]`
 
+### Changes to property info
+
+In template files, there are functions like view_<basic/cost/additional etc.>_info( $id ), that create info tables about propery.
+
+If you need to change the table data, you can use filters: `kivi_viewable_label` and `kivi_viewable_value`, for example:
+
+```php
+// change label
+add_filter( 'kivi_viewable_label', function( $label ) {
+	if($label == "Myyntihinta") {
+		$label = "Hinta ilman velkaosuutta";
+	}
+	return $label;
+});
+```
+
+```php
+// recreate contact info to use mailto- and tel- links.
+add_filter( 'kivi_viewable_value', function( $ret, $label, $properties ){
+	if( 'Yhteystiedot' == $label){
+		$data = array();
+		$data['name'] 	= 	get_post_meta( get_the_id(), '_iv_person_name', true);
+		$data['supplier'] = get_post_meta( get_the_id(), '_iv_person_suppliername', true);
+		$data['email'] 	= 	get_post_meta( get_the_id(), '_iv_person_email', true);
+		$data['phone'] 	= 	get_post_meta( get_the_id(), '_iv_person_mobilephone', true);
+		$data = array_map( 'esc_html', $data );
+
+		$ret_str = "";
+		$ret_str .= "<ul class='custom-kivi-contact-info'>";
+		$ret_str .= "<li class='custom-kivi-contact-info-name'>$data[name]</li>";
+		$ret_str .= "<li class='custom-kivi-contact-info-supplier'>$data[supplier]</li>";
+		$ret_str .= "<li class='custom-kivi-contact-info-email'><a href='mailto:$data[email]'>$data[email]</a></li>";
+		$ret_str .= "<li class='custom-kivi-contact-info-phone'><a href='tel:$data[phone]'>$data[phone]</a></li>";
+		$ret_str .= "</ul>";
+		
+		return $ret_str;
+	}
+    return $ret;
+}, 10, 3);
+```
+
+Add these to the current theme functions.php or as new plugin. 
+
 
 ## Updating plugin
 Replace all plugin files by FTP.
@@ -124,11 +167,11 @@ Replace all plugin files by FTP.
 If using WP admin, follow these steps:
 
 1. Get new version from Github as zip file.
-2. Go to WP admin plugins page, and disable Kivi plugin.
-3. From the same page, delete Kivi plugin.
-4. Add Kivi as new plugin by uploading the zip file.
-5. Activate Kivi plugin.
-6. Ready. Settings and items are kept in database.
+2. Add Kivi as new plugin by uploading the zip file.
+3. Wordpress will ask about updating current plugin ( if using same branch )
+4. Ready. Settings and items are kept in database.
+
+If you are updating to different branch, disable old version first. Settings are kept and shared between plugin instances.
 
 ## Wordpress Core updates
 1. Disable Kivi plugin.
@@ -140,7 +183,7 @@ If property data stops updating from Kivi (this might happen after WP Core updat
 
 ## Recommended plugins
 ### DX Delete Attached Media
-Helps to keep media library clean. With this plugin, media attached to items will be removed when item is deleted. This might or might not be the wanted behaviour.
+Helps to keep media library clean. With this plugin, media attached to items will be removed when item is deleted manually from WP admin.
 If the images dowloaded by Kivi plugin are used in posts or pages, the images will stop working after the item is deleted.
 
 ### WordPress Share Buttons Plugin – AddThis
