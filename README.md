@@ -1,10 +1,10 @@
 # KIVI WP-plugin
 - Requires at least: 4.0
-- Tested up to: 5.1.1
-- Stable tag: 1.1.0
+- Tested up to: 5.6.0
+- Stable tag: 1.1.2
 - License: GPLv2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
 
-- *PHP >= 5.6.0 required*, 5.5.9 tested
+- *PHP >= 5.6.0 required*, 7.4 tested
 - php GD support required
 - php DOM required (http://php.net/manual/en/book.dom.php)
 - php settings:
