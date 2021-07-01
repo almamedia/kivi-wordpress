@@ -231,6 +231,7 @@ class Kivi_Background_Process extends WP_Background_Process
                     }
                 }
 
+	            $this->update_item_image_urls( $post_id, $item['images'] );
                 foreach ($item['images'] as $i) {
                     if (!in_array($i['image_url'], $current_images)) {
                         $this->add_media($i['image_url'], $i['image_realtyimagetype_id'], $i['image_iv_order'], $post_id, $i['image_desc']);
@@ -295,6 +296,15 @@ class Kivi_Background_Process extends WP_Background_Process
         }
     }
 
+    private function update_item_image_urls( $post_id, $item_images = array() ) {
+	    $images_to_save = array();
+	    foreach ($item_images as $image) {
+		    $images_to_save[] = array('order' => $image['image_iv_order'], 'url' => $image['image_url'], 'type' => $image['image_realtyimagetype_id'], 'description' => $image['image_desc'] );
+	    }
+	    sort($images_to_save);
+	    update_post_meta( $post_id, '_kivi_images_data', json_encode($images_to_save) );
+    }
+
     /*
     * Add new item to wp.
     * Post is created as a draft first, images downloaded, metadata updated.
@@ -311,6 +321,7 @@ class Kivi_Background_Process extends WP_Background_Process
         update_post_meta($post_id, '_realty_unique_no', $item['realty_unique_no']);
         foreach ($item as $key => $value) {
             if ($key == 'images') {
+            	$this->update_item_image_urls( $post_id, $item['images'] );
                 foreach ($item['images'] as $value2) {
                     $this->add_media($value2['image_url'], $value2['image_realtyimagetype_id'], $value2['image_iv_order'], $post_id, $value2['image_desc']);
                 }
