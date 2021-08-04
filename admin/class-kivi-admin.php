@@ -153,6 +153,7 @@ public function kivi_sync() {
 					$this->copy_func( $foo, $result );
 				}
 			}
+			$result['source_url'] = $baseurl;
 
 		  $z->next('item');
 
