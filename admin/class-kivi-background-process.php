@@ -112,6 +112,7 @@ class Kivi_Background_Process extends WP_Background_Process
     /* Add the media to media library */
     public function add_media($image_url, $image_type, $image_order, $post_id, $caption = '')
     {
+    	return;
 		// current image might be as unattached in WP media
 		$args = array(
 			'meta_query' => array(
