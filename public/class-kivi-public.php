@@ -815,4 +815,46 @@ class Kivi_Public {
         return $value;
 
     }
+
+    public static function get_primary_image_url( $post_id, $size_str = "440x200,fit,q72" ){
+		$images = self::get_images( $post_id );
+		if( empty( $images ) ){
+			return "";
+		}
+		$first_image = $images[0];
+		if( ! empty( $first_image->url ) ){
+			return str_replace('1600x1200,fit', $size_str, $first_image->url );
+		}
+		return '';
+    }
+
+    public static function get_images( $post_id ){
+	    $data = get_post_meta( $post_id, '_kivi_images_data', true );
+	    $data = json_decode($data);
+	    if( ! empty( $data )){
+	    	return $data;
+	    }
+    }
+
+    public static function get_img_tag( $src, $alt, $class, $size_str = "1600x1200,fit,q80" ) {
+	    $search = "1600x1200,fit";
+	    $ret_str = '<img src="'.esc_attr( str_replace( $search, $size_str, $src ) ).'" alt="'.esc_attr($alt).'" class="'.esc_attr($class).'" />';
+	    if( ! empty( $alt ) ) {
+	    	$ret_str .= '<span class="kivi-image-caption">'.esc_html( $alt ).'</span>';
+	    }
+	    return $ret_str;
+    }
+	
+	public static function get_listing_button( $button_text = 'Takaisin kohdelistaan' ){
+		$ret_str = "";
+		$href = get_post_type_archive_link( 'kivi_item' );
+		if ( ! empty( $href ) ) {
+			// https://icons.getbootstrap.com/icons/arrow-left-circle-fill/
+			$icon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">   <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/> </svg>';
+			$ret_str = "<a href='$href' class='kivi-back-button'>$icon $button_text</a>";
+		}
+		
+		return $ret_str;
+	}
+
 }

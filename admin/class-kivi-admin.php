@@ -273,6 +273,7 @@ public function kivi_sync() {
         }
       }
       if( $i['image_itemimagetype_name'] == 'kivirealty-original'){
+		  $i['image_url'] = str_replace('.net//kivimedia', '.net/1600x1200,fit/kivimedia', $i['image_url'] );
         array_push($images,$i);
       }
     }

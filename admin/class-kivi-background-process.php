@@ -268,29 +268,6 @@ class Kivi_Background_Process extends WP_Background_Process
 
                     }
                 }
-            } elseif ($key == 'iv_person_image_url' && $value) {
-                $image_url = get_post_meta($post_id, '_iv_person_image_url', $single = true);
-                if ($image_url !== $value) {
-                    $this->kivi_save_image($value, 'iv_person_image_url', 0, $post_id);
-                    // And delete old file here too...
-                    $args = array(
-                        'meta_query' => array(
-                            array(
-                                'key' => 'original_image_url',
-                                'value' => $image_url,
-                            )
-                        ),
-                        'post_type' => 'attachment',
-						'post_parent' => $post_id,
-                    );
-                    $posts = get_posts($args);
-                    foreach ($posts as $attachment) {
-                        if (wp_get_post_parent_id($attachment->ID) == $post_id) {
-                            wp_delete_attachment($attachment->ID, false); // move to trash (true -> force delete)
-                        }
-                    }
-                }
-				update_post_meta($post_id, '_iv_person_image_url', $value);
             } else {
                 update_post_meta($post_id, '_' . $key, $value);
             }
@@ -300,10 +277,16 @@ class Kivi_Background_Process extends WP_Background_Process
     private function update_item_image_urls( $post_id, $item_images = array() ) {
 	    $images_to_save = array();
 	    foreach ($item_images as $image) {
+			$image['image_desc'] = wp_strip_all_tags( $image['image_desc'], true );
+			$image['image_desc'] = str_replace( array('"',"'"), "", $image['image_desc'] );
+			$image['image_desc'] = wp_check_invalid_utf8( $image['image_desc'], true );
+			
+			$image['image_url'] = preg_replace("(^https?://)", "", $image['image_url'] ); // remove protocol
+			
 		    $images_to_save[] = array('order' => $image['image_iv_order'], 'url' => $image['image_url'], 'type' => $image['image_realtyimagetype_id'], 'description' => $image['image_desc'] );
 	    }
 	    sort($images_to_save);
-	    update_post_meta( $post_id, '_kivi_images_data', json_encode($images_to_save) );
+		update_post_meta( $post_id, '_kivi_images_data', json_encode($images_to_save, JSON_UNESCAPED_UNICODE) );
     }
 
     /*
@@ -326,9 +309,6 @@ class Kivi_Background_Process extends WP_Background_Process
                 foreach ($item['images'] as $value2) {
                     $this->add_media($value2['image_url'], $value2['image_realtyimagetype_id'], $value2['image_iv_order'], $post_id, $value2['image_desc']);
                 }
-            } elseif ($key == 'iv_person_image_url' && $value) {
-                $this->kivi_save_image($value, 'iv_person_image_url', 0, $post_id);
-				update_post_meta($post_id, '_iv_person_image_url', $value);
             } elseif ($key == 'realty_unique_no' && $value) {
                 update_post_meta($post_id, '_' . $key, $value);
             } elseif ($value != "") {

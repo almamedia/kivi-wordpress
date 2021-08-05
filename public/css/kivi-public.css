@@ -81,6 +81,7 @@ input[type="submit"].button-kivi {
 }
 
 .slick-for-image-wrapper {
+  position: relative;
   text-align: center;
 }
 
@@ -104,6 +105,7 @@ input[type="submit"].button-kivi {
 
 .slick-carousel-image {
   text-align: center;
+  max-height: 100px;
 }
 
 .slick-arrow {
@@ -194,6 +196,7 @@ input[type="submit"].button-kivi {
 
 .kivi-item-image {
   flex: 1 300px;
+  max-height: 300px;
 }
 .kivi-item-image img {
   width: 100%;
@@ -362,6 +365,21 @@ a.page-numbers:hover {
 .slick-for .slick-slide.slick-current.slick-active img {
   max-height: var(--img-height);
   width: auto;
+}
+
+.kivi-image-caption{
+	display: block;
+    position: absolute;
+	bottom: 15px;
+	margin: 0 30%;
+    width: 40%;
+	font-size: 15px;
+	line-height: 17px;
+	font-weight: bold;
+	color: #000; 
+	text-transform: uppercase;
+	background-color: rgba(255,255,255,0.5);
+    padding: 5px 0;
 }
 
 /* Kivi-single-template: real estate agent image */
