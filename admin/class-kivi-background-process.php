@@ -268,25 +268,15 @@ class Kivi_Background_Process extends WP_Background_Process
 
                     }
                 }
-            } else {
+            }
+			elseif ($key == 'iv_person_image_url') {			
+				$value = preg_replace("(^https?:)", "", $value ); // remove protocol
+				update_post_meta($post_id, '_iv_person_image_url', $value);
+			}
+			else {
                 update_post_meta($post_id, '_' . $key, $value);
             }
         }
-    }
-
-    private function update_item_image_urls( $post_id, $item_images = array() ) {
-	    $images_to_save = array();
-	    foreach ($item_images as $image) {
-			$image['image_desc'] = wp_strip_all_tags( $image['image_desc'], true );
-			$image['image_desc'] = str_replace( array('"',"'"), "", $image['image_desc'] );
-			$image['image_desc'] = wp_check_invalid_utf8( $image['image_desc'], true );
-			
-			$image['image_url'] = preg_replace("(^https?://)", "", $image['image_url'] ); // remove protocol
-			
-		    $images_to_save[] = array('order' => $image['image_iv_order'], 'url' => $image['image_url'], 'type' => $image['image_realtyimagetype_id'], 'description' => $image['image_desc'] );
-	    }
-	    sort($images_to_save);
-		update_post_meta( $post_id, '_kivi_images_data', json_encode($images_to_save, JSON_UNESCAPED_UNICODE) );
     }
 
     /*
@@ -309,10 +299,13 @@ class Kivi_Background_Process extends WP_Background_Process
                 foreach ($item['images'] as $value2) {
                     $this->add_media($value2['image_url'], $value2['image_realtyimagetype_id'], $value2['image_iv_order'], $post_id, $value2['image_desc']);
                 }
-            } elseif ($key == 'realty_unique_no' && $value) {
+            }
+			elseif ($key == 'iv_person_image_url') {			
+				$value = preg_replace("(^https?:)", "", $value ); // remove protocol
+				update_post_meta($post_id, '_iv_person_image_url', $value);
+			}
+			elseif ($value != "") {
                 update_post_meta($post_id, '_' . $key, $value);
-            } elseif ($value != "") {
-                add_post_meta($post_id, '_' . $key, $value);
             }
         }
         /* Publish the post when all metadata and stuff is in place */
@@ -321,6 +314,22 @@ class Kivi_Background_Process extends WP_Background_Process
         $postarr['post_status'] = 'publish';
         wp_update_post($postarr);
     }
+
+    private function update_item_image_urls( $post_id, $item_images = array() ) {
+	    $images_to_save = array();
+	    foreach ($item_images as $image) {
+			$image['image_desc'] = wp_strip_all_tags( $image['image_desc'], true );
+			$image['image_desc'] = str_replace( array('"',"'"), "", $image['image_desc'] );
+			$image['image_desc'] = wp_check_invalid_utf8( $image['image_desc'], true );
+			
+			$image['image_url'] = preg_replace("(^https?:)", "", $image['image_url'] ); // remove protocol
+			
+		    $images_to_save[] = array('order' => $image['image_iv_order'], 'url' => $image['image_url'], 'type' => $image['image_realtyimagetype_id'], 'description' => $image['image_desc'] );
+	    }
+	    sort($images_to_save);
+		update_post_meta( $post_id, '_kivi_images_data', json_encode($images_to_save, JSON_UNESCAPED_UNICODE) );
+    }
+
 
     /*
     * Delete the post based on post id. Related attacments are deleted, too.

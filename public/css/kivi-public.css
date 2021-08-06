@@ -196,7 +196,7 @@ input[type="submit"].button-kivi {
 
 .kivi-item-image {
   flex: 1 300px;
-  max-height: 300px;
+  max-height: 220px;
 }
 .kivi-item-image img {
   width: 100%;
@@ -409,6 +409,11 @@ a.page-numbers:hover {
   width: 100%;
   object-fit: cover;
   object-position: top;
+}
+
+#Vesimaksu li {
+    display: inline-block;
+    padding-right: 3px;
 }
 
 /*Shortcode spesific styles*/

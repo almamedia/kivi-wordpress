@@ -645,12 +645,12 @@ class Kivi_Public {
 		if( empty($value) ){
 			return $value;
 		}
-
+		
 		// change float value to integer if .00
 		if( is_numeric($value) && fmod($value, 1) === 0.00 ){
 			$value = intval($value);
 		}
-
+		
 		// replace "m2" with square character
 		$value = str_replace('m2', 'm²', $value);
 
@@ -681,14 +681,21 @@ class Kivi_Public {
 				'_charges_condominium_total_mo',
 				'_charges_finance_base_month',
 				'_charges_maint_base_month',
+				'_charges_streetcleansing',
                 '_charges_realtytax',
                 '_charges_heating',
                 '_charges_road',
+				'_charges_sewage',
                 '_rc_lot_rent',
                 '_highest_bid',
 			);
 			if( in_array($kivi_property->name, $to_price) ){
-				$value = +$value;
+				$value = str_replace(',', '.', $value); // make possible "finnish float" a real float
+				
+				if( empty($value) ){
+					return $value;
+				}
+
 				if( is_numeric($value) ){
                     if( is_float($value) || intval($value) < 1000 ){
                         $price = number_format($value, 2, ',', ' '); // to 2 decimal price string with thousand separators
@@ -816,7 +823,7 @@ class Kivi_Public {
 
     }
 
-    public static function get_primary_image_url( $post_id, $size_str = "440x200,fit,q72" ){
+    public static function get_primary_image_url( $post_id, $size_str = "480x220,fit,q72" ){
 		$images = self::get_images( $post_id );
 		if( empty( $images ) ){
 			return "";
