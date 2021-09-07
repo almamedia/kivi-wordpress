@@ -317,8 +317,10 @@ get_header(); ?>
 
 					<?php endif; ?>
 
-      <?php do_action( 'kivi_single_item_after' ); ?>
-	  <?php echo Kivi_Public::get_listing_button(); ?>
+		<section class="kivi-single-item-body kivi-item-after">
+			<?php do_action( 'kivi_single_item_after' ); ?>
+			<?php echo Kivi_Public::get_listing_button(); ?>
+		</section>	
 
         </main><!-- #main -->
     </div><!-- #primary -->
