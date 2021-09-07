@@ -864,4 +864,9 @@ class Kivi_Public {
 		return $ret_str;
 	}
 
+	public static function get_person_image_url( $post_id ){
+		$url = get_post_meta( $post_id, '_iv_person_image_url',true);
+		return $url;
+	}
+
 }

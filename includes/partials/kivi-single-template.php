@@ -122,7 +122,7 @@ get_header(); ?>
                 <tr class="kivi-iv-person">
                   <th>
                     <div class="kivi-iv-person-container">
-                      <img class="kivi-iv-person-image" src="<?php echo get_iv_person_image(get_the_id()); ?>" alt="<?php echo get_post_meta( get_the_id(), '_iv_person_name', true ); ?>" />
+                      <img class="kivi-iv-person-image" src="<?php echo Kivi_Public::get_person_image_url( get_the_id() ); ?>" alt="<?php echo get_post_meta( get_the_id(), '_iv_person_name', true ); ?>" />
                     </div>
                   </th>
                 </tr>
