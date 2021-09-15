@@ -77,16 +77,9 @@ class Kivi_Public {
    * @since    1.0.0
    */
   public function enqueue_scripts() {
-		 wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/kivi-public.js', array( 'jquery', 'slick' ), $this->version, false );
-		 wp_enqueue_script( 'slick', plugin_dir_url( __FILE__ ) . 'js/slick.min.js', array( 'jquery' ), $this->version, false );
-  }
-
-	public function jquery_version_bump() {
-		if (!is_admin()) {
-			wp_deregister_script('jquery');
-			wp_register_script('jquery', plugin_dir_url( __FILE__ ) . 'js/jquery.min.js', false, '1.8.1');
-			wp_enqueue_script('jquery');
-		}
+	  wp_enqueue_script('jquery');
+	  wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/kivi-public.js', array( 'jquery', 'slick' ), $this->version, false );
+	  wp_enqueue_script( 'slick', plugin_dir_url( __FILE__ ) . 'js/slick.min.js', array( 'jquery' ), $this->version, false );
   }
 
   public function kivi_item_metaboxes( array $meta_boxes ) {
