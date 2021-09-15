@@ -109,6 +109,8 @@ else{
 
       <h1 class="kivi-index-archive-title"><?php _e("Kohdelistaus", "kivi"); ?></h1>
 
+		<?php do_action( 'kivi_index_archive_before', get_the_id() ); ?>
+
       <form action="<?php echo get_post_type_archive_link( 'kivi_item' ); ?>" method="get" class="kivi-item-filters">
         <div class="kivi-item-filters-wrapper">
           <div class="kivi-filter-cell">
@@ -207,6 +209,7 @@ else{
       );
       echo paginate_links( $pagination_args ); ?>
       </div>
+	  <?php do_action( 'kivi_index_archive_after', get_the_id() ); ?>
     </main><!-- #main -->
   </div><!-- #primary -->
 
