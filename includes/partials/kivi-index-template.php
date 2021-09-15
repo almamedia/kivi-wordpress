@@ -42,7 +42,7 @@ if ( ! empty($_GET) ){
   $realtytype = array();
   $toim_tyyppi = array();
 
-  populate_searchcriteria( $roomcount, $_GET, 'kivi-item-asunto-huoneluku-select', '_flattype_id', '=');
+  populate_searchcriteria( $roomcount, $_GET, '_flattype_id', '_flattype_id', '=');
   populate_searchcriteria( $pricemin, $_GET, 'kivi-item-asunto-hintamin', '_unencumbered_price', '>=', true);
   populate_searchcriteria( $pricemax, $_GET, 'kivi-item-asunto-hintamax', '_unencumbered_price', '<=', true);
   populate_searchcriteria( $areamin, $_GET, 'kivi-item-asunto-pamin', '_living_area_m2', '>=', true);
@@ -51,8 +51,9 @@ if ( ! empty($_GET) ){
   populate_searchcriteria( $town, $_GET, 'kivi-item-asunto-osoite', '_town', 'LIKE');
   populate_searchcriteria( $realty_id, $_GET, 'kivi-item-asunto-osoite', '_realty_unique_no', '=');
   populate_searchcriteria( $postcode, $_GET, 'kivi-item-asunto-osoite', '_postcode', '=');
-  populate_searchcriteria( $realtytype, $_GET, 'kivi-item-asunto-type-select', '_realtytype_id','=');
-  populate_searchcriteria( $toim_tyyppi, $_GET, 'kivi-item-toimeksianto-tyyppi', '_assignment_type','LIKE');
+  populate_searchcriteria( $realtytype, $_GET, '_realtytype_id', '_realtytype_id','=');
+  populate_searchcriteria( $toim_tyyppi, $_GET, '_assignment_type', '_assignment_type','LIKE');
+  populate_searchcriteria( $town_select, $_GET, '_town', '_town', 'LIKE');
 
   $args = array(
     'post_type' => 'kivi_item',
@@ -66,6 +67,7 @@ if ( ! empty($_GET) ){
       $areamax,
       $realtytype,
       $toim_tyyppi,
+      $town_select,
       array(
         'relation' => 'OR',
         $street,
@@ -82,14 +84,14 @@ if ( ! empty($_GET) ){
 
   /* Values for the form to match the filter criteria */
 
-  $huonelukuarvo = get_posted_value( $_GET, 'kivi-item-asunto-huoneluku-select');
+  $huonelukuarvo = get_posted_value( $_GET, '_flattype_id');
   $priceminval = get_posted_value( $_GET, 'kivi-item-asunto-hintamin' );
   $pricemaxval = get_posted_value( $_GET, 'kivi-item-asunto-hintamax' );
   $areaminval = get_posted_value( $_GET, 'kivi-item-asunto-pamin' );
   $areamaxval = get_posted_value( $_GET, 'kivi-item-asunto-pamax' );
-  $realtytypeval = get_posted_value( $_GET, 'kivi-item-asunto-type-select' );
+  $realtytypeval = get_posted_value( $_GET, '_realty_type_id' );
   $townval = get_posted_value( $_GET, 'kivi-item-asunto-osoite' );
-  $toim_tyyppi = get_posted_value( $_GET, 'kivi-item-toimeksianto-tyyppi' );
+  $toim_tyyppi = get_posted_value( $_GET, '_assignment_type' );
 
 }
 else{
@@ -115,7 +117,7 @@ else{
         <div class="kivi-item-filters-wrapper">
           <div class="kivi-filter-cell">
             <label><?php _e('Asunnon tyyppi', 'kivi'); ?>
-              <select name="kivi-item-asunto-type-select">
+              <select name="_realtytype_id">
                 <option <?php if ($realtytypeval == '') echo 'selected'; ?> value="" name=""><?php _e("-", "kivi"); ?></option>
                 <option <?php if ($realtytypeval == 'kerrostalo') echo 'selected'; ?> value="kerrostalo" name="kerrostalo"><?php _e("Kerrostalo", "kivi"); ?></option>
                 <option <?php if ($realtytypeval == 'omakotitalo') echo 'selected'; ?> value="omakotitalo" name="omakotitalo"><?php _e("Omakotitalo", "kivi"); ?></option>
@@ -154,7 +156,7 @@ else{
           </div>
           <div class="kivi-filter-cell">
             <label><?php _e('Huoneluku', 'kivi'); ?>
-              <select name="kivi-item-asunto-huoneluku-select" value="<?php echo esc_attr($huonelukuarvo); ?>">
+              <select name="_flattype_id" value="<?php echo esc_attr($huonelukuarvo); ?>">
                 <option name="default" value="">-</option>
                 <option name="yksio" value="yksio" <?php if ($huonelukuarvo == 'yksio') echo 'selected'; ?> ><?php _e('Yksiö', 'kivi'); ?></option>
                 <option name="kaksio" value="kaksio" <?php if ($huonelukuarvo == 'kaksio') echo 'selected'; ?>><?php _e('2 huonetta', 'kivi'); ?></option>
@@ -167,7 +169,7 @@ else{
           </div>
           <div class="kivi-filter-cell kivi-filter-cell">
             <label><?php _e('Toimeksiannon tyyppi', 'kivi'); ?></label>
-            <select name="kivi-item-toimeksianto-tyyppi">
+            <select name="_assignment_type">
               <option value="">-</option>
               <option value="myyntitoimeksianto" <?php if ($toim_tyyppi == 'myyntitoimeksianto') echo 'selected'; ?>>Myynti</option>
               <option value="vuokranantaja" <?php if ($toim_tyyppi == 'vuokranantaja') echo 'selected'; ?>>Vuokra</option>
