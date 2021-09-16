@@ -109,54 +109,6 @@ class Kivi_Background_Process extends WP_Background_Process
         return $count > 0;
     }
 
-    /* Add the media to media library */
-    public function add_media($image_url, $image_type, $image_order, $post_id, $caption = '')
-    {
-    	return;
-		// current image might be as unattached in WP media
-		$args = array(
-			'meta_query' => array(
-				array(
-					'key' => 'original_image_url',
-					'value' => $image_url,
-				)
-			),
-			'post_parent' => 0,
-			'post_type' => 'attachment',
-			'post_status' => 'any',
-			'cache_results'  => false,
-		);
-		$posts = get_posts($args);
-		// images found, attach them if unattached
-		foreach($posts as $attachment_post) {                
-			// attach
-			$attachment = array(
-				'ID' => $attachment_post->ID,
-				'post_parent' => $post_id
-			);
-			wp_update_post($attachment);
-			update_post_meta( $attachment_post->ID, 'image_order', $image_order );
-			add_post_meta($post_id, '_kivi_item_image', $attachment_post->ID, false);
-		}
-		
-        // add only if not already in WP ( search for original_image_url for current kivi_item )
-        $args = array(
-            'meta_query' => array(
-                array(
-                    'key' => 'original_image_url',
-                    'value' => $image_url,
-                )
-            ),
-			'post_parent' => $post_id,
-            'post_type' => 'attachment',
-            'post_status' => 'any',
-			'cache_results'  => false,
-        );
-        $posts = get_posts($args);
-        if ( is_array($posts) && empty($posts) ) { // empty array: image not in WP, save it
-            $this->kivi_save_image($image_url, $image_type, $image_order, $post_id, $caption);
-        }
-    }
 
     /**
      * Figure out if item needs to be modified. That is if the updatedate in the
@@ -233,41 +185,6 @@ class Kivi_Background_Process extends WP_Background_Process
                 }
 
 	            $this->update_item_image_urls( $post_id, $item['images'] );
-                foreach ($item['images'] as $i) {
-                    if (!in_array($i['image_url'], $current_images)) {
-                        $this->add_media($i['image_url'], $i['image_realtyimagetype_id'], $i['image_iv_order'], $post_id, $i['image_desc']);
-                    } else { // current image
-                        $args = array( // find current image
-                            'meta_query' => array(
-                                array(
-                                    'key' => 'original_image_url',
-                                    'value' => $i['image_url'],
-                                )
-                            ),
-                            'post_type' => 'attachment',
-                        );
-                        $posts = get_posts($args);
-                        if (isset($posts[0]) && count($posts) == 1) { // should be only one
-                            $posty = $posts[0];
-                            if (get_post_meta($posty->ID, 'image_order', true) != $i['image_iv_order']) {
-                                update_post_meta($posty->ID, 'image_order', intval($i['image_iv_order']));
-                            }
-
-                            // update post excerpt with image description ( post excerpt == attachment caption )
-                            $post_arr = array(
-                                'ID' => $posty->ID,
-                                'post_excerpt' => sanitize_text_field($i['image_desc']),
-                            );
-                            wp_update_post($post_arr);
-
-                            // maybe set as featured image
-                            if ($i['image_iv_order'] == 1 || 'pääkuva' == $i['image_realtyimagetype_id']) {
-                                set_post_thumbnail($post_id, $posty->ID);
-                            }
-                        }
-
-                    }
-                }
             }
 			elseif ($key == 'iv_person_image_url') {			
 				$value = preg_replace("(^https?:)", "", $value ); // remove protocol
@@ -296,9 +213,6 @@ class Kivi_Background_Process extends WP_Background_Process
         foreach ($item as $key => $value) {
             if ($key == 'images') {
             	$this->update_item_image_urls( $post_id, $item['images'] );
-                foreach ($item['images'] as $value2) {
-                    $this->add_media($value2['image_url'], $value2['image_realtyimagetype_id'], $value2['image_iv_order'], $post_id, $value2['image_desc']);
-                }
             }
 			elseif ($key == 'iv_person_image_url') {			
 				$value = preg_replace("(^https?:)", "", $value ); // remove protocol
