@@ -41,6 +41,7 @@ if ( ! empty($_GET) ){
   $postcode = array();
   $realtytype = array();
   $toim_tyyppi = array();
+  $town_select = array();
 
   populate_searchcriteria( $roomcount, $_GET, '_flattype_id', '_flattype_id', '=');
   populate_searchcriteria( $pricemin, $_GET, 'kivi-item-asunto-hintamin', '_unencumbered_price', '>=', true);
