@@ -228,6 +228,7 @@ class Kivi_Background_Process extends WP_Background_Process
         $postarr['post_status'] = 'publish';
         wp_update_post($postarr);
     }
+    
 
     private function update_item_image_urls( $post_id, $item_images = array() ) {
 	    $images_to_save = array();
@@ -246,20 +247,6 @@ class Kivi_Background_Process extends WP_Background_Process
 
 
     /*
-    * Delete the post based on post id. Related attacments are deleted, too.
-    */
-    public function item_delete($post_id)
-    {
-        foreach (get_post_meta($post_id, '_kivi_item_image', $single = false) as $attach_id) {
-            wp_delete_attachment($attach_id, true);
-        }
-        foreach (get_post_meta($post_id, '_kivi_iv_person_image', $single = false) as $attach_id) {
-            wp_delete_attachment($attach_id, true);
-        }
-        wp_delete_post($post_id, true);
-    }
-
-    /*
     * Delete items whose _realty_unique_no is not in among active_items. This
     * Is used to delete (sold) items that no longer exist in the incoming XML.
     */
@@ -274,78 +261,7 @@ class Kivi_Background_Process extends WP_Background_Process
         foreach ($posts as $post) {
             $realtyid = get_post_meta($post->ID, '_realty_unique_no', $single = true);
             if (!in_array($realtyid, $active_items)) {
-                $this->item_delete($post->ID);
-            }
-        }
-    }
-
-
-    /*
-    * Save image into media library as an attachment to the according KIVI item
-    */
-    public function kivi_save_image($url, $image_type, $image_order = 0, $post_id = 0, $caption = '')
-    {
-        $filename = $post_id.'-kivi-'.basename($url);
-
-        $upload_dir = wp_upload_dir();
-        $upload_basedir = $upload_dir['basedir'];
-
-        $filepath = $upload_basedir . '/' . $filename;
-
-        if (file_exists($filepath)) {
-            $filename = $filename . '-' . sha1($filename);
-        }
-
-        $response = wp_remote_get($url);
-        if (is_wp_error($response)) {
-            return;
-        }
-        $upload_file = wp_upload_bits($filename, null, wp_remote_retrieve_body($response));
-        if (!$upload_file['error']) {
-            $wp_filetype = wp_check_filetype($filename, null);
-            $attachment = array(
-                'post_mime_type' => $wp_filetype['type'],
-                'post_parent' => $post_id,
-                'post_title' => 'Kohdekuva ' . preg_replace('/\.[^.]+$/', '', $filename),
-                'post_content' => '',
-                'post_status' => 'inherit',
-				'post_excerpt' => sanitize_text_field($caption),
-            );
-
-            $attachment_id = wp_insert_attachment($attachment, $upload_file['file'], $post_id, true);
-			if( is_wp_error($attachment_id) ){
-				error_log($attachment_id->get_error_message());
-				$attachment_id = 0;
-            }
-			
-            if ($attachment_id) {
-				update_post_meta($attachment_id, 'original_image_url', $url);
-
-				$qpost = get_post( $attachment_id );
-				if ( ! $qpost ) {
-					error_log("Ei löydy attachmenttia (kivi_save_image)");
-					return false;
-				}
-
-                // Set featured image if not yet set
-                if ("pääkuva" == $image_type) {
-                    set_post_thumbnail($post_id, $attachment_id);
-                }
-
-                require_once(ABSPATH . 'wp-admin/includes/image.php');
-                $attachment_data = wp_generate_attachment_metadata($attachment_id, $upload_file['file']);
-				wp_update_attachment_metadata($attachment_id, $attachment_data);
-                if ($image_type == 'iv_person_image_url') {
-                    update_post_meta($post_id, '_kivi_iv_person_image', $attachment_id);
-                } else {
-                    add_post_meta($post_id, '_kivi_item_image', $attachment_id);
-                }
-                update_post_meta($attachment_id, 'image_type', $image_type);
-                if ($image_type != 'iv_person_image_url') {
-                    update_post_meta($attachment_id, 'image_order', $image_order);
-                }
-
-                return wp_get_attachment_url($attachment_id);
+	            wp_delete_post($post->ID, true);
             }
         }
     }
