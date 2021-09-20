@@ -12,506 +12,515 @@
 
 class Kivi_Admin {
 
-  /**
-   * The ID of this plugin.
-   *
-   * @since    1.0.0
-   * @access   private
-   * @var      string    $plugin_name    The ID of this plugin.
-   */
-  private $plugin_name;
+	/**
+	 * The ID of this plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string $plugin_name The ID of this plugin.
+	 */
+	private $plugin_name;
 
-  /**
-   * The version of this plugin.
-   *
-   * @since    1.0.0
-   * @access   private
-   * @var      string    $version    The current version of this plugin.
-   */
-  private $version;
+	/**
+	 * The version of this plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string $version The current version of this plugin.
+	 */
+	private $version;
 
-  /**
-   * @var Kivi_Background_Process
-   */
-  protected $process;
+	/**
+	 * @var Kivi_Background_Process
+	 */
+	protected $process;
 
-  /**
-   * Initialize the class and set its properties.
-   *
-   * @since    1.0.0
-   * @param      string    $plugin_name       The name of this plugin.
-   * @param      string    $version    The version of this plugin.
-   */
-  public function __construct( $plugin_name, $version ) {
+	/**
+	 * Initialize the class and set its properties.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @param      string $plugin_name The name of this plugin.
+	 * @param      string $version The version of this plugin.
+	 */
+	public function __construct( $plugin_name, $version ) {
 
-    $this->plugin_name = $plugin_name;
-    $this->version = $version;
-    $this->process = new Kivi_Background_Process();
+		$this->plugin_name = $plugin_name;
+		$this->version     = $version;
+		$this->process     = new Kivi_Background_Process();
 
-  }
+	}
 
-  /**
-   * Register the JavaScript for the admin area.
-   *
-   * @since    1.0.0
-   */
-  public function enqueue_scripts() {
-    // Add the color picker css file
-    wp_enqueue_style( 'wp-color-picker' );
-    wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/kivi-admin.js', array( 'jquery', 'wp-color-picker' ), $this->version, false );
-  }
+	/**
+	 * Register the JavaScript for the admin area.
+	 *
+	 * @since    1.0.0
+	 */
+	public function enqueue_scripts() {
+		// Add the color picker css file
+		wp_enqueue_style( 'wp-color-picker' );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/kivi-admin.js',
+			array( 'jquery', 'wp-color-picker' ), $this->version, false );
+	}
 
-  /**
-   * Register Kivi plugins menu
-   *
-   * @since     1.0.0
-   */
-  public function kivi_register_menu_page() {
-    add_menu_page(
-        'KIVI',
-        'KIVI',
-        'manage_options',
-        plugin_dir_path( dirname( __FILE__ ) ) .'admin/partials/kivi-admin-display.php',
-        '',
-        'dashicons-tickets',
-        82
-    );
-  }
+	/**
+	 * Register Kivi plugins menu
+	 *
+	 * @since     1.0.0
+	 */
+	public function kivi_register_menu_page() {
+		add_menu_page(
+			'KIVI',
+			'KIVI',
+			'manage_options',
+			plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/kivi-admin-display.php',
+			'',
+			'dashicons-tickets',
+			82
+		);
+	}
 
 
-  /**
-   * This function is hooked to an ajax call defined in class-kivi.php.
-   * 1. XML is read from the remote source (KIVI)
-   * 2. XML is parsed and data is put into an array
-   * 3. data is put to background processing queue
-   * 4. Non-existent items are deleted from wp
-   * 5. background processing is dispatched
-   */
-public function kivi_sync() {
+	/**
+	 * This function is hooked to an ajax call defined in class-kivi.php.
+	 * 1. XML is read from the remote source (KIVI)
+	 * 2. XML is parsed and data is put into an array
+	 * 3. data is put to background processing queue
+	 * 4. Non-existent items are deleted from wp
+	 * 5. background processing is dispatched
+	 */
+	public function kivi_sync() {
 
-    error_log('kivi sync!');
+		error_log( 'kivi sync!' );
 
-    update_option('kivi-show-statusbar', 1);
+		update_option( 'kivi-show-statusbar', 1 );
 
-    /**
-     * Stop multiple processes from being dispatched.
-     */
+		/**
+		 * Stop multiple processes from being dispatched.
+		 */
 
-    if ( $this->process->is_process_already_running() ) {
-      wp_send_json(array('message'=>'Tausta-ajo jo käynnissä'));
-      wp_die();
-    }
-
-	$baseurl_input_value = esc_attr(get_option('kivi-remote-url'));
-	$baseurl_trimmed = trim( preg_replace( '/\/$/', '', $baseurl_input_value ) );
-
-	if( empty($baseurl_trimmed) ){
-        update_option('kivi-show-statusbar', 0);
-        wp_send_json( array('message'=>'Aineisto-URLia ei ole asetuksissa.') );
-        wp_die();
-    }
-
-	$baseurl_array = explode(",", $baseurl_trimmed);
-    $active_items=[];
-	foreach ($baseurl_array as $baseurl) {
-
-		$response = wp_remote_get( $baseurl . '/LATEST.txt' );
-		$latest = trim( wp_remote_retrieve_body( $response ));
-		$theurl = $baseurl . '/' . $latest;
-		$doc = new DOMDocument();
-		$z = new XMLReader;
-		$res = $z->open(  $theurl );
-
-		if( !$res ){
-		  error_log("Reading of the incoming XML failed.");
-		  update_option('kivi-show-statusbar', 0);
-		  wp_send_json(array('message'=>'Tiedoston lukeminen epäonnistui'));
-		  wp_die();
+		if ( $this->process->is_process_already_running() ) {
+			wp_send_json( array( 'message' => 'Tausta-ajo jo käynnissä' ) );
+			wp_die();
 		}
 
-		while ($z->read() && $z->name !== 'item');
+		$baseurl_input_value = esc_attr( get_option( 'kivi-remote-url' ) );
+		$baseurl_trimmed     = trim( preg_replace( '/\/$/', '', $baseurl_input_value ) );
 
-		while ($z->name === 'item'){
-			$result = [];
-			$node = simplexml_import_dom($doc->importNode($z->expand(), true));
-
-			foreach ($node->children() as $foo) {
-				if ( $foo->getName() == "image" ) {
-					$this->image_func( $foo, $result );
-				} elseif( $foo->getName() == "realtyrealtyoption") {
-					$this->realtyrealtyoption_func( $foo, $result );
-				}elseif( $foo->getName() == "areabasis_id") {
-					$this->areabasis_func( $foo, $result );
-				}elseif( $foo->getName() == "kivipresentation") {
-					$this->presentation_func( $foo, $result );
-				}elseif( $foo->getName() == "realty_vi_presentation") {
-					$this->realty_vi_presentation_func( $foo, $result );
-				}elseif( in_array( $foo->getName(), [ "unencumbered_price" ] )) {
-					$this->copy_int_func( $foo, $result );
-				}
-				else {
-					$this->copy_func( $foo, $result );
-				}
-			}
-			$result['source_url'] = $baseurl;
-
-		  $z->next('item');
-
-		  if( ! empty( get_kivi_option('kivi-prefilter-name' )) && ! empty(get_kivi_option('kivi-prefilter-value'))  ) {
-			$filtername = get_kivi_option('kivi-prefilter-name');
-			if( isset( $result[$filtername] ) && $result[$filtername] == get_kivi_option('kivi-prefilter-value' )){
-			  /* Filters match */
-			}else {
-			  /* Filters don't match, ignore this item */
-			  continue;
-			}
-		  }
-
-		  array_push($active_items, $result['realty_unique_no']);
-		  $this->process->push_to_queue( $result );
+		if ( empty( $baseurl_trimmed ) ) {
+			update_option( 'kivi-show-statusbar', 0 );
+			wp_send_json( array( 'message' => 'Aineisto-URLia ei ole asetuksissa.' ) );
+			wp_die();
 		}
-	} // /foreach $baseurl_array
 
-	$this->process->save()->dispatch();
-    $this->process->items_delete( $active_items );
-    wp_send_json(array('message'=>'Tausta-ajo käynnistetty'));
+		$baseurl_array = explode( ",", $baseurl_trimmed );
+		$active_items  = [];
+		foreach ( $baseurl_array as $baseurl ) {
 
-    wp_die();
-  }
+			$response = wp_remote_get( $baseurl . '/LATEST.txt' );
+			$latest   = trim( wp_remote_retrieve_body( $response ) );
+			$theurl   = $baseurl . '/' . $latest;
+			$doc      = new DOMDocument();
+			$z        = new XMLReader;
+			$res      = $z->open( $theurl );
 
+			if ( ! $res ) {
+				error_log( "Reading of the incoming XML failed." );
+				update_option( 'kivi-show-statusbar', 0 );
+				wp_send_json( array( 'message' => 'Tiedoston lukeminen epäonnistui' ) );
+				wp_die();
+			}
 
-  public function show_status_bar() {
-    if ( get_option('kivi-show-statusbar') == 1 ) {
-      echo '<div class="admin-status-bar">'.__('Tausta-ajo käynnissä. Ajon aikana käyttöliittymä saattaa tuntua hitaammalta kuin tavallisesti.', 'kivi').'</div>';
-    }
-  }
+			while ( $z->read() && $z->name !== 'item' ) {
+				;
+			}
 
+			while ( $z->name === 'item' ) {
+				$result = [];
+				$node   = simplexml_import_dom( $doc->importNode( $z->expand(), true ) );
 
-  /**
-   * This function stops the dispatched background process
-   * by calling wp_unschedule_event on the next occurrent
-   * task.
-   */
-  public function kivi_stop() {
-    update_option( 'kivi-show-statusbar', 0 );
-    $this->process->stop();
-    wp_send_json(array('message'=>'Tausta-ajo keskeytetty.'));
-  }
+				foreach ( $node->children() as $foo ) {
+					if ( $foo->getName() == "image" ) {
+						$this->image_func( $foo, $result );
+					} elseif ( $foo->getName() == "realtyrealtyoption" ) {
+						$this->realtyrealtyoption_func( $foo, $result );
+					} elseif ( $foo->getName() == "areabasis_id" ) {
+						$this->areabasis_func( $foo, $result );
+					} elseif ( $foo->getName() == "kivipresentation" ) {
+						$this->presentation_func( $foo, $result );
+					} elseif ( $foo->getName() == "realty_vi_presentation" ) {
+						$this->realty_vi_presentation_func( $foo, $result );
+					} elseif ( in_array( $foo->getName(), [ "unencumbered_price" ] ) ) {
+						$this->copy_int_func( $foo, $result );
+					} else {
+						$this->copy_func( $foo, $result );
+					}
+				}
+				$result['source_url'] = $baseurl;
 
-  public function kivi_reset() {
-    update_option( 'kivi-show-statusbar', 0 );
-    $this->process->reset();
-    wp_send_json(array('message'=>'Tausta-ajo keskeytetty ja aiemmin lisätyt tiedot poistettu.'));
-  }
+				$z->next( 'item' );
 
-  public function kivi_set_remote_url() {
-    $new_value = esc_url_raw( $_POST['kivi-remote-url'], array('https', 'http') );
+				if ( ! empty( get_kivi_option( 'kivi-prefilter-name' ) ) && ! empty( get_kivi_option( 'kivi-prefilter-value' ) ) ) {
+					$filtername = get_kivi_option( 'kivi-prefilter-name' );
+					if ( isset( $result[ $filtername ] ) && $result[ $filtername ] == get_kivi_option( 'kivi-prefilter-value' ) ) {
+						/* Filters match */
+					} else {
+						/* Filters don't match, ignore this item */
+						continue;
+					}
+				}
 
-    update_option( 'kivi-remote-url', $new_value );
-    if( empty($new_value) ) {
-      wp_send_json(array('status'=>0, 'message'=>'Päivitys epäonnistui.'));
-    }
+				array_push( $active_items, $result['realty_unique_no'] );
+				$this->process->push_to_queue( $result );
+			}
+		} // /foreach $baseurl_array
 
-    wp_send_json(array('status'=>1, 'message'=>$new_value));
-  }
+		$this->process->save()->dispatch();
+		$this->process->items_delete( $active_items );
+		wp_send_json( array( 'message' => 'Tausta-ajo käynnistetty' ) );
 
-  public function kivi_save_settings() {
-    update_option(	'kivi-brand-color',	sanitize_text_field( $_POST['kivi-brand-color'] ) );
-    update_option(	'kivi-slug',		sanitize_text_field( $_POST['kivi-slug'] ));
-    set_kivi_option('kivi-use-debt-free-price-on-shortcode', sanitize_text_field( $_POST['kivi-use-debt-free-price-on-shortcode'] ) );
-	set_kivi_option('kivi-clean-values',sanitize_text_field( $_POST['kivi-clean-values'] ) );
-    set_kivi_option('kivi-prefilter-name', sanitize_text_field( $_POST['kivi-prefilter-name'] ) );
-    set_kivi_option('kivi-prefilter-value', sanitize_text_field( $_POST['kivi-prefilter-value'] ) );
-    set_kivi_option('kivi-gmap-id', 	sanitize_text_field( $_POST['kivi-gmap-id'] ) );
-    update_option(	'kivi-remote-url', 	esc_url_raw( $_POST['kivi-remote-url'], array('https', 'http') ) );
-
-    if( !empty($_POST['kivi-rest-user']) && !empty($_POST['kivi-rest-pass']) ){
-	    $kivi_creds = base64_encode( $_POST['kivi-rest-user'].':'.$_POST['kivi-rest-pass'] );
-	    update_option(	'kivi-rest-auth', $kivi_creds, false );
-	    // crypt by filtering pre_update_option_kivi-rest-auth (encrypt) and option_kivi-rest-auth (decrypt)
-    }
-
-    wp_send_json( array('status'=>1, 'message'=>'Asetukset tallennettu') );
-  }
-
-  /*
-  * Copy attributes from item to the result object just as they are or mapped
-  * values on some cases
-  */
-  public function copy_func(&$item, &$result){
-    $mappings = array(
-      "holdingtype_id" =>
-      array(
-        '4' => 'muu',
-        '5' => 'asunto-osakeyhtiö',
-        '6' => 'kiinteistöosakeyhtiö',
-        '7' => 'osaomistus'
-      ),
-      "watercharge_type_id" =>
-      array(
-        '1237.1' => '€/kk',
-        '1237.2' => '€/hlö/kk',
-        '1237.3' => 'oma mittari',
-        '1237.4' => 'sisältyy vastikkeeseen',
-        '1237.5' => 'sisältyy vuokraan'
-      )
-    );
-    if( "$item" &&  array_key_exists( $item->getName(), $mappings ) ){
-      $result[$item->getName()] = $mappings[$item->getName()]["$item"];
-    }else{
-		// Fix euro sign
-		$result[$item->getName()] = strtr("$item", array( chr(0xC2).chr(0x80) => '€' ));
-    }
-  }
-
-  /* Copy attributes from item to the result object as integers  */
-  public function copy_int_func(&$item, &$result){
-    $result[$item->getName()] = intval( "$item" );
-  }
-
-  /* Copy images from the parsed object to the result obbject. Only originals. */
-  public function image_func(&$foo, &$result){
-    $images=[];
-    foreach ($foo->children() as $image) {
-      $i=[];
-      if( $image->getName() == 'image_item'){
-        foreach ($image->children() as $prop) {
-          $this->copy_func($prop, $i);
-        }
-      }
-      if( $i['image_itemimagetype_name'] == 'kivirealty-original'){
-		  $i['image_url'] = str_replace('.net//kivimedia', '.net/1600x1200,fit/kivimedia', $i['image_url'] );
-        array_push($images,$i);
-      }
-    }
-    $result['images'] = $images;
-  }
-
-  /*
-  * Copy presentation items, 0..n of them
-  */
-  public function presentation_func( &$foo, &$result ){
-    $pres = array();
-    foreach ($foo->children() as $p) {
-      $i=array();
-      if( $p->getName() == 'kivipresentation_item'){
-        foreach ($p->children() as $prop) {
-          $this->copy_func($prop, $i);
-        }
-        array_push($pres,$i);
-      }
-    }
-    $result['presentations'] = $pres;
-  }
-
-  /*
-  * Copy vi_presentation items, 0..n of them
-  */
-  public function realty_vi_presentation_func( &$foo, &$result ){
-    $pres = array();
-    foreach ($foo->children() as $p) {
-      $i=array();
-      if( $p->getName() == 'realty_vi_presentation_item'){
-        foreach ($p->children() as $prop) {
-          $this->copy_func($prop, $i);
-        }
-        array_push($pres,$i);
-      }
-    }
-    $result['vi_presentations'] = $pres;
-  }
+		wp_die();
+	}
 
 
-  /*
-  * Handle arrea basis which happens to be a bit special
-  * case in the xml. There's supposed to be only one of these
-  * but still it's in a composite property
-  */
-  public function areabasis_func( &$foo, &$result ){
-    $mappings = array(
-      '1225.10' => 'yhtiöjärjestyksen mukainen',
-      '1225.20' => 'isännöitsijäntodistuksen mukainen',
-      '1225.30' => 'tarkistusmitattu'
-     );
-    $result['areabasis_id'] = "";
-    $prefix = "";
-    foreach ($foo->children() as $opt) {
-      if( $opt->getName() == 'areabasis_id_item'){
-        if( array_key_exists($opt->__toString(),$mappings) ){
-          $result['areabasis_id'] .= $prefix.$mappings[$opt->__toString()];
-          $prefix = ", ";
-        }
-      }
-    }
-  }
+	public function show_status_bar() {
+		if ( get_option( 'kivi-show-statusbar' ) == 1 ) {
+			echo '<div class="admin-status-bar">' . __( 'Tausta-ajo käynnissä. Ajon aikana käyttöliittymä saattaa tuntua hitaammalta kuin tavallisesti.',
+					'kivi' ) . '</div>';
+		}
+	}
 
-  /*
-  * Handle realtyoptions. These hold many different types of
-  * classified information about the items. These are grouped
-  * in realytoptiongroups or they're in default group (no group in xml)
-  */
-  public function realtyrealtyoption_func( &$foo, &$result ){
-    $opts=[];
-    foreach ($foo->children() as $opt) {
-      if( $opt->getName() == 'realtyrealtyoption_item'){
-        $group = '';
-        $val = '';
-        foreach ($opt->children() as $prop) {
-          if( $prop->getName() == 'realtyoptiongroup_id'){ $group = "$prop"; }
-          elseif( $prop->getName() == 'realtyoption'){ $val = "$prop"; }
-        }
-        if( $group==''){$group='_default';}
-        if($val){
-          if( !array_key_exists( $group, $opts )){
-            $opts[$group] = [];
-          }
-          array_push($opts[$group], $val);
-        }
-      }
-    }
-    $result['realtyrealtyoptions'] = $opts;
-  }
 
-  /*
-  * This is the custom post type that represents the KIVI item
-  */
-  public function register_kivi_item_post_type() {
-    if ( get_option('kivi-slug') ) :
-      $slug = get_option('kivi-slug');
-    else :
-      $slug = 'kohde';
-    endif;
+	/**
+	 * This function stops the dispatched background process
+	 * by calling wp_unschedule_event on the next occurrent
+	 * task.
+	 */
+	public function kivi_stop() {
+		update_option( 'kivi-show-statusbar', 0 );
+		$this->process->stop();
+		wp_send_json( array( 'message' => 'Tausta-ajo keskeytetty.' ) );
+	}
 
-    $labels = array(
-      'name'                  => __( 'KIVI items', 'kivi_item' ),
-      'singular_name'         => __( 'Item', 'kivi_item' ),
-      'menu_name'             => __( 'KIVI items', 'kivi_item' ),
-      'name_admin_bar'        => __( 'KIVI items', 'kivi_item' ),
-      'archives'              => __( 'Item listing', 'kivi_item' ),
-      'parent_item_colon'     => __( 'Parent Item:', 'kivi_item' ),
-      'all_items'             => __( 'All items', 'kivi_item' ),
-      'add_new_item'          => __( 'Add Item', 'kivi_item' ),
-      'add_new'               => __( 'Add new', 'kivi_item' ),
-      'new_item'              => __( 'New Item', 'kivi_item' ),
-      'edit_item'             => __( 'Edit Item', 'kivi_item' ),
-      'update_item'           => __( 'Update Item', 'kivi_item' ),
-      'view_item'             => __( 'View Item', 'kivi_item' ),
-      'search_items'          => __( 'Search items', 'kivi_item' ),
-      'not_found'             => __( 'Not found.', 'kivi_item' ),
-      'not_found_in_trash'    => __( 'Not found in trash.', 'kivi_item' ),
-      'featured_image'        => __( 'Featured Item image', 'kivi_item' ),
-      'set_featured_image'    => __( 'Set featured Item image', 'kivi_item' ),
-      'remove_featured_image' => __( 'Remove featured image', 'kivi_item' ),
-      'use_featured_image'    => __( 'Use as featured image', 'kivi_item' ),
-      'insert_into_item'      => __( 'Insert into Item', 'kivi_item' ),
-      'uploaded_to_this_item' => __( 'Uploaded to this Item', 'kivi_item' ),
-      'items_list'            => __( 'Item list', 'kivi_item' ),
-      'items_list_navigation' => __( 'Comapny navigation', 'kivi_item' ),
-      'filter_items_list'     => __( 'Filter items', 'kivi_item' ),
-    );
-    $rewrite = array(
-      'slug'                  => $slug,
-      'with_front'            => true,
-      'pages'                 => true,
-      'feeds'                 => true,
-    );
-    $args = array(
-      'label'                 => __( 'Item', 'kivi_item' ),
-      'description'           => __( 'Item type', 'kivi_item' ),
-      'labels'                => $labels,
-      'supports'              => array( 'title', 'editor', 'thumbnail', 'page-attributes' ),
-      'taxonomies'            => array(),
-      'hierarchical'          => false,
-      'public'                => true,
-      'show_ui'               => true,
-      'show_in_menu'          => true,
-      'menu_position'         => 20,
-      'show_in_admin_bar'     => false,
-      'show_in_nav_menus'     => true,
-      'can_export'            => true,
-      'has_archive'           => true,
-      'exclude_from_search'   => false,
-      'publicly_queryable'    => true,
-      'rewrite'               => $rewrite,
-      'show_in_rest'          => true,
-      'capability_type'       => 'page',
-    );
+	public function kivi_reset() {
+		update_option( 'kivi-show-statusbar', 0 );
+		$this->process->reset();
+		wp_send_json( array( 'message' => 'Tausta-ajo keskeytetty ja aiemmin lisätyt tiedot poistettu.' ) );
+	}
 
-    register_post_type( 'kivi_item', $args );
+	public function kivi_set_remote_url() {
+		$new_value = esc_url_raw( $_POST['kivi-remote-url'], array( 'https', 'http' ) );
 
-    if ( is_admin() ){
-        flush_rewrite_rules(false);
-    }
+		update_option( 'kivi-remote-url', $new_value );
+		if ( empty( $new_value ) ) {
+			wp_send_json( array( 'status' => 0, 'message' => 'Päivitys epäonnistui.' ) );
+		}
 
-  }
+		wp_send_json( array( 'status' => 1, 'message' => $new_value ) );
+	}
 
-  /**
-   * Add new meta box for kivi_item edit page.
-   * Meta box contains table for all items metadata, including all data exported from Kivi.
-   * @param $post_type
-   */
-  public function register_metadata_metabox( $post_type ){
+	public function kivi_save_settings() {
+		update_option( 'kivi-brand-color', sanitize_text_field( $_POST['kivi-brand-color'] ) );
+		update_option( 'kivi-slug', sanitize_text_field( $_POST['kivi-slug'] ) );
+		set_kivi_option( 'kivi-use-debt-free-price-on-shortcode',
+			sanitize_text_field( $_POST['kivi-use-debt-free-price-on-shortcode'] ) );
+		set_kivi_option( 'kivi-clean-values', sanitize_text_field( $_POST['kivi-clean-values'] ) );
+		set_kivi_option( 'kivi-prefilter-name', sanitize_text_field( $_POST['kivi-prefilter-name'] ) );
+		set_kivi_option( 'kivi-prefilter-value', sanitize_text_field( $_POST['kivi-prefilter-value'] ) );
+		set_kivi_option( 'kivi-gmap-id', sanitize_text_field( $_POST['kivi-gmap-id'] ) );
+		update_option( 'kivi-remote-url', esc_url_raw( $_POST['kivi-remote-url'], array( 'https', 'http' ) ) );
 
-    //if ( 'kivi_item' == $post_type || 'attachment' == $post_type ) {
-    if ( 'kivi_item' == $post_type ) {
-      add_meta_box(
-        'Metadata',
-        __( 'Kohteen metatiedot', 'kivi' ),
-        function( $post ){
+		if ( ! empty( $_POST['kivi-rest-user'] ) && ! empty( $_POST['kivi-rest-pass'] ) ) {
+			$kivi_creds = base64_encode( $_POST['kivi-rest-user'] . ':' . $_POST['kivi-rest-pass'] );
+			update_option( 'kivi-rest-auth', $kivi_creds, false );
+			// crypt by filtering pre_update_option_kivi-rest-auth (encrypt) and option_kivi-rest-auth (decrypt)
+		}
 
-          $updatedate = get_post_meta( $post->ID, '_updatedate', true );
-          if($updatedate){
-            echo "<p>".__( 'Tiedot tallennettu Kiviin: ', 'kivi' );
-            echo mysql2date( get_option('date_format') . ' ' . get_option('time_format'), $updatedate ) ;
-            echo "</p>";
-          }
+		wp_send_json( array( 'status' => 1, 'message' => 'Asetukset tallennettu' ) );
+	}
 
-          $metadata = get_metadata( 'post', $post->ID );
-          echo "<table style='width:100%;'>";
-          foreach( $metadata as $key => $value ){
-            echo "<tr><th style='vertical-align: top; text-align: left; border-bottom: 1px solid #efefef;'>$key</th>";
-            echo "<td style='border-bottom: 1px solid #efefef; vertical-align: top;'>";
-            echo Kivi_Public::map_post_meta($key);
-            echo "</td>";
-            echo "<td style='border-bottom: 1px solid #efefef; vertical-align: top;'>";
-            if(count($value) == 1 && isset($value[0])){
-              $value = maybe_unserialize($value[0]);
-              if(is_array($value)){
-                echo "Serialisoituna: ";
-                echo "<pre>".print_r($value, true)."</pre>";
-              }
-              else{
-                echo $value;
-              }
-            }
-            else{
-              echo "Multiple: ";
-              echo "<pre>".print_r($value, true)."</pre>";
-            }
-            echo "</td></tr>";
-          }
-          echo "</table>";
+	/*
+	* Copy attributes from item to the result object just as they are or mapped
+	* values on some cases
+	*/
+	public function copy_func( &$item, &$result ) {
+		$mappings = array(
+			"holdingtype_id"      =>
+				array(
+					'4' => 'muu',
+					'5' => 'asunto-osakeyhtiö',
+					'6' => 'kiinteistöosakeyhtiö',
+					'7' => 'osaomistus'
+				),
+			"watercharge_type_id" =>
+				array(
+					'1237.1' => '€/kk',
+					'1237.2' => '€/hlö/kk',
+					'1237.3' => 'oma mittari',
+					'1237.4' => 'sisältyy vastikkeeseen',
+					'1237.5' => 'sisältyy vuokraan'
+				)
+		);
+		if ( "$item" && array_key_exists( $item->getName(), $mappings ) ) {
+			$result[ $item->getName() ] = $mappings[ $item->getName() ]["$item"];
+		} else {
+			// Fix euro sign
+			$result[ $item->getName() ] = strtr( "$item", array( chr( 0xC2 ) . chr( 0x80 ) => '€' ) );
+		}
+	}
 
-        },
-        $post_type,
-        'advanced',
-        'low'
-      );
-    }
-  }
+	/* Copy attributes from item to the result object as integers  */
+	public function copy_int_func( &$item, &$result ) {
+		$result[ $item->getName() ] = intval( "$item" );
+	}
 
-  /*
-  * Start the scheduler that runs the background process ie. checks
-  * the new xml and does it's stuff every 30 minutes.
-  */
-  public function start_scheduler() {
-    if (! wp_next_scheduled ( 'kivi_items_sync' )) {
-      wp_schedule_event(time(), 'every15minutes', 'kivi_items_sync');
-    }
-  }
+	/* Copy images from the parsed object to the result obbject. Only originals. */
+	public function image_func( &$foo, &$result ) {
+		$images = [];
+		foreach ( $foo->children() as $image ) {
+			$i = [];
+			if ( $image->getName() == 'image_item' ) {
+				foreach ( $image->children() as $prop ) {
+					$this->copy_func( $prop, $i );
+				}
+			}
+			if ( $i['image_itemimagetype_name'] == 'kivirealty-original' ) {
+				$i['image_url'] = str_replace( '.net//kivimedia', '.net/1600x1200,fit/kivimedia', $i['image_url'] );
+				array_push( $images, $i );
+			}
+		}
+		$result['images'] = $images;
+	}
 
-  public function stop_scheduler() {
-    wp_clear_scheduled_hook('kivi_items_sync');
-  }
+	/*
+	* Copy presentation items, 0..n of them
+	*/
+	public function presentation_func( &$foo, &$result ) {
+		$pres = array();
+		foreach ( $foo->children() as $p ) {
+			$i = array();
+			if ( $p->getName() == 'kivipresentation_item' ) {
+				foreach ( $p->children() as $prop ) {
+					$this->copy_func( $prop, $i );
+				}
+				array_push( $pres, $i );
+			}
+		}
+		$result['presentations'] = $pres;
+	}
+
+	/*
+	* Copy vi_presentation items, 0..n of them
+	*/
+	public function realty_vi_presentation_func( &$foo, &$result ) {
+		$pres = array();
+		foreach ( $foo->children() as $p ) {
+			$i = array();
+			if ( $p->getName() == 'realty_vi_presentation_item' ) {
+				foreach ( $p->children() as $prop ) {
+					$this->copy_func( $prop, $i );
+				}
+				array_push( $pres, $i );
+			}
+		}
+		$result['vi_presentations'] = $pres;
+	}
+
+
+	/*
+	* Handle arrea basis which happens to be a bit special
+	* case in the xml. There's supposed to be only one of these
+	* but still it's in a composite property
+	*/
+	public function areabasis_func( &$foo, &$result ) {
+		$mappings               = array(
+			'1225.10' => 'yhtiöjärjestyksen mukainen',
+			'1225.20' => 'isännöitsijäntodistuksen mukainen',
+			'1225.30' => 'tarkistusmitattu'
+		);
+		$result['areabasis_id'] = "";
+		$prefix                 = "";
+		foreach ( $foo->children() as $opt ) {
+			if ( $opt->getName() == 'areabasis_id_item' ) {
+				if ( array_key_exists( $opt->__toString(), $mappings ) ) {
+					$result['areabasis_id'] .= $prefix . $mappings[ $opt->__toString() ];
+					$prefix                 = ", ";
+				}
+			}
+		}
+	}
+
+	/*
+	* Handle realtyoptions. These hold many different types of
+	* classified information about the items. These are grouped
+	* in realytoptiongroups or they're in default group (no group in xml)
+	*/
+	public function realtyrealtyoption_func( &$foo, &$result ) {
+		$opts = [];
+		foreach ( $foo->children() as $opt ) {
+			if ( $opt->getName() == 'realtyrealtyoption_item' ) {
+				$group = '';
+				$val   = '';
+				foreach ( $opt->children() as $prop ) {
+					if ( $prop->getName() == 'realtyoptiongroup_id' ) {
+						$group = "$prop";
+					} elseif ( $prop->getName() == 'realtyoption' ) {
+						$val = "$prop";
+					}
+				}
+				if ( $group == '' ) {
+					$group = '_default';
+				}
+				if ( $val ) {
+					if ( ! array_key_exists( $group, $opts ) ) {
+						$opts[ $group ] = [];
+					}
+					array_push( $opts[ $group ], $val );
+				}
+			}
+		}
+		$result['realtyrealtyoptions'] = $opts;
+	}
+
+	/*
+	* This is the custom post type that represents the KIVI item
+	*/
+	public function register_kivi_item_post_type() {
+		if ( get_option( 'kivi-slug' ) ) :
+			$slug = get_option( 'kivi-slug' );
+		else :
+			$slug = 'kohde';
+		endif;
+
+		$labels  = array(
+			'name'                  => __( 'KIVI items', 'kivi_item' ),
+			'singular_name'         => __( 'Item', 'kivi_item' ),
+			'menu_name'             => __( 'KIVI items', 'kivi_item' ),
+			'name_admin_bar'        => __( 'KIVI items', 'kivi_item' ),
+			'archives'              => __( 'Item listing', 'kivi_item' ),
+			'parent_item_colon'     => __( 'Parent Item:', 'kivi_item' ),
+			'all_items'             => __( 'All items', 'kivi_item' ),
+			'add_new_item'          => __( 'Add Item', 'kivi_item' ),
+			'add_new'               => __( 'Add new', 'kivi_item' ),
+			'new_item'              => __( 'New Item', 'kivi_item' ),
+			'edit_item'             => __( 'Edit Item', 'kivi_item' ),
+			'update_item'           => __( 'Update Item', 'kivi_item' ),
+			'view_item'             => __( 'View Item', 'kivi_item' ),
+			'search_items'          => __( 'Search items', 'kivi_item' ),
+			'not_found'             => __( 'Not found.', 'kivi_item' ),
+			'not_found_in_trash'    => __( 'Not found in trash.', 'kivi_item' ),
+			'featured_image'        => __( 'Featured Item image', 'kivi_item' ),
+			'set_featured_image'    => __( 'Set featured Item image', 'kivi_item' ),
+			'remove_featured_image' => __( 'Remove featured image', 'kivi_item' ),
+			'use_featured_image'    => __( 'Use as featured image', 'kivi_item' ),
+			'insert_into_item'      => __( 'Insert into Item', 'kivi_item' ),
+			'uploaded_to_this_item' => __( 'Uploaded to this Item', 'kivi_item' ),
+			'items_list'            => __( 'Item list', 'kivi_item' ),
+			'items_list_navigation' => __( 'Comapny navigation', 'kivi_item' ),
+			'filter_items_list'     => __( 'Filter items', 'kivi_item' ),
+		);
+		$rewrite = array(
+			'slug'       => $slug,
+			'with_front' => true,
+			'pages'      => true,
+			'feeds'      => true,
+		);
+		$args    = array(
+			'label'               => __( 'Item', 'kivi_item' ),
+			'description'         => __( 'Item type', 'kivi_item' ),
+			'labels'              => $labels,
+			'supports'            => array( 'title', 'editor', 'thumbnail', 'page-attributes' ),
+			'taxonomies'          => array(),
+			'hierarchical'        => false,
+			'public'              => true,
+			'show_ui'             => true,
+			'show_in_menu'        => true,
+			'menu_position'       => 20,
+			'show_in_admin_bar'   => false,
+			'show_in_nav_menus'   => true,
+			'can_export'          => true,
+			'has_archive'         => true,
+			'exclude_from_search' => false,
+			'publicly_queryable'  => true,
+			'rewrite'             => $rewrite,
+			'show_in_rest'        => true,
+			'capability_type'     => 'page',
+		);
+
+		register_post_type( 'kivi_item', $args );
+
+		if ( is_admin() ) {
+			flush_rewrite_rules( false );
+		}
+
+	}
+
+	/**
+	 * Add new meta box for kivi_item edit page.
+	 * Meta box contains table for all items metadata, including all data exported from Kivi.
+	 *
+	 * @param $post_type
+	 */
+	public function register_metadata_metabox( $post_type ) {
+
+		//if ( 'kivi_item' == $post_type || 'attachment' == $post_type ) {
+		if ( 'kivi_item' == $post_type ) {
+			add_meta_box(
+				'Metadata',
+				__( 'Kohteen metatiedot', 'kivi' ),
+				function ( $post ) {
+
+					$updatedate = get_post_meta( $post->ID, '_updatedate', true );
+					if ( $updatedate ) {
+						echo "<p>" . __( 'Tiedot tallennettu Kiviin: ', 'kivi' );
+						echo mysql2date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $updatedate );
+						echo "</p>";
+					}
+
+					$metadata = get_metadata( 'post', $post->ID );
+					echo "<table style='width:100%;'>";
+					foreach ( $metadata as $key => $value ) {
+						echo "<tr><th style='vertical-align: top; text-align: left; border-bottom: 1px solid #efefef;'>$key</th>";
+						echo "<td style='border-bottom: 1px solid #efefef; vertical-align: top;'>";
+						echo Kivi_Public::map_post_meta( $key );
+						echo "</td>";
+						echo "<td style='border-bottom: 1px solid #efefef; vertical-align: top;'>";
+						if ( count( $value ) == 1 && isset( $value[0] ) ) {
+							$value = maybe_unserialize( $value[0] );
+							if ( is_array( $value ) ) {
+								echo "Serialisoituna: ";
+								echo "<pre>" . print_r( $value, true ) . "</pre>";
+							} else {
+								echo $value;
+							}
+						} else {
+							echo "Multiple: ";
+							echo "<pre>" . print_r( $value, true ) . "</pre>";
+						}
+						echo "</td></tr>";
+					}
+					echo "</table>";
+
+				},
+				$post_type,
+				'advanced',
+				'low'
+			);
+		}
+	}
+
+	/*
+	* Start the scheduler that runs the background process ie. checks
+	* the new xml and does it's stuff every 30 minutes.
+	*/
+	public function start_scheduler() {
+		if ( ! wp_next_scheduled( 'kivi_items_sync' ) ) {
+			wp_schedule_event( time(), 'every15minutes', 'kivi_items_sync' );
+		}
+	}
+
+	public function stop_scheduler() {
+		wp_clear_scheduled_hook( 'kivi_items_sync' );
+	}
 
 }

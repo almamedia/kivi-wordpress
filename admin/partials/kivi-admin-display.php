@@ -85,9 +85,11 @@
 
                     <div>
                         <h3>REST-API</h3>
-                        <?php do_action('kivi-admin-rest-form'); ?>
+						<?php do_action( 'kivi-admin-rest-form' ); ?>
 
-                        <p><a href="#" onclick='document.getElementById("kivi-credentials").style.visibility="visible";'>Aseta tunnukset</a></p>
+                        <p><a href="#"
+                              onclick='document.getElementById("kivi-credentials").style.visibility="visible";'>Aseta
+                                tunnukset</a></p>
                         <div id="kivi-credentials" style="visibility: hidden;">
                             <label for="kivi-rest-user"><?php _e( "User name", "kivi" ); ?></label>
                             <input type="password" name="kivi-rest-user" id="kivi-rest-user" class="text-input"
@@ -97,7 +99,6 @@
                                    value="" autocomplete="new-password">
                         </div>
                     </div>
-
 
 
                     <button type="button" id="save-kivi-settings"
