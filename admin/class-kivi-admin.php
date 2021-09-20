@@ -101,7 +101,7 @@ public function kivi_sync() {
       wp_send_json(array('message'=>'Tausta-ajo jo käynnissä'));
       wp_die();
     }
-	
+
 	$baseurl_input_value = esc_attr(get_option('kivi-remote-url'));
 	$baseurl_trimmed = trim( preg_replace( '/\/$/', '', $baseurl_input_value ) );
 
@@ -171,7 +171,7 @@ public function kivi_sync() {
 		  $this->process->push_to_queue( $result );
 		}
 	} // /foreach $baseurl_array
-	
+
 	$this->process->save()->dispatch();
     $this->process->items_delete( $active_items );
     wp_send_json(array('message'=>'Tausta-ajo käynnistetty'));
@@ -224,6 +224,13 @@ public function kivi_sync() {
     set_kivi_option('kivi-prefilter-value', sanitize_text_field( $_POST['kivi-prefilter-value'] ) );
     set_kivi_option('kivi-gmap-id', 	sanitize_text_field( $_POST['kivi-gmap-id'] ) );
     update_option(	'kivi-remote-url', 	esc_url_raw( $_POST['kivi-remote-url'], array('https', 'http') ) );
+
+    if( !empty($_POST['kivi-rest-user']) && !empty($_POST['kivi-rest-pass']) ){
+	    $kivi_creds = base64_encode( $_POST['kivi-rest-user'].':'.$_POST['kivi-rest-pass'] );
+	    update_option(	'kivi-rest-auth', $kivi_creds, false );
+	    // crypt by filtering pre_update_option_kivi-rest-auth (encrypt) and option_kivi-rest-auth (decrypt)
+    }
+
     wp_send_json( array('status'=>1, 'message'=>'Asetukset tallennettu') );
   }
 
@@ -296,7 +303,7 @@ public function kivi_sync() {
     }
     $result['presentations'] = $pres;
   }
-  
+
   /*
   * Copy vi_presentation items, 0..n of them
   */

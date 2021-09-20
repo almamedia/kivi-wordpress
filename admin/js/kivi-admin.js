@@ -23,7 +23,9 @@
         'kivi-use-debt-free-price-on-shortcode': $('#kivi-use-debt-free-price-on-shortcode').is(':checked') ? true : "",
 		'kivi-clean-values': $('#kivi-clean-values').is(':checked') ? true : "",
         'kivi-gmap-id': $('#kivi-gmap-id').val(),
-		'kivi-remote-url': $('#kivi-remote-url').val()
+		'kivi-remote-url': $('#kivi-remote-url').val(),
+        'kivi-rest-user': $('#kivi-rest-user').val(),
+        'kivi-rest-pass': $('#kivi-rest-pass').val()
       };
 
       doAjax(opts, function(res, type) {

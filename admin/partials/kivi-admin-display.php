@@ -24,7 +24,7 @@
     </div>
     <div class="admin-page page-body">
         <div class="wrapper">
-            <form method="post" action="options.php" id="xmlform">
+            <form method="post" action="options.php" id="xmlform" autocomplete="off">
 				<?php settings_fields( 'kivi-settings' ); ?>
 				<?php do_settings_sections( 'kivi-settings' ); ?>
                 <h2><?php _e( "Aseta URL ja tuo aineisto", "kivi" ); ?>:</h2>
@@ -82,6 +82,22 @@
 
                     <button type="button button-secondary" id="xmlimport-reset"
                             class="button button-secondary"><?php _e( 'Keskeytä', 'kivi' ); ?></button>
+
+                    <div>
+                        <h3>REST-API</h3>
+                        <?php do_action('kivi-admin-rest-form'); ?>
+
+                        <p><a href="#" onclick='document.getElementById("kivi-credentials").style.visibility="visible";'>Aseta tunnukset</a></p>
+                        <div id="kivi-credentials" style="visibility: hidden;">
+                            <label for="kivi-rest-user"><?php _e( "User name", "kivi" ); ?></label>
+                            <input type="password" name="kivi-rest-user" id="kivi-rest-user" class="text-input"
+                                   value="" autocomplete="new-password">
+                            <label for="kivi-rest-pass"><?php _e( "Password", "kivi" ); ?></label>
+                            <input type="password" name="kivi-rest-pass" id="kivi-rest-pass" class="text-input"
+                                   value="" autocomplete="new-password">
+                        </div>
+                    </div>
+
 
 
                     <button type="button" id="save-kivi-settings"
