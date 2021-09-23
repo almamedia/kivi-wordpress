@@ -54,6 +54,7 @@ class KiviRest {
 			$header_data = $res['headers']->getAll();
 			if ( isset( $header_data['x-total-hit-count'] ) ) {
 				echo $header_data['x-total-hit-count'] . " kohdetta löydetty";
+				echo " <button id='rest-update-all' type='button'>Nouda / päivitä kaikki</button>";
 			}
 			else{
 				echo $res['response']['code'].' OK';

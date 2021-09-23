@@ -53,14 +53,13 @@
       });
 	});
 
-    $('#xmlimport-stop-sync').on('click', function() {
-      if (confirm('Oletko varma että haluat keskeyttää?')) {
-        doAjax( {'action': 'kivi_stop'}, function(res, type) {
-          showMsg(res, type);
-        });
-      } else {
-        return false;
-      }
+    $('#rest-update-all').on('click', function() {
+
+      doAjax({'action': 'kivi_sync' }, function(res, type) {
+        showMsg(res, type);
+        $('body').css('opacity', '1');
+      });
+
     });
 
     $('#xmlimport-reset').on('click', function() {
