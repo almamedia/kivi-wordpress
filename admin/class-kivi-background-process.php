@@ -45,7 +45,7 @@ class Kivi_Background_Process extends WP_Background_Process {
 		$this->delete( $this->get_batch()->key );
 
 		// Delete items
-		$this->items_delete();
+		$this->items_delete_all();
 
 		// Reset the data source; somehow this seems like the only way to really
 		// prevent the process from ticking again
@@ -71,18 +71,13 @@ class Kivi_Background_Process extends WP_Background_Process {
 
 	/*  Do all the needed stuff for the parsed item */
 	public function handle_parsed_item( &$item ) {
-		if ( $this->item_exists( $item ) ) {
-			$this->item_update( $item );
-		} else {
-			$this->item_add( $item );
-		}
-
+		$this->item_update( $item );
 		return;
 	}
 
 
 	/* Check if the item already exists in wp database */
-	public function item_exists( &$item ) {
+	public function item_exists( $item ) {
 		$args = array(
 			'meta_query'  => array(
 				array(
@@ -102,6 +97,32 @@ class Kivi_Background_Process extends WP_Background_Process {
 	}
 
 
+	/* Get post_id by realty_unique_no */
+	public function get_item_post_id( $realty_unique_no ) {
+		$args = array(
+			'meta_query'  => array(
+				array(
+					'key'           => '_realty_unique_no',
+					'value'         => $realty_unique_no,
+					'type'          => 'NUMERIC',
+					'cache_results' => false,
+				)
+			),
+			'post_type'   => 'kivi_item',
+			'post_status' => get_post_stati(),
+			'fields'        => 'ids',
+		);
+
+		$posts = get_posts( $args );
+
+		if(empty($posts)){
+			return 0;
+		}
+
+		return $posts[0];
+	}
+
+
 	/**
 	 * Figure out if item needs to be modified. That is if the updatedate in the
 	 * post metadata is different from the one in the incoming XML.
@@ -110,6 +131,8 @@ class Kivi_Background_Process extends WP_Background_Process {
 	 * in WP admin without overwriting after scheduled update.
 	 */
 	public function item_update( &$item ) {
+		$postarr                = array();
+		$item_post_id = 0;
 		$args  = array(
 			'meta_query'  => array(
 				array(
@@ -119,39 +142,49 @@ class Kivi_Background_Process extends WP_Background_Process {
 				)
 			),
 			'post_type'   => 'kivi_item',
-			'post_status' => get_post_stati(),
 		);
 		$posts = get_posts( $args );
-		if ( ! isset( $posts[0] ) ) {
-			return;
-		}
-		$post = $posts[0];
-		$d    = get_post_meta( $post->ID, '_updatedate', $single = true );
-		if ( $item['updatedate'] === $d ) {
 
-		} else {
-			$this->item_update_metadata( $post->ID, $item );
-			$this->item_update_content( $post->ID,
-				$item ); // comment this line to disable automatic updates for post_content and post_title.
+		if( count($posts) ){
+			$item_post = $posts[0];
+			$item_post_id = $item_post->ID;
 		}
 
-		/* Publish the post */
-		$postarr                = array();
-		$postarr['ID']          = $post->ID;
+		$postarr['ID'] = $item_post_id;
+
+		$uidata = KiviRest::getUiData($item['realty_unique_no']);
+		$meta                   = array();
+
+		$postarr['post_type']   = 'kivi_item';
+		$postarr['post_title']  = wp_strip_all_tags( $item['flat_structure'] . ' ' . $item['town'] . ' ' . $item['street'] );
+
+		foreach( $item as $key => $data ) {
+			$meta['_'.$key] = maybe_serialize($data);
+		}
+
+		foreach( $uidata as $key => $data ) {
+			$meta['_ui_'.$key] = $data;
+		}
+		foreach( $uidata['sections'] as $key => $data ) {
+			$meta['_ui_section_'.$key] = $data;
+		}
+		$log = 'item_update ';
+		if($item_post_id == 0){
+			$log .= '(new) ';
+		}
+		$log .= current_time('mysql');
+		$log .= " ".md5(json_encode($postarr));
+
+
+		$postarr['meta_input'] = $meta;
 		$postarr['post_status'] = 'publish';
-		wp_update_post( $postarr );
+
+		$new_id = wp_insert_post( $postarr );
+		add_post_meta( $new_id, '_kivi_log', $log);
+
 	}
 
-	/*
-	* Update post_content and post_title for kivi_item.
-	*/
-	public function item_update_content( $post_id, &$item ) {
-		$postarr                 = [];
-		$postarr['post_content'] = $item['presentation'];
-		$postarr['post_title']   = $item['flat_structure'] . ' ' . $item['town'] . ' ' . $item['street'];
-		$postarr['ID']           = $post_id;
-		wp_update_post( $postarr );
-	}
+
 
 	/*
 	* Update all the metadata in the item, in case the item has any
@@ -184,35 +217,6 @@ class Kivi_Background_Process extends WP_Background_Process {
 		}
 	}
 
-	/*
-	* Add new item to wp.
-	* Post is created as a draft first, images downloaded, metadata updated.
-	* Finally post is published.
-	*/
-	public function item_add( &$item ) {
-		$postarr                 = [];
-		$postarr['post_type']    = 'kivi_item';
-		$postarr['post_status']  = 'draft';
-		$postarr['post_content'] = $item['presentation'];
-		$postarr['post_title']   = $item['flat_structure'] . ' ' . $item['town'] . ' ' . $item['street'];
-		$post_id                 = wp_insert_post( $postarr );
-		update_post_meta( $post_id, '_realty_unique_no', $item['realty_unique_no'] );
-		foreach ( $item as $key => $value ) {
-			if ( $key == 'images' ) {
-				$this->update_item_image_urls( $post_id, $item['images'] );
-			} elseif ( $key == 'iv_person_image_url' ) {
-				$value = preg_replace( "(^https?:)", "", $value ); // remove protocol
-				update_post_meta( $post_id, '_iv_person_image_url', $value );
-			} elseif ( $value != "" ) {
-				update_post_meta( $post_id, '_' . $key, $value );
-			}
-		}
-		/* Publish the post when all metadata and stuff is in place */
-		$postarr                = [];
-		$postarr['ID']          = $post_id;
-		$postarr['post_status'] = 'publish';
-		wp_update_post( $postarr );
-	}
 
 
 	private function update_item_image_urls( $post_id, $item_images = array() ) {
@@ -239,7 +243,19 @@ class Kivi_Background_Process extends WP_Background_Process {
 	* Delete items whose _realty_unique_no is not in among active_items. This
 	* Is used to delete (sold) items that no longer exist in the incoming XML.
 	*/
-	public function items_delete( &$active_items = [] ) {
+	public function items_delete() {
+
+		$deleted_realties = KiviRest::getItemsToDelete();
+		error_log('Delete these: '.print_r($deleted_realties, true));
+		foreach ( $deleted_realties as $realty ) {
+			$item_post_id = get_item_post_id( $realty['realty_unique_no'] );
+			if( $item_post_id ){
+				wp_delete_post( get_item_post_id( $realty['realty_unique_no'] ), true );
+			}
+		}
+	}
+
+	public function items_delete_all() {
 		$args  = array(
 			'post_type'   => 'kivi_item',
 			'numberposts' => - 1,
@@ -247,10 +263,7 @@ class Kivi_Background_Process extends WP_Background_Process {
 		);
 		$posts = get_posts( $args );
 		foreach ( $posts as $post ) {
-			$realtyid = get_post_meta( $post->ID, '_realty_unique_no', $single = true );
-			if ( ! in_array( $realtyid, $active_items ) ) {
-				wp_delete_post( $post->ID, true );
-			}
+			wp_delete_post( $post->ID, true );
 		}
 	}
 

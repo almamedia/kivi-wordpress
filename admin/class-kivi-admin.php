@@ -89,7 +89,7 @@ class Kivi_Admin {
 	 * 4. Non-existent items are deleted from wp
 	 * 5. background processing is dispatched
 	 */
-	public function kivi_sync() {
+	public function kivi_sync($indexed_after = true) {
 
 		error_log( 'kivi sync!' );
 
@@ -113,70 +113,39 @@ class Kivi_Admin {
 			wp_die();
 		}
 
-		$baseurl_array = explode( ",", $baseurl_trimmed );
-		$active_items  = [];
-		foreach ( $baseurl_array as $baseurl ) {
 
-			$response = wp_remote_get( $baseurl . '/LATEST.txt' );
-			$latest   = trim( wp_remote_retrieve_body( $response ) );
-			$theurl   = $baseurl . '/' . $latest;
-			$doc      = new DOMDocument();
-			$z        = new XMLReader;
-			$res      = $z->open( $theurl );
+		$items = KiviRest::getAllItems($indexed_after);
 
-			if ( ! $res ) {
-				error_log( "Reading of the incoming XML failed." );
-				update_option( 'kivi-show-statusbar', 0 );
-				wp_send_json( array( 'message' => 'Tiedoston lukeminen epäonnistui' ) );
-				wp_die();
+		if( empty($items) ){
+			error_log( "REST no items ( kivi_sync )" );
+			update_option( 'kivi-show-statusbar', 0 );
+			wp_send_json( array( 'message' => 'REST-rajapinnasta ei tullut kohteita' ) );
+			wp_die();
+		}
+
+		foreach( $items as $item ){
+			$result = [];
+
+			foreach ( $item as $key => $foo ) {
+				$key = strtolower($key);
+				$this->copy_func( $foo, $key, $result );
 			}
 
-			while ( $z->read() && $z->name !== 'item' ) {
-				;
-			}
-
-			while ( $z->name === 'item' ) {
-				$result = [];
-				$node   = simplexml_import_dom( $doc->importNode( $z->expand(), true ) );
-
-				foreach ( $node->children() as $foo ) {
-					if ( $foo->getName() == "image" ) {
-						$this->image_func( $foo, $result );
-					} elseif ( $foo->getName() == "realtyrealtyoption" ) {
-						$this->realtyrealtyoption_func( $foo, $result );
-					} elseif ( $foo->getName() == "areabasis_id" ) {
-						$this->areabasis_func( $foo, $result );
-					} elseif ( $foo->getName() == "kivipresentation" ) {
-						$this->presentation_func( $foo, $result );
-					} elseif ( $foo->getName() == "realty_vi_presentation" ) {
-						$this->realty_vi_presentation_func( $foo, $result );
-					} elseif ( in_array( $foo->getName(), [ "unencumbered_price" ] ) ) {
-						$this->copy_int_func( $foo, $result );
-					} else {
-						$this->copy_func( $foo, $result );
-					}
+			if ( ! empty( get_kivi_option( 'kivi-prefilter-name' ) ) && ! empty( get_kivi_option( 'kivi-prefilter-value' ) ) ) {
+				$filtername = get_kivi_option( 'kivi-prefilter-name' );
+				if ( isset( $result[ $filtername ] ) && $result[ $filtername ] == get_kivi_option( 'kivi-prefilter-value' ) ) {
+					/* Filters match */
+				} else {
+					/* Filters don't match, ignore this item */
+					continue;
 				}
-				$result['source_url'] = $baseurl;
-
-				$z->next( 'item' );
-
-				if ( ! empty( get_kivi_option( 'kivi-prefilter-name' ) ) && ! empty( get_kivi_option( 'kivi-prefilter-value' ) ) ) {
-					$filtername = get_kivi_option( 'kivi-prefilter-name' );
-					if ( isset( $result[ $filtername ] ) && $result[ $filtername ] == get_kivi_option( 'kivi-prefilter-value' ) ) {
-						/* Filters match */
-					} else {
-						/* Filters don't match, ignore this item */
-						continue;
-					}
-				}
-
-				array_push( $active_items, $result['realty_unique_no'] );
-				$this->process->push_to_queue( $result );
 			}
-		} // /foreach $baseurl_array
+			$this->process->push_to_queue( $result );
+
+		}
 
 		$this->process->save()->dispatch();
-		$this->process->items_delete( $active_items );
+		$this->process->items_delete();
 		wp_send_json( array( 'message' => 'Tausta-ajo käynnistetty' ) );
 
 		wp_die();
@@ -243,7 +212,7 @@ class Kivi_Admin {
 	* Copy attributes from item to the result object just as they are or mapped
 	* values on some cases
 	*/
-	public function copy_func( &$item, &$result ) {
+	public function copy_func( &$item, $name, &$result ) {
 		$mappings = array(
 			"holdingtype_id"      =>
 				array(
@@ -261,17 +230,22 @@ class Kivi_Admin {
 					'1237.5' => 'sisältyy vuokraan'
 				)
 		);
-		if ( "$item" && array_key_exists( $item->getName(), $mappings ) ) {
-			$result[ $item->getName() ] = $mappings[ $item->getName() ]["$item"];
+
+		if( is_array($item) ){
+			$item = json_encode( $item );
+		}
+
+		if ( "$item" && array_key_exists( $name, $mappings ) ) {
+			$result[ $name ] = $mappings[ $name ]["$item"];
 		} else {
 			// Fix euro sign
-			$result[ $item->getName() ] = strtr( "$item", array( chr( 0xC2 ) . chr( 0x80 ) => '€' ) );
+			$result[ $name ] = strtr( "$item", array( chr( 0xC2 ) . chr( 0x80 ) => '€' ) );
 		}
 	}
 
 	/* Copy attributes from item to the result object as integers  */
-	public function copy_int_func( &$item, &$result ) {
-		$result[ $item->getName() ] = intval( "$item" );
+	public function copy_int_func( &$item, $name, &$result ) {
+		$result[ $name ] = intval( "$item" );
 	}
 
 	/* Copy images from the parsed object to the result obbject. Only originals. */
@@ -489,13 +463,13 @@ class Kivi_Admin {
 							$value = maybe_unserialize( $value[0] );
 							if ( is_array( $value ) ) {
 								echo "Serialisoituna: ";
-								echo "<pre>" . print_r( $value, true ) . "</pre>";
+								echo "<pre>" . htmlentities( print_r( $value, true ) ). "</pre>";
 							} else {
 								echo $value;
 							}
 						} else {
 							echo "Multiple: ";
-							echo "<pre>" . print_r( $value, true ) . "</pre>";
+							echo "<pre>" . htmlentities( print_r( $value, true ) ). "</pre>";
 						}
 						echo "</td></tr>";
 					}
