@@ -173,7 +173,7 @@ class Kivi_Background_Process extends WP_Background_Process {
 			$log .= '(new) ';
 		}
 		$log .= current_time('mysql');
-		$log .= " ".md5(json_encode($postarr));
+		$log .= " ".md5(json_encode($item).json_encode($uidata));
 
 
 		$postarr['meta_input'] = $meta;
