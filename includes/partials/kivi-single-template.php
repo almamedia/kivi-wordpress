@@ -17,223 +17,141 @@ get_header(); ?>
 
     <div id="primary" class="content-area">
         <main id="main"
-              class="site-main kivi-template-single <?php echo Kivi_Public::get_css_classes( get_the_id() ); ?>"
+              class="site-main kivi-template-single <?php echo Kivi_Public::get_css_classes( get_the_ID() ); ?>"
               role="main">
-			  
+
 			<?php
 			if ( have_posts() ) :
-			the_post();
+				the_post();
+
+				$images = Kivi_Public::get_images( get_the_ID() );
+				if ( $images ) : ?>
+                    <div class="kivi-img-container">
+                        <div class="slick-for">
+							<?php foreach ( $images as $image ) : ?>
+                                <div class="slick-for-image-wrapper">
+									<?php
+									echo Kivi_Public::get_img_tag( $image->url, $image->description, 'slick-for-image',
+										'980x700,fit,q82' );
+									?>
+                                </div>
+							<?php endforeach; ?>
+                        </div>
+                        <div class="slick-carousel">
+							<?php foreach ( $images as $image ) : ?>
+                                <div class="slick-carousel-image-wrapper">
+									<?php
+									echo Kivi_Public::get_img_tag( $image->url, '', 'slick-carousel-image',
+										'150x100,fit,q62' );
+									?>
+                                </div>
+							<?php endforeach; ?>
+                        </div>
+                    </div>
+				<?php endif; ?>
 
 
-			$images = Kivi_Public::get_images( get_the_ID() );
-			if ( $images ) : ?>
-                <div class="kivi-img-container">
-                    <div class="slick-for">
-						<?php foreach ( $images as $image ) : ?>
-                            <div class="slick-for-image-wrapper">
-								<?php
-                                echo Kivi_Public::get_img_tag($image->url, $image->description, 'slick-for-image', '980x700,fit,q82');
-                                ?>
-                            </div>
-						<?php endforeach; ?>
-                    </div>
-                    <div class="slick-carousel">
-	                    <?php foreach ( $images as $image ) : ?>
-                            <div class="slick-carousel-image-wrapper">
-								<?php
-								echo Kivi_Public::get_img_tag($image->url, '', 'slick-carousel-image', '150x100,fit,q62');
-								?>
-                            </div>
-						<?php endforeach; ?>
-                    </div>
-                </div>
-			<?php endif; ?>
-
-			<?php $brand_styling = ' style="background-color:' . get_option( "kivi-brand-color" ) . ';"'; ?>
-            <div class="kivi-single-item-header">
-                <p class="kivi-single-item-structure"> <?php echo ucfirst( get_post_meta( get_the_id(),
-						'_realtytype_id', true ) ) ?> <span
-                            aria-hidden='true'> | </span> <?php echo get_post_meta( get_the_id(), '_flat_structure',
-						true ) ?> </p>
-                <h1 class="kivi-single-item-title">
-					<?php
-					echo ucfirst( get_post_meta( get_the_id(), '_street',
-							true ) ) . ", " . ucfirst( get_post_meta( get_the_id(), '_quarteroftown',
-							true ) ) . ", " . get_post_meta( get_the_id(), '_town', true );
-					?>
-                </h1>
-                <div class="kivi-item-details">
-                    <div class="div">
-                        <p class="kivi-item-details__price"><span
-                                    class="kivi-item-details__heading"><?php ( Kivi_Public::is_for_rent_assignment( get_the_id() ) ) ? _e( 'Vuokra',
-									'Kivi' ) : _e( 'Hinta', 'Kivi' ); ?></span>
-                            <br>
-							<?php echo ( $price = Kivi_Public::get_display_price( get_the_id() ) ) ? $price : '-'; ?>
-                        </p>
-                    </div>
-                    <div class="div">
-                        <p class="kivi-item-details__area"><span class="kivi-item-details__heading"><?php _e( 'Koko',
-									'Kivi' ) ?></span><br>
-							<?php
-							if ( get_post_meta( get_the_id(), '_living_area_m2', true ) != "" ) {
-								echo get_post_meta( get_the_id(), '_living_area_m2', true ) . ' m²';
-							} else {
-								echo '-';
-							} ?>
-                        </p>
-                    </div>
-                    <div class="div">
-                        <p class="kivi-item-details__buildyear"><span
-                                    class="kivi-item-details__heading"><?php _e( 'Vuosi', 'Kivi' ) ?></span><br>
-							<?php
-							if ( get_post_meta( get_the_id(), '_rc_buildyear2', true ) != "" ) {
-								echo get_post_meta( get_the_id(), '_rc_buildyear2', true );
-							} else {
-								echo '-';
-							} ?>
-                        </p>
+                <div class="kivi-single-item-header">
+                    <?php
+                    $header_data = get_post_meta(get_the_ID(), '_ui_section_SUMMARY', true);
+                    ?>
+                    <p class="kivi-single-item-structure">
+                        <?= $header_data['fields']['TYPE']['value'] ?>
+                        <span aria-hidden='true'> | </span>
+                        <?php echo get_post_meta( get_the_id(), '_flat_structure', true ) ?>
+                    </p>
+                    <h1 class="kivi-single-item-title">
+	                    <?= $header_data['fields']['LOCATION']['value'] ?>
+                    </h1>
+                    <div class="kivi-item-details">
+                        <div class="div">
+                            <p class="kivi-item-details__price">
+                                <span class="kivi-item-details__heading"><?= $header_data['fields']['PRICE']['label'] ?></span>
+                                <br>
+	                            <?= $header_data['fields']['PRICE']['value'] ?>
+                            </p>
+                        </div>
+                        <div class="div">
+                            <p class="kivi-item-details__area">
+                                <span class="kivi-item-details__heading"><?= $header_data['fields']['LIVING_AREA_M2']['label'] ?></span>
+                                <br>
+	                            <?= $header_data['fields']['LIVING_AREA_M2']['value'] ?>
+                            </p>
+                        </div>
+                        <div class="div">
+                            <p class="kivi-item-details__buildyear">
+                                <span class="kivi-item-details__heading"><?= $header_data['fields']['BUILD_YEAR']['label'] ?></span>
+                                <br>
+	                            <?= $header_data['fields']['BUILD_YEAR']['value'] ?>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="kivi-single-item-infowrapper">
-				<?php
-				if ( trim( get_the_content() ) != "" ) {
-					?>
-                    <section class="kivi-single-item-body kivi-single-the-content">
-						<?php the_content(); ?>
-                    </section>
+
+
+                <div class="kivi-single-item-infowrapper">
+
 					<?php
-				}
-				?>
+                    $sections = array(
+                        //"_ui_section_SUMMARY"   =>  'hide-by-default',
+                        "_ui_section_BASICS"    =>  'show-by-default',
+                        "_ui_section_CHARGES"   =>  'show-by-default',
+                        "_ui_section_LIVING_COSTS" => 'show-by-default',
+                        "_ui_section_ADDITIONAL_DETAILS" => 'hide-by-default',
+                        "_ui_section_PREMISES_AND_MATERIALS" => 'hide-by-default',
+                        "_ui_section_LOT"       =>  'hide-by-default',
+                        "_ui_section_REALTY_COMPANY" => 'hide-by-default',
+                    );
 
-        <?php if( view_contact_info( get_the_id() ) ): ?>
-        <section class="kivi-single-item-body kivi-single-contact-info">
-            <div class="kivi-header-wrapper">
-              <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
-                <button class="kivi-toggle" data-target="kiviContact"><?php _e('Yhteystiedot ja esittelyt', 'kivi'); ?></button>
-              </h3>
-            </div>
-            <table id="kiviContact" class="kivi-item-table kivi-contact">
-              <tbody>
-                <?php echo view_contact_info( get_the_id() );?>
-              </tbody>
-              <?php if( get_post_meta( get_the_id(), '_iv_supplier_user', true) == "true" ): ?>
-              <tfoot>
-                <tr class="kivi-iv-person">
-                  <th>
-                    <div class="kivi-iv-person-container">
-                      <img class="kivi-iv-person-image" src="<?php echo Kivi_Public::get_person_image_url( get_the_id() ); ?>" alt="<?php echo get_post_meta( get_the_id(), '_iv_person_name', true ); ?>" />
-                    </div>
-                  </th>
-                </tr>
-              </tfoot>
-              <?php endif; ?>
-            </table>
-        </section>
-        <?php endif; ?>
-
-        <section class="kivi-single-item-body kivi-single-basic-info">
-            <div class="kivi-header-wrapper">
-                    <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
-                <button class="kivi-toggle" data-target="kiviBasic"><?php _e('Asunnon perustiedot', 'kivi'); ?></button>
-                    </h3>
-            </div>
-                        <table id="kiviBasic" class="kivi-item-table">
-                            <tbody>
-							<?php echo view_basic_info( get_the_id() ); ?>
-                            </tbody>
-                        </table>
-        </section>
-
-        <section class="kivi-single-item-body kivi-single-cost-info">
-            <div class="kivi-header-wrapper">
-                    <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
-                <button class="kivi-toggle" data-target="kiviPrice"><?php _e('Hinta ja kustannukset', 'kivi'); ?></button>
-                    </h3>
-            </div>
-                        <table id="kiviPrice" class="kivi-item-table">
-                            <tbody>
-							<?php echo view_cost_info( get_the_id() ); ?>
-                            </tbody>
-                        </table>
-        </section>
-
-        <section class="kivi-single-item-body kivi-single-additional-info">
-            <div class="kivi-header-wrapper">
-                        <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
-                <button class="kivi-toggle hide-by-default" data-target="kiviMoreInfo"><?php _e('Asunnon lisätiedot', 'kivi'); ?></button>
-                        </h3>
-            </div>
-                            <table id="kiviMoreInfo" class="kivi-item-table">
+					foreach ( $sections as $section_identifier => $header_class ):
+					    $section = get_post_meta(get_the_ID(), $section_identifier, true);
+					    if(empty($section)){
+					        break;
+                        }
+						?>
+                        <section id="section-<?= $section_identifier ?>"
+                                 class="kivi-single-item-body kivi-single-section">
+                            <div class="kivi-header-wrapper">
+                                <h3 class="kivi-single-item-body-header">
+                                    <button class="kivi-toggle <?= $header_class ?>"
+                                            data-target="table-<?= $section_identifier ?>"><?= $section['header'] ?></button>
+                                </h3>
+                            </div>
+                            <table id="table-<?= $section_identifier ?>" class="kivi-item-table">
                                 <tbody>
-                <?php echo view_additional_info( get_the_id() ); ?>
+								<?php foreach ( $section['fields'] as $info_row ): ?>
+                                    <tr>
+                                        <th class='kivi-item-cell kivi-item-cell-header'><?= $info_row['label'] ?></th>
+                                        <td class='kivi-item-cell kivi-item-cell-value'>
+											<?php if ( is_array( $info_row['value'] ) ): ?>
+                                                <ul class="kivi">
+													<?php foreach ( $info_row['value'] as $key => $value ): ?>
+                                                        <li><?= $value ?></li>
+													<?php endforeach; ?>
+                                                </ul>
+											<?php else: ?>
+												<?= $info_row['value'] ?>
+											<?php endif; ?>
+                                        </td>
+                                    </tr>
+								<?php endforeach; ?>
                                 </tbody>
                             </table>
-        </section>
+                        </section>
+					<?php endforeach; ?>
 
-        <?php if( $materials = view_materials_info( get_the_id() ) ): ?>
-        <section class="kivi-single-item-body kivi-single-materials-info">
-            <div class="kivi-header-wrapper">
-                        <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
-                <button class="kivi-toggle hide-by-default" data-target="kiviMaterials"><?php _e('Asunnon tilat ja materiaalit', 'kivi'); ?></button>
-                        </h3>
-            </div>
-                            <table id="kiviMaterials" class="kivi-item-table">
-                                <tbody>
-								<?php echo $materials; ?>
-                                </tbody>
-                            </table>
-        </section>
-					<?php endif; ?>
-
-					<?php if ( $housingco = view_housing_company_info( get_the_id() ) ): ?>
-        <section class="kivi-single-item-body kivi-single-housing-company-info">
-            <div class="kivi-header-wrapper">
-                        <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
-                <button class="kivi-toggle hide-by-default" data-target="kiviHousing">
-							<?php
-							if ( get_post_meta( get_the_id(), '_realtycompany', true ) ) {
-								echo _e( 'Taloyhtiö', 'kivi' );
-                    }
-                    else {
-								echo _e( 'Tontti', 'kivi' );
-							}
-							?>
-                </button>
-                        </h3>
-            </div>
-                            <table id="kiviHousing" class="kivi-item-table">
-                                <tbody>
-								<?php echo $housingco; ?>
-                                </tbody>
-                            </table>
-        </section>
-					<?php endif; ?>
-
-					<?php if ( $services = view_services_info( get_the_id() )->__toString() ): ?>
-		    <section class="kivi-single-item-body kivi-single-services-info">
-            <div class="kivi-header-wrapper">
-                        <h3 class="kivi-single-item-body-header"<?php echo $brand_styling; ?>>
-                <button class="kivi-toggle hide-by-default" data-target="kiviServices"><?php _e('Palvelut ja liikenneyhteydet', 'kivi'); ?></button>
-                        </h3>
-            </div>
-                            <table id="kiviServices" class="kivi-item-table">
-                                <tbody>
-								<?php echo $services; ?>
-                                </tbody>
-                            </table>
-        </section>
-					<?php endif; ?>
 
 					<?php if ( get_kivi_option( 'kivi-gmap-id' ) ) { ?>
-        <section class="kivi-single-item-body kivi-single-gmap">
+                        <section class="kivi-single-item-body kivi-single-gmap">
 
                             <div id="map"></div>
                             <script type="text/javascript">
 								<?php
-                if ( get_post_meta($post->ID, "_lat", true) && get_post_meta($post->ID, "_lon", true) ):
+								if ( get_post_meta( $post->ID, "_lat", true ) && get_post_meta( $post->ID, "_lon",
+										true ) ):
 									echo "var hasCoordinates = true;";
-                    echo 'var latlng = {lat:' . get_post_meta($post->ID, "_lat", true) . ', lng: '. get_post_meta($post->ID, "_lon", true) . '};';
+									echo 'var latlng = {lat:' . get_post_meta( $post->ID, "_lat",
+											true ) . ', lng: ' . get_post_meta( $post->ID, "_lon", true ) . '};';
 								else:
 									echo "var hasCoordinates = false;";
 								endif;
@@ -310,22 +228,20 @@ get_header(); ?>
                                     }
                                 }
                             </script>
-          <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo get_kivi_option('kivi-gmap-id'); ?>&callback=initMap" async defer></script>
-        </section>
-        <?php } ?>
-                        </div>
+                            <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo get_kivi_option( 'kivi-gmap-id' ); ?>&callback=initMap"
+                                    async defer></script>
+                        </section>
+					<?php } ?>
+                </div>
 
-					<?php endif; ?>
+			<?php endif; ?>
 
-		<section class="kivi-single-item-body kivi-item-after">
-			<?php do_action( 'kivi_single_item_after' ); ?>
-			<?php echo Kivi_Public::get_listing_button(); ?>
-		</section>	
+            <section class="kivi-single-item-body kivi-item-after">
+				<?php do_action( 'kivi_single_item_after' ); ?>
+				<?php echo Kivi_Public::get_listing_button(); ?>
+            </section>
 
         </main><!-- #main -->
     </div><!-- #primary -->
 
-<?php
-//get_sidebar();
-
-get_footer();
+<?php get_footer();
