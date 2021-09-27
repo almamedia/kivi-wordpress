@@ -776,29 +776,31 @@ class Kivi_Public {
 
     }
 
-    public static function get_primary_image_url( $post_id, $size_str = "480x220,fit,q72" ){
+    public static function get_primary_image_url( $post_id ){
 		$images = self::get_images( $post_id );
 		if( empty( $images ) ){
 			return "";
 		}
 		$first_image = $images[0];
-		if( ! empty( $first_image->url ) ){
-			return str_replace('1600x1200,fit', $size_str, $first_image->url );
+		if( ! empty( $first_image['V400x'] ) ){
+			return $first_image['V400x'];
 		}
+	    elseif( ! empty( $first_image['URL'] ) ){
+		    return $first_image['URL'];
+	    }
 		return '';
     }
 
     public static function get_images( $post_id ){
-	    $data = get_post_meta( $post_id, '_kivi_images_data', true );
-	    $data = json_decode($data);
+	    $data = get_post_meta( $post_id, '_ui_IMAGES', true );
 	    if( ! empty( $data )){
 	    	return $data;
 	    }
+	    return false;
     }
 
-    public static function get_img_tag( $src, $alt, $class, $size_str = "1600x1200,fit,q80" ) {
-	    $search = "1600x1200,fit";
-	    $ret_str = '<img src="'.esc_attr( str_replace( $search, $size_str, $src ) ).'" alt="'.esc_attr($alt).'" class="'.esc_attr($class).'" />';
+    public static function get_img_tag( $src, $alt, $class ) {
+	    $ret_str = '<img src="'.esc_attr( $src ).'" alt="'.esc_attr($alt).'" class="'.esc_attr($class).'" />';
 	    if( ! empty( $alt ) ) {
 	    	$ret_str .= '<span class="kivi-image-caption">'.esc_html( $alt ).'</span>';
 	    }
@@ -818,7 +820,7 @@ class Kivi_Public {
 	}
 
 	public static function get_person_image_url( $post_id ){
-		$url = get_post_meta( $post_id, '_iv_person_image_url',true);
+		$url = get_post_meta( $post_id, '_AGENT_IMAGE',true);
 		return $url;
 	}
 

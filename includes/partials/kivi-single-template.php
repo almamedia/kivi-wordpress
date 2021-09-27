@@ -24,14 +24,14 @@ get_header(); ?>
 			if ( have_posts() ) :
 				the_post();
 
-				$images = Kivi_Public::get_images( get_the_ID() );
+				$images = get_post_meta( get_the_ID(), '_ui_IMAGES', true );
 				if ( $images ) : ?>
                     <div class="kivi-img-container">
                         <div class="slick-for">
 							<?php foreach ( $images as $image ) : ?>
                                 <div class="slick-for-image-wrapper">
 									<?php
-									echo Kivi_Public::get_img_tag( $image->url, $image->description, 'slick-for-image',
+									echo Kivi_Public::get_img_tag( $image['V1066x'], $image['DESCRIPTION'], 'slick-for-image',
 										'980x700,fit,q82' );
 									?>
                                 </div>
@@ -41,8 +41,7 @@ get_header(); ?>
 							<?php foreach ( $images as $image ) : ?>
                                 <div class="slick-carousel-image-wrapper">
 									<?php
-									echo Kivi_Public::get_img_tag( $image->url, '', 'slick-carousel-image',
-										'150x100,fit,q62' );
+									echo Kivi_Public::get_img_tag( $image['V150x'], $image['DESCRIPTION'], 'slick-carousel-image');
 									?>
                                 </div>
 							<?php endforeach; ?>
