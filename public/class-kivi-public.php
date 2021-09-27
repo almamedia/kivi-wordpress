@@ -82,50 +82,6 @@ class Kivi_Public {
 	  wp_enqueue_script( 'slick', plugin_dir_url( __FILE__ ) . 'js/slick.min.js', array( 'jquery' ), $this->version, false );
   }
 
-  public function kivi_item_metaboxes( array $meta_boxes ) {
-    $fields = array(
-      array(
-        'id'   => '_realty_unique_no',
-        'name' => __('realty_unique_no', 'kivi_item'),
-        'type' => 'text',
-      ),
-      array(
-        'id'   => '_updatedate',
-        'name' => __('updatedate', 'kivi_item'),
-        'type' => 'text',
-      ),
-      array(
-        'id'   => '_flat_structure',
-        'name' => __('flat structure', 'kivi_item'),
-        'type' => 'text',
-      ),
-      array(
-        'id'   => '_street',
-        'name' => __('street', 'kivi_item'),
-        'type' => 'text',
-      ),
-      array(
-        'id'   => '_addr_town_area',
-        'name' => __('addr_town_area', 'kivi_item'),
-        'type' => 'text',
-      ),
-      array(
-        'id'   => '_kivi_item_image',
-        'name' => __('Item Image', 'kivi_item'),
-        'type' => 'image',
-        'repeatable' => true,
-        'repeatable_max' => 30,
-      ),
-    );
-      $meta_boxes[] = array(
-          'title' => __('KIVI item data', 'kivi_item'),
-          'pages' => 'kivi_item',
-          'context'    => 'side',
-          'priority'   => 'high',
-          'fields' => $fields
-      );
-      return $meta_boxes;
-  }
 
   /**
    * Get item price in a clean format. For rental assignment returns rent and for sale unencumbered price.
@@ -135,14 +91,15 @@ class Kivi_Public {
    */
   public static function get_display_price($post_id , $postfix = " €" ) {
     $price = "";
+	  $assignment = get_post_meta($post_id, '_assignment', true);
     if( self::is_for_rent_assignment( $post_id ) ) {
-      $rent_price = get_post_meta($post_id, '_assignmentrent_rent', true);
+	    $rent_price = $assignment['RENT'];
       if( $rent_price ) {
         $price = $rent_price;
       }
     }
     else{
-      $price = get_post_meta($post_id, '_unencumbered_price', true);
+      $price = $assignment['UNENCUMBERED_PRICE'];
     }
 
     if( $price ){
@@ -167,9 +124,9 @@ class Kivi_Public {
    * @return bool
    */
   public static function is_for_rent_assignment( $post_id ) {
-    $assigntype = get_post_meta($post_id, '_assignment_type', true);
-    if( ! empty($assigntype) ){
-      if( strpos($assigntype, 'vuokranantaja') !== false) {
+    $assignt = get_post_meta($post_id, '_assignment', true);
+    if( ! empty($assignt['ASSIGNMENT_TYPE_CODE']) ){
+      if( strpos($assignt['ASSIGNMENT_TYPE_CODE'], 'FOR_RENT') !== false) {
         return true;
       }
     }
@@ -182,9 +139,9 @@ class Kivi_Public {
    * @return bool
    */
   public static function is_property_assignment($post_id ) {
-    $assigntype = get_post_meta($post_id, '_assignment_type', true);
-    if( ! empty($assigntype) ){
-      if( strpos($assigntype, 'kiinteistö') !== false) {
+    $assignt = get_post_meta($post_id, '_assignment', true);
+	  if( ! empty($assignt['ASSIGNMENT_TYPE_CODE']) ){
+      if( strpos($assignt['ASSIGNMENT_TYPE_CODE'], 'REALTY') !== false) {
         return true;
       }
     }
@@ -197,9 +154,9 @@ class Kivi_Public {
    * @return bool
    */
   public static function is_newbuild_assignment($post_id ) {
-    $assigntype = get_post_meta($post_id, '_assignment_type', true);
-    if( ! empty($assigntype) ){
-      if( strpos($assigntype, 'uudiskohde') !== false) {
+    $assignt = get_post_meta($post_id, '_assignment', true);
+	  if( ! empty($assignt['ASSIGNMENT_TYPE_CODE']) ){
+      if( strpos($assignt['ASSIGNMENT_TYPE_CODE'], 'NEW') !== false) {
         return true;
       }
     }
@@ -215,8 +172,8 @@ class Kivi_Public {
     $classes = array();
     $classes[] = "kivi-no-".get_post_meta( $post_id, '_realty_unique_no', true );
 
-    $bid_wanted_flag = get_post_meta( $post_id, "_bid_wanted_flag", true );
-    if( !empty($bid_wanted_flag) && $bid_wanted_flag != 'false' ){
+    $bid_wanted_flag = self::get_bid_wanted_flag( $post_id);
+    if( !empty($bid_wanted_flag) && $bid_wanted_flag ){
       $classes[] ="bid-wanted";
     }
 
@@ -224,7 +181,7 @@ class Kivi_Public {
       $classes[] = "has-presentation";
     }
 
-    $type = get_post_meta($post_id, '_realtytype_id', true);
+    $type = get_post_meta($post_id, '_realtytype', true);
     if( ! empty($type) ){
       $classes[] = "type-".trim(sanitize_title($type));
     }
@@ -241,7 +198,7 @@ class Kivi_Public {
       $classes[] = "assignment-for-new-building";
     }
 
-    $itemgroup = get_post_meta($post_id, '_itemgroup_id', true);
+    $itemgroup = get_post_meta($post_id, '_itemgroup', true);
     if( ! empty($itemgroup) ){
       $classes[] = "itemgroup-".trim($itemgroup);
     }
@@ -251,12 +208,12 @@ class Kivi_Public {
       $classes[] = "town-".trim(sanitize_title($town));
     }
 
-    $lotholding = get_post_meta($post_id, '_rc_lotholding_id', true);
+    $lotholding = get_post_meta($post_id, '_rc_lotholding', true);
     if( ! empty($lotholding) ){
       $classes[] = "lotholding-".trim($lotholding);
     }
 
-    $tradetype = get_post_meta($post_id, '_tradetype_id', true);
+    $tradetype = get_post_meta($post_id, '_tradetype', true);
     if( ! empty($tradetype) ){
       $classes[] = "tradetype-".trim($tradetype);
     }
@@ -356,7 +313,7 @@ class Kivi_Public {
   static function map_post_meta($meta_field) {
     $meta_field = substr($meta_field, 1);
     $arr = array(
-      "addr_region_area_id" => __("Maakunta","kivi"),
+      "region" => __("Maakunta","kivi"),
       "addr_town_area" => __("Kunta","kivi"),
       "arable_no_flag" => __("Ei peltoa","kivi"),
       "arableland" => __("Pellon kuvaus","kivi"),
@@ -621,7 +578,10 @@ class Kivi_Public {
       "igglo_ad_id" => __("Igglo","kivi"),
       "assignmentsale_free_other" => __("Vapautuminen","kivi"),
       "assignmentsale_free_type_name" =>  __("Vapautuminen","kivi"),
-      "assignmentsale_free_date"=>  __("Vapautuu","kivi")
+      "assignmentsale_free_date"=>  __("Vapautuu","kivi"),
+      "changedate"=>  __("Muutettu","kivi"),
+      "itemgroup"=>  __("Kohdetyyppi","kivi"),
+      "municipality"=>  __("Kunta","kivi"),
     );
 
     return ( array_key_exists($meta_field, $arr) ) ? $arr[$meta_field] : false;
@@ -861,5 +821,18 @@ class Kivi_Public {
 		$url = get_post_meta( $post_id, '_iv_person_image_url',true);
 		return $url;
 	}
+
+	private static function get_assignment_value( $item_post_id, $assignment_data_name ){
+		$assigment = get_post_meta($item_post_id, '_assignment', true);
+		if( isset($assigment->$assignment_data_name)){
+			return $assigment->$assignment_data_name;
+		}
+		return '';
+	}
+
+	private static function get_bid_wanted_flag( $item_post_id ){
+		return self::get_assignment_value($item_post_id, 'BID_WANTED_FLAG');
+	}
+
 
 }
