@@ -63,11 +63,6 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-kivi.php';
 
 require_once plugin_dir_path( __FILE__ ) . 'public/kivi-functions.php';
 
-require_once plugin_dir_path( __FILE__ ) . 'public/class-kivi-fact-box.php';
-require_once plugin_dir_path( __FILE__ ) . 'public/class-kivi-viewable.php';
-require_once plugin_dir_path( __FILE__ ) . 'public/class-kivi-property.php';
-
-
 /**
  * Begins execution of the plugin.
  *
