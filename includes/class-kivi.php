@@ -220,7 +220,6 @@ class Kivi {
     add_action('init', array($this, 'register_shortcodes'));
 
     if( get_kivi_option('kivi-clean-values') ) {
-		$this->loader->add_filter( 'kivi_viewable_value', $plugin_public, 'filter_viewable_values', 10, 3 );
 		$this->loader->add_filter( 'kivi_viewable_value', $plugin_public, 'filter_presentation_date', 10, 3 );
 		$this->loader->add_filter( 'kivi_viewable_value', $plugin_public, 'filter_format_date', 10, 2 );
         $this->loader->add_filter( 'kivi_viewable_value', $plugin_public, 'filter_charges_eheating', 10, 3 );
