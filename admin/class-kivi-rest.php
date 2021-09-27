@@ -70,18 +70,18 @@ class KiviRest {
 		$realty_unique_no = intval($realty_unique_no);
 
 		if( $realty_unique_no == 0){
-			return false;
+			return array();
 		}
 
 		$instance    = new KiviRest();
 
-		$res = $instance->kiviRemoteRequest( 'realties/homepage/'.$realty_unique_no.'/uiformat' );
+		$res = $instance->kiviRemoteRequest( 'realties/homepage/'.$realty_unique_no.'/uiformat', array(), 0 );
 
 		if ( ! is_wp_error( $res ) && ( $res['response']['code'] == 200 || $res['response']['code'] == 201 ) ) {
 			return json_decode($res['body'], true);
 		} else {
 			error_log( "Error KiviRest :: getUiData( $realty_unique_no )" );
-			return false;
+			return array();
 		}
 	}
 
