@@ -126,9 +126,9 @@ class Kivi_Admin {
 		foreach( $items as $item ){
 			$result = [];
 
-			foreach ( $item as $key => $foo ) {
+			foreach ( $item as $key => $value ) {
 				$key = strtolower($key);
-				$this->copy_func( $foo, $key, $result );
+				$result[$key] = $value;
 			}
 
 			if ( ! empty( get_kivi_option( 'kivi-prefilter-name' ) ) && ! empty( get_kivi_option( 'kivi-prefilter-value' ) ) ) {
@@ -463,7 +463,7 @@ class Kivi_Admin {
 							$value = maybe_unserialize( $value[0] );
 							if ( is_array( $value ) ) {
 								echo "Serialisoituna: ";
-								echo "<pre>" . htmlentities( print_r( $value, true ) ). "</pre>";
+								echo "<pre style='max-width:880px; overflow: auto; max-height: 300px;'>" . htmlentities( print_r( $value, true ) ). "</pre>";
 							} else {
 								echo $value;
 							}
