@@ -159,15 +159,21 @@ class Kivi_Background_Process extends WP_Background_Process {
 		$postarr['post_title']  = wp_strip_all_tags( $item['flat_structure'] . ' ' . $item['town'] . ' ' . $item['street'] );
 
 		foreach( $item as $key => $data ) {
-			$meta['_'.$key] = maybe_serialize($data);
+			if (is_object(json_decode($data))){
+				$data = json_decode($data);
+			}
+			$meta['_'.$key] = $data;
 		}
 
 		foreach( $uidata as $key => $data ) {
 			$meta['_ui_'.$key] = $data;
 		}
-		foreach( $uidata['sections'] as $key => $data ) {
-			$meta['_ui_section_'.$key] = $data;
+		if(is_array($uidata['sections'])){
+			foreach( $uidata['sections'] as $key => $data ) {
+				$meta['_ui_section_'.$key] = $data;
+			}
 		}
+
 		$log = 'item_update ';
 		if($item_post_id == 0){
 			$log .= '(new) ';
