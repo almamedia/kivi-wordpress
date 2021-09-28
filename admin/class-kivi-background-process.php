@@ -97,32 +97,6 @@ class Kivi_Background_Process extends WP_Background_Process {
 	}
 
 
-	/* Get post_id by realty_unique_no */
-	public function get_item_post_id( $realty_unique_no ) {
-		$args = array(
-			'meta_query'  => array(
-				array(
-					'key'           => '_realty_unique_no',
-					'value'         => $realty_unique_no,
-					'type'          => 'NUMERIC',
-					'cache_results' => false,
-				)
-			),
-			'post_type'   => 'kivi_item',
-			'post_status' => get_post_stati(),
-			'fields'        => 'ids',
-		);
-
-		$posts = get_posts( $args );
-
-		if(empty($posts)){
-			return 0;
-		}
-
-		return $posts[0];
-	}
-
-
 	/**
 	 * Figure out if item needs to be modified. That is if the updatedate in the
 	 * post metadata is different from the one in the incoming XML.
@@ -159,9 +133,6 @@ class Kivi_Background_Process extends WP_Background_Process {
 		$postarr['post_title']  = wp_strip_all_tags( $item['flat_structure'] . ' ' . $item['town'] . ' ' . $item['street'] );
 
 		foreach( $item as $key => $data ) {
-			if (is_object(json_decode($data))){
-				$data = json_decode($data);
-			}
 			$meta['_'.$key] = $data;
 		}
 
@@ -244,22 +215,6 @@ class Kivi_Background_Process extends WP_Background_Process {
 		update_post_meta( $post_id, '_kivi_images_data', json_encode( $images_to_save, JSON_UNESCAPED_UNICODE ) );
 	}
 
-
-	/*
-	* Delete items whose _realty_unique_no is not in among active_items. This
-	* Is used to delete (sold) items that no longer exist in the incoming XML.
-	*/
-	public function items_delete() {
-
-		$deleted_realties = KiviRest::getItemsToDelete();
-		error_log('Delete these: '.print_r($deleted_realties, true));
-		foreach ( $deleted_realties as $realty ) {
-			$item_post_id = get_item_post_id( $realty['realty_unique_no'] );
-			if( $item_post_id ){
-				wp_delete_post( get_item_post_id( $realty['realty_unique_no'] ), true );
-			}
-		}
-	}
 
 	public function items_delete_all() {
 		$args  = array(

@@ -163,7 +163,7 @@ class Kivi {
     $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
     $this->loader->add_action( 'admin_menu', $plugin_admin, 'kivi_register_menu_page' );
     $this->loader->add_action( 'in_admin_header', $plugin_admin, 'show_status_bar' );
-    $this->loader->add_action( 'wp_ajax_kivi_sync', $plugin_admin, 'kivi_sync' );
+    $this->loader->add_action( 'wp_ajax_kivi_sync', $plugin_admin, 'kivi_sync_all' );
     $this->loader->add_action( 'kivi_items_sync', $plugin_admin, 'kivi_sync' );
     $this->loader->add_action( 'wp_ajax_kivi_stop', $plugin_admin, 'kivi_stop' );
     $this->loader->add_action( 'wp_ajax_kivi_reset', $plugin_admin, 'kivi_reset' );

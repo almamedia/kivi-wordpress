@@ -13,16 +13,16 @@ class KiviRest {
 	public static function getItemsToDelete() {
 		$instance = new KiviRest();
 
-		$res = $instance->kiviRemoteRequest( 'realties/homepage?IV_ACTIVE_FLAG=0', array(), $indexed_after = 60 );
+		$res = $instance->kiviRemoteRequest( 'realties/homepage?INCLUDE_FIELDS=REALTY_UNIQUE_NO', array(), 60*4, 0 );
 
 		if ( ! is_wp_error( $res ) && ( $res['response']['code'] == 200 || $res['response']['code'] == 201 ) ) {
 			return json_decode( $res['body'], true );
 		} else {
-			error_log( "Error KiviRest :: getAllItems()" );
+			error_log( "Error KiviRest :: getItemsToDelete()" );
 		}
 	}
 
-	public static function getAllItems( $indexed_after = true ) {
+	public static function getAllItems( $indexed_after = 16 ) {
 		$instance = new KiviRest();
 
 		$res = $instance->kiviRemoteRequest( 'realties/homepage', array(), $indexed_after );
@@ -86,9 +86,9 @@ class KiviRest {
 	 *
 	 * @return mixed
 	 */
-	private function kiviRemoteRequest( $endpoint, $args = array(), $indexed_after = 16 ) {
+	private function kiviRemoteRequest( $endpoint, $args = array(), $indexed_after = 16, $iv_active_flag = 1 ) {
 		$url = $this->api_url . $endpoint;
-		$url = add_query_arg( 'IV_ACTIVE_FLAG', '1', $url );
+		$url = add_query_arg( 'IV_ACTIVE_FLAG', $iv_active_flag, $url );
 
 		if ( $indexed_after ) {
 			$date = date_create( 'now' );
@@ -99,7 +99,7 @@ class KiviRest {
 
 		$auth_string     = 'Basic ' . get_option( 'kivi-rest-auth' );
 		$args['headers'] = array( 'Authorization' => $auth_string );
-
+		error_log('Request: '.$url);
 		return wp_remote_request( $url, $args );
 	}
 

@@ -80,7 +80,9 @@ class Kivi_Admin {
 		);
 	}
 
-
+	public function kivi_sync_all() {
+		$this->kivi_sync(0);
+	}
 	/**
 	 * This function is hooked to an ajax call defined in class-kivi.php.
 	 * 1. XML is read from the remote source (KIVI)
@@ -89,7 +91,7 @@ class Kivi_Admin {
 	 * 4. Non-existent items are deleted from wp
 	 * 5. background processing is dispatched
 	 */
-	public function kivi_sync($indexed_after = true) {
+	public function kivi_sync($indexed_after = 16) {
 
 		error_log( 'kivi sync!' );
 
@@ -104,15 +106,7 @@ class Kivi_Admin {
 			wp_die();
 		}
 
-		$baseurl_input_value = esc_attr( get_option( 'kivi-remote-url' ) );
-		$baseurl_trimmed     = trim( preg_replace( '/\/$/', '', $baseurl_input_value ) );
-
-		if ( empty( $baseurl_trimmed ) ) {
-			update_option( 'kivi-show-statusbar', 0 );
-			wp_send_json( array( 'message' => 'Aineisto-URLia ei ole asetuksissa.' ) );
-			wp_die();
-		}
-
+		$this->items_delete();
 
 		$items = KiviRest::getAllItems($indexed_after);
 
@@ -143,14 +137,27 @@ class Kivi_Admin {
 			$this->process->push_to_queue( $result );
 
 		}
-
 		$this->process->save()->dispatch();
-		$this->process->items_delete();
 		wp_send_json( array( 'message' => 'Tausta-ajo käynnistetty' ) );
 
 		wp_die();
 	}
 
+
+	/*
+	* Delete items whose _realty_unique_no is not in among active_items. This
+	* Is used to delete (sold) items that no longer exist in the incoming XML.
+	*/
+	public function items_delete() {
+		$deleted_realties = KiviRest::getItemsToDelete();
+		error_log('(Kivi) Delete these: '.print_r($deleted_realties, true));
+		foreach ( $deleted_realties as $realty ) {
+			$item_post_id = $this->get_item_post_id( $realty['REALTY_UNIQUE_NO'] );
+			if( $item_post_id ){
+				wp_delete_post( $item_post_id, true );
+			}
+		}
+	}
 
 	public function show_status_bar() {
 		if ( get_option( 'kivi-show-statusbar' ) == 1 ) {
@@ -482,6 +489,32 @@ class Kivi_Admin {
 			);
 		}
 	}
+
+	/* Get post_id by realty_unique_no */
+	public function get_item_post_id( $realty_unique_no ) {
+		$args = array(
+			'meta_query'  => array(
+				array(
+					'key'           => '_realty_unique_no',
+					'value'         => $realty_unique_no,
+					'type'          => 'NUMERIC',
+					'cache_results' => false,
+				)
+			),
+			'post_type'   => 'kivi_item',
+			'post_status' => get_post_stati(),
+			'fields'        => 'ids',
+		);
+
+		$posts = get_posts( $args );
+
+		if(empty($posts)){
+			return 0;
+		}
+
+		return $posts[0];
+	}
+
 
 	/*
 	* Start the scheduler that runs the background process ie. checks
