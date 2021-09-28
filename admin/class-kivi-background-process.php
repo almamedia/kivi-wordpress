@@ -107,6 +107,7 @@ class Kivi_Background_Process extends WP_Background_Process {
 	public function item_update( &$item ) {
 		$postarr                = array();
 		$item_post_id = 0;
+		$post_date = '';
 		$args  = array(
 			'meta_query'  => array(
 				array(
@@ -122,6 +123,7 @@ class Kivi_Background_Process extends WP_Background_Process {
 		if( count($posts) ){
 			$item_post = $posts[0];
 			$item_post_id = $item_post->ID;
+			$post_date = $item_post->post_date;
 		}
 
 		$postarr['ID'] = $item_post_id;
@@ -155,6 +157,7 @@ class Kivi_Background_Process extends WP_Background_Process {
 
 		$postarr['meta_input'] = $meta;
 		$postarr['post_status'] = 'publish';
+		$postarr['post_date'] = $post_date;
 
 		$new_id = wp_insert_post( $postarr );
 		add_post_meta( $new_id, '_kivi_log', $log);
