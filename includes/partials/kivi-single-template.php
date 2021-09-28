@@ -146,11 +146,11 @@ get_header(); ?>
                             <div id="map"></div>
                             <script type="text/javascript">
 								<?php
-								if ( get_post_meta( $post->ID, "_lat", true ) && get_post_meta( $post->ID, "_lon",
-										true ) ):
+                                $lat = get_post_meta( get_the_ID(), "_ui_LOCATION_LAT", true );
+                                $lon = get_post_meta( get_the_ID(), "_ui_LOCATION_LON", true );
+								if ( ! empty($lat)  && ! empty($lon) ):
 									echo "var hasCoordinates = true;";
-									echo 'var latlng = {lat:' . get_post_meta( $post->ID, "_lat",
-											true ) . ', lng: ' . get_post_meta( $post->ID, "_lon", true ) . '};';
+									echo 'var latlng = {lat:' . esc_js($lat) . ', lng: ' . esc_js($lon) . '};';
 								else:
 									echo "var hasCoordinates = false;";
 								endif;
@@ -192,8 +192,8 @@ get_header(); ?>
                                         styles: styleArray,
                                     }
                                     var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-									<?php echo 'var address = "' . get_post_meta( get_the_id(), "_street",
-										true ) . ', ' . get_post_meta( get_the_id(), "_town", true ) . '";';  ?>
+									<?php echo 'var address = "' . esc_js(get_post_meta( get_the_id(), "_street",
+										true )) . ', ' . esc_js(get_post_meta( get_the_id(), "_town", true )) . '";';  ?>
 
                                     // Set the marker on the map for the first time
                                     setMarker(geocoder, map, address);
@@ -227,7 +227,7 @@ get_header(); ?>
                                     }
                                 }
                             </script>
-                            <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo get_kivi_option( 'kivi-gmap-id' ); ?>&callback=initMap"
+                            <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo esc_attr(get_kivi_option( 'kivi-gmap-id' )); ?>&callback=initMap"
                                     async defer></script>
                         </section>
 					<?php } ?>
