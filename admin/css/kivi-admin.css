@@ -18,25 +18,15 @@
   font-size: 12px;
 }
 
-#admin-page-kivi #xmlimport-sync {
-  height: 36px;
-  min-width: 60px;
-  background: #ED5851;
-  border-color: transparent;
-  border-radius: 0;
-  text-shadow: none;
-  box-shadow: none;
-  color: white;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.other-kivi-settings {
-  margin-top: 16px;
+.kivi-settings {
+  margin: 1em;
+    padding: 1em;
+    border: 1px dotted #666;
+    border-radius: 1em;
 }
 
 #admin-page-kivi #save-kivi-settings,
-#xmlimport-reset {
+#import-reset {
   margin-top: 16px;
   display: inline-block;
   height: 34px;
@@ -48,7 +38,7 @@
   box-shadow: none;
 }
 
-#admin-page-kivi #xmlimport-reset {
+#admin-page-kivi #import-reset {
   background: #333;
 }
 
