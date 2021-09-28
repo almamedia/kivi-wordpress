@@ -100,6 +100,8 @@ get_header(); ?>
                         "_ui_section_PREMISES_AND_MATERIALS" => 'hide-by-default',
                         "_ui_section_LOT"       =>  'hide-by-default',
                         "_ui_section_REALTY_COMPANY" => 'hide-by-default',
+                        "_ui_section_PRESENTATION" => 'hide-by-default',
+                        "_ui_section_AGENT" => 'hide-by-default',
                     );
 
 					foreach ( $sections as $section_identifier => $header_class ):
@@ -113,29 +115,35 @@ get_header(); ?>
                             <div class="kivi-header-wrapper">
                                 <h3 class="kivi-single-item-body-header">
                                     <button class="kivi-toggle <?= $header_class ?>"
-                                            data-target="table-<?= $section_identifier ?>"><?= $section['header'] ?></button>
+                                            data-target="section-content-<?= $section_identifier ?>"><?= $section['header'] ?></button>
                                 </h3>
                             </div>
-                            <table id="table-<?= $section_identifier ?>" class="kivi-item-table">
-                                <tbody>
-								<?php foreach ( $section['fields'] as $info_row ): ?>
-                                    <tr>
-                                        <th class='kivi-item-cell kivi-item-cell-header'><?= $info_row['label'] ?></th>
-                                        <td class='kivi-item-cell kivi-item-cell-value'>
-											<?php if ( is_array( $info_row['value'] ) ): ?>
-                                                <ul class="kivi">
-													<?php foreach ( $info_row['value'] as $key => $value ): ?>
-                                                        <li><?= $value ?></li>
-													<?php endforeach; ?>
-                                                </ul>
-											<?php else: ?>
-												<?= $info_row['value'] ?>
-											<?php endif; ?>
-                                        </td>
-                                    </tr>
-								<?php endforeach; ?>
-                                </tbody>
-                            </table>
+                            <div id="section-content-<?= $section_identifier ?>">
+	                            <?php echo "<!-- action  kivi_single{$section_identifier} -->"; ?>
+                                <?php do_action("kivi_single{$section_identifier}"); ?>
+                                <table class="kivi-item-table">
+                                    <tbody>
+                                    <?php foreach ( $section['fields'] as $field_key => $info_row ): ?>
+                                        <tr class="info-row-<?=$field_key?>">
+                                            <th class='kivi-item-cell kivi-item-cell-header info-label-<?=$field_key?>'><?= $info_row['label'] ?></th>
+                                            <td class='kivi-item-cell kivi-item-cell-value info-value-<?=$field_key?>'>
+                                                <?php if ( is_array( $info_row['value'] ) ): ?>
+                                                    <ul class="kivi">
+                                                        <?php foreach ( $info_row['value'] as $key => $value ): ?>
+                                                            <li><?= $value ?></li>
+                                                        <?php endforeach; ?>
+                                                    </ul>
+                                                <?php else: ?>
+                                                    <?= $info_row['value'] ?>
+                                                <?php endif; ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+	                            <?php echo "<!-- action kivi_single{$section_identifier}_after -->"; ?>
+	                            <?php do_action("kivi_single{$section_identifier}_after"); ?>
+                            </div>
                         </section>
 					<?php endforeach; ?>
 

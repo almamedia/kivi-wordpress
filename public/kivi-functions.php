@@ -67,3 +67,12 @@ function get_posted_value( &$request, $value ) {
 
 	return $ret;
 }
+
+add_action('kivi_single_ui_section_AGENT', function(){
+	$img_src = get_post_meta( get_the_ID(), '_ui_AGENT_IMAGE', true );
+	if( ! empty($img_src) ){
+		echo "<div class='kivi-agent-image'>
+		<img src='{$img_src}' />
+		</div>";
+	}
+});
