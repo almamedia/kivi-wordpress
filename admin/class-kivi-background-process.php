@@ -150,7 +150,7 @@ class Kivi_Background_Process extends WP_Background_Process {
 			$log .= '(new) ';
 		}
 		$log .= current_time('mysql');
-		$log .= " ".md5(json_encode($item).json_encode($uidata));
+		$log .= " ".md5(wp_json_encode($item).wp_json_encode($uidata));
 
 
 		$postarr['meta_input'] = $meta;
@@ -161,59 +161,6 @@ class Kivi_Background_Process extends WP_Background_Process {
 
 	}
 
-
-
-	/*
-	* Update all the metadata in the item, in case the item has any
-	* modifications.
-	*/
-	public function item_update_metadata( $post_id, &$item ) {
-		foreach ( $item as $key => $value ) {
-			if ( $key == 'images' ) {
-				$new_images     = array_column( $item['images'], 'image_url' );
-				$current_images = [];
-				$images         = get_post_meta( $post_id, '_kivi_item_image', $single = false );
-
-				foreach ( $images as $i ) {
-					$original_image_url = get_post_meta( $i, 'original_image_url', $single = true );
-					if ( ! in_array( $original_image_url, $new_images ) ) {
-						wp_delete_attachment( $i, $force_delete = true );
-						delete_post_meta( $post_id, '_kivi_item_image', $meta_value = $i );
-					} else {
-						array_push( $current_images, $original_image_url );
-					}
-				}
-
-				$this->update_item_image_urls( $post_id, $item['images'] );
-			} elseif ( $key == 'iv_person_image_url' ) {
-				$value = preg_replace( "(^https?:)", "", $value ); // remove protocol
-				update_post_meta( $post_id, '_iv_person_image_url', $value );
-			} else {
-				update_post_meta( $post_id, '_' . $key, $value );
-			}
-		}
-	}
-
-
-
-	private function update_item_image_urls( $post_id, $item_images = array() ) {
-		$images_to_save = array();
-		foreach ( $item_images as $image ) {
-			$image['image_desc'] = wp_strip_all_tags( $image['image_desc'], true );
-			$image['image_desc'] = str_replace( array( '"', "'" ), "", $image['image_desc'] );
-			$image['image_desc'] = wp_check_invalid_utf8( $image['image_desc'], true );
-
-			$image['image_url'] = preg_replace( "(^https?:)", "", $image['image_url'] ); // remove protocol
-
-			$images_to_save[] = array( 'order'       => $image['image_iv_order'],
-			                           'url'         => $image['image_url'],
-			                           'type'        => $image['image_realtyimagetype_id'],
-			                           'description' => $image['image_desc']
-			);
-		}
-		sort( $images_to_save );
-		update_post_meta( $post_id, '_kivi_images_data', json_encode( $images_to_save, JSON_UNESCAPED_UNICODE ) );
-	}
 
 
 	public function items_delete_all() {

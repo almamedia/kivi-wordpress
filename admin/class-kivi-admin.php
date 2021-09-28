@@ -239,7 +239,7 @@ class Kivi_Admin {
 		);
 
 		if( is_array($item) ){
-			$item = json_encode( $item );
+			$item = wp_json_encode( $item );
 		}
 
 		if ( "$item" && array_key_exists( $name, $mappings ) ) {
