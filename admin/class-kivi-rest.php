@@ -67,7 +67,7 @@ class KiviRest {
 				echo $header_data['x-total-hit-count'] . " kohdetta löydetty, ";
 				echo $header_data['x-rate-limit-remaining'] .' pyyntöä jäljellä (tunnissa)';
 				if( $header_data['x-rate-limit-remaining'] > $header_data['x-total-hit-count'] ){
-				echo " <button id='rest-update-all' type='button'>Nouda / päivitä kaikki</button>";
+					echo " <button id='rest-update-all' type='button'>Nouda / päivitä kaikki</button>";
 				}
 			} else {
 				echo $res['response']['code'] . ' OK';
@@ -99,6 +99,18 @@ class KiviRest {
 		}
 	}
 
+	public static function getPurchaseAnnouncements(){
+		$instance = new KiviRest();
+
+		$res = $instance->kiviRemoteRequest( 'purchase-announcements/homepage', array(), 0, 1 );
+
+		if ( ! is_wp_error( $res ) && ( $res['response']['code'] == 200 || $res['response']['code'] == 201 ) ) {
+			return json_decode( $res['body'], true );
+		} else {
+			error_log( "Error KiviRest :: getPurchaseAnnouncements() " );
+		}
+	}
+
 	/**
 	 * @param $endpoint string ex. "realties"
 	 * @param array $args for request
@@ -108,8 +120,8 @@ class KiviRest {
 	 *
 	 * @return mixed
 	 */
-	private function kiviRemoteRequest( $endpoint, $args = array(), $indexed_after = 16, $iv_active_flag = 1 ) {
-		$url = $this->api_url . $endpoint;
+	protected function kiviRemoteRequest( $endpoint, $args = array(), $indexed_after = 16, $iv_active_flag = 1 ) {
+		$url = $this->getApiUrl() . $endpoint;
 		$url = add_query_arg( 'IV_ACTIVE_FLAG', $iv_active_flag, $url );
 
 		if ( $indexed_after ) {

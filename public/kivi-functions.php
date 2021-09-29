@@ -68,6 +68,9 @@ function get_posted_value( &$request, $value ) {
 	return $ret;
 }
 
+/*
+ * echo image html to AGENT -section on frontend.
+ */
 add_action('kivi_single_ui_section_AGENT', function(){
 	$img_src = get_post_meta( get_the_ID(), '_ui_AGENT_IMAGE', true );
 	if( ! empty($img_src) ){
@@ -76,3 +79,24 @@ add_action('kivi_single_ui_section_AGENT', function(){
 		</div>";
 	}
 });
+
+
+add_shortcode('kivi-ostotoimeksiannot', function(){
+
+	if ( false === ( $results = get_transient( 'kivi-rest-purchase-announcements' ) ) ) {
+		$results = KiviRest::getPurchaseAnnouncements();
+		set_transient( 'kivi-rest-purchase-announcements', $results, MINUTE_IN_SECONDS ); // HOUR_IN_SECONDS
+	}
+
+	foreach( $results as $ota ) { // "osto toimeksi anto"
+
+        if ( $overridden_template = locate_template( '/../includes/partials/kivi-purchase-announcement.php' ) ) {
+          load_template( $overridden_template, false );
+        } else {
+          include(dirname( __FILE__ ) . '/../includes/partials/kivi-purchase-announcement.php');
+        }
+
+	}
+
+});
+
