@@ -85,15 +85,15 @@ add_shortcode('kivi-ostotoimeksiannot', function(){
 
 	if ( false === ( $results = get_transient( 'kivi-rest-purchase-announcements' ) ) ) {
 		$results = KiviRest::getPurchaseAnnouncements();
-		set_transient( 'kivi-rest-purchase-announcements', $results, MINUTE_IN_SECONDS ); // HOUR_IN_SECONDS
+		set_transient( 'kivi-rest-purchase-announcements', $results, HOUR_IN_SECONDS );
 	}
 
 	foreach( $results as $ota ) { // "osto toimeksi anto"
 
-        if ( $overridden_template = locate_template( '/../includes/partials/kivi-purchase-announcement.php' ) ) {
-          load_template( $overridden_template, false );
+        if ( $overridden_template = locate_template( 'kivi-purchase-announcement.php' ) ) {
+	        include( $overridden_template );
         } else {
-          include(dirname( __FILE__ ) . '/../includes/partials/kivi-purchase-announcement.php');
+        	include( dirname( __FILE__ ) . '/../includes/partials/kivi-purchase-announcement.php');
         }
 
 	}
