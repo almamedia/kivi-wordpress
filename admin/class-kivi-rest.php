@@ -4,11 +4,30 @@
  * Date: 16.9.2021
  */
 
-add_action( 'kivi-admin-rest-form', array( 'KiviRest', 'testApiConnection' ) );
-
 class KiviRest {
 
-	private $api_url = 'https://api.test.kivi.etuovi.com/ext-api/v2/';
+	private $api_url = '';
+
+	/**
+	 * @return string
+	 */
+	public function getApiUrl() {
+		return $this->api_url;
+	}
+
+	/**
+	 * @param string $api_url
+	 */
+	public function setApiUrl( $api_url ) {
+		$this->api_url = $api_url;
+	}
+
+	/**
+	 * KiviRest constructor.
+	 */
+	public function __construct() {
+		$this->setApiUrl( apply_filters( 'kivi-rest-api-url', 'https://api.prod.kivi.etuovi.com/v2/' ) );
+	}
 
 	public static function getItemsToDelete() {
 		$instance = new KiviRest();
@@ -45,8 +64,11 @@ class KiviRest {
 		if ( ! is_wp_error( $res ) && ( $res['response']['code'] == 200 || $res['response']['code'] == 201 ) ) {
 			$header_data = $res['headers']->getAll();
 			if ( isset( $header_data['x-total-hit-count'] ) ) {
-				echo $header_data['x-total-hit-count'] . " kohdetta löydetty";
+				echo $header_data['x-total-hit-count'] . " kohdetta löydetty, ";
+				echo $header_data['x-rate-limit-remaining'] .' pyyntöä jäljellä (tunnissa)';
+				if( $header_data['x-rate-limit-remaining'] > $header_data['x-total-hit-count'] ){
 				echo " <button id='rest-update-all' type='button'>Nouda / päivitä kaikki</button>";
+				}
 			} else {
 				echo $res['response']['code'] . ' OK';
 			}
