@@ -12,6 +12,17 @@
  * @package    Kivi
  * @subpackage Kivi/public/partials
  */
+$view = array();
+$section = get_post_meta( get_the_ID(), '_ui_section_SUMMARY', true);
+
+$view['PRICE']          = $section['fields']['PRICE']['value'];
+$view['LIVING_AREA_M2'] = $section['fields']['LIVING_AREA_M2']['value'];
+$view['BUILD_YEAR']     = $section['fields']['BUILD_YEAR']['value'];
+$view['TYPE']           = $section['fields']['TYPE']['value'];
+$view['FLAT_STRUCTURE'] = get_post_meta(get_the_ID(), '_flat_structure', true );
+$view['LOCATION']       = $section['fields']['LOCATION']['value'];
+
+
 ?>
 <div class="kivi-index-item col <?php echo Kivi_Public::get_css_classes(get_the_id()); ?>">
   <a href="<?php the_permalink(); ?>" class="kivi-item-link">
@@ -20,37 +31,29 @@
     </div>
     <div class="kivi-item-body">
       <span class="kivi-item-body__structure limit-2">
-        <?php echo ucfirst( get_post_meta( get_the_id(), '_realtytype_id', true ) ) ?>
-        <?php if (get_post_meta( get_the_id(), '_flat_structure', true ) ) {
-          echo "<span aria-hidden='true'> | </span>" . get_post_meta(get_the_id(), '_flat_structure', true ); }
+        <?php echo esc_html( $view['TYPE'] ); ?>
+        <?php if ( ! empty($view['FLAT_STRUCTURE']) ) {
+          echo "<span aria-hidden='true'> | </span>" . esc_html( $view['FLAT_STRUCTURE'] ); }
         ?>
       </span>
 
       <h2 class="limit-2">
-        <?php echo ucfirst( get_post_meta( get_the_id(), '_street', true ) ) . ", " . ucfirst( get_post_meta(get_the_id(), '_quarteroftown', true ) ) . ", " .  get_post_meta( get_the_id(), '_town', true )?>
+        <?php echo esc_html( $view['LOCATION'] ); ?>
       </h2>
       <div class="kivi-item-details">
         <div class="div">
           <p class="kivi-item-details__price" title="<?php ( Kivi_Public::is_for_rent_assignment(get_the_id()) ) ? _e('Vuokra', 'Kivi') :  _e('Hinta', 'Kivi'); ?>">
-          <!--<?php ( Kivi_Public::is_for_rent_assignment(get_the_id()) ) ? _e('Vuokra', 'Kivi') :  _e('Hinta', 'Kivi'); ?>
-          <br>-->
-            <?php echo ( $price = Kivi_Public::get_display_price(get_the_id()) ) ? $price : '-'; ?>
+            <?php echo esc_html( $view['PRICE'] ); ?>
           </p>
         </div>
         <div class="div">
           <p class="kivi-item-details__area" title="<?php _e('Koko', 'Kivi')?>">
-            <?php
-              if ( get_post_meta(get_the_id(), '_living_area_m2', true) != "" ) {
-                echo intval(get_post_meta(get_the_id(), '_living_area_m2', true)).' m²';
-              } ?>
+            <?php echo esc_html( $view['LIVING_AREA_M2'] ); ?>
           </p>
         </div>
         <div class="div">
           <p class="kivi-item-details__buildyear" title="<?php _e('Vuosi', 'Kivi')?>">
-            <?php
-              if ( get_post_meta(get_the_id(), '_rc_buildyear2', true) != "" ) {
-                echo get_post_meta(get_the_id(), '_rc_buildyear2', true);
-              } ?>
+            <?php echo esc_html( $view['BUILD_YEAR'] ); ?>
           </p>
         </div>
       </div>
