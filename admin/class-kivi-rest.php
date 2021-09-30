@@ -58,6 +58,7 @@ class KiviRest {
 
 		$args            = array();
 		$args['timeout'] = 4; // short timeout as used when generating page
+		$args['method'] = 'HEAD';
 
 		$res = $instance->kiviRemoteRequest( 'realties/homepage', $args, 0 );
 
@@ -134,7 +135,13 @@ class KiviRest {
 		$auth_string     = 'Basic ' . get_option( 'kivi-rest-auth' );
 		$args['headers'] = array( 'Authorization' => $auth_string );
 		error_log('Request: '.$url);
-		return wp_remote_request( $url, $args );
+		$res = wp_remote_request( $url, $args );
+
+		if( is_wp_error( $res ) ){
+			error_log( "kiviRemoteRequest ERROR: ". print_r($res->getErrorMessages(), true) );
+			$res = $res->getErrorMessages();
+		}
+		return $res;
 	}
 
 
