@@ -206,9 +206,6 @@ class Kivi {
 
     $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
     $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
-    $this->loader->add_filter( 'cmb_meta_boxes', $plugin_public, 'kivi_item_metaboxes' );
-    //add_action( 'init', array($this, 'map_post_meta') );
     add_filter( 'single_template', array($this, 'load_single_kivi_template') );
     add_filter( 'archive_template', array($this, 'load_kivi_index_template') ) ;
 
@@ -219,15 +216,7 @@ class Kivi {
       return $redirect_url;
     });
 
-    add_action('init', array($this, 'register_shortcodes'));
-
-    if( get_kivi_option('kivi-clean-values') ) {
-		$this->loader->add_filter( 'kivi_viewable_value', $plugin_public, 'filter_presentation_date', 10, 3 );
-		$this->loader->add_filter( 'kivi_viewable_value', $plugin_public, 'filter_format_date', 10, 2 );
-        $this->loader->add_filter( 'kivi_viewable_value', $plugin_public, 'filter_charges_eheating', 10, 3 );
-        $this->loader->add_filter( 'kivi_viewable_value', $plugin_public, 'filter_charges_parkingspace', 10, 3 );
-        $this->loader->add_filter( 'kivi_viewable_value', $plugin_public, 'filter_bid_url', 10, 3 );
-	}
+	add_shortcode('kivi', array($this, 'kivi_shortcode'));
   }
 
   public function load_kivi_index_template( $index_template ) {
@@ -300,16 +289,6 @@ class Kivi {
     return $this->version;
   }
 
-
-  /* Register shortcodes for listing items based on item properties */
-  public function register_shortcodes(){
-    add_shortcode('taloyhtio', array($this, 'realtycompany_shortcode'));
-    add_shortcode('kunta', array($this, 'town_shortcode'));
-    add_shortcode('tyyppi', array($this, 'realtytype_shortcode'));
-    add_shortcode('toimeksianto', array($this, 'assignmenttype_shortcode'));
-    add_shortcode('tuoteryhma', array($this, 'itemgroup_shortcode'));
-    add_shortcode('kivi', array($this, 'kivi_shortcode'));
-  }
 
   public function kivi_list_shortcode( $meta_query, $attributes = array() ){
 	$ret_str  = "";
@@ -389,83 +368,5 @@ class Kivi {
     }
 
     return $this->kivi_list_shortcode($meta_query, $attributes);
-  }
-
-  public function assignmenttype_shortcode($attributes){
-    $meta_query = array(
-      'relation' => 'AND',
-      array(
-        'key' => '_assignment_type',
-        'value' => $attributes["tyyppi"],
-        'compare' => 'LIKE'
-      )
-    );
-    return $this->kivi_list_shortcode($meta_query);
-  }
-
-  public function realtycompany_shortcode($attributes) {
-    $meta_query = array(
-      'relation' => 'AND',
-      array(
-        'key' => '_realtycompany',
-        'value' => $attributes["nimi"],
-        'compare' => '='
-      )
-    );
-    return $this->kivi_list_shortcode($meta_query);
-  }
-
-  public function itemgroup_shortcode($attributes) {
-    $toimeksianto=null;
-    if (array_key_exists('toimeksianto', $attributes)) {
-      $toimeksianto = $attributes["toimeksianto"];
-    }
-    $meta_query = array(
-      'relation' => 'AND',
-      array(
-        'key' => '_itemgroup_id',
-        'value' => $attributes["nimi"],
-        'compare' => '='
-      ),
-      array (
-        'key' => '_assignment_type',
-        'value' => $toimeksianto ,
-        'compare' => 'LIKE'
-      )
-    );
-    return $this->kivi_list_shortcode( $meta_query );
-  }
-
-  public function realtytype_shortcode($attributes) {
-    $toimeksianto=null;
-    if (array_key_exists('toimeksianto', $attributes)) {
-      $toimeksianto = $attributes["toimeksianto"];
-    }
-    $meta_query = array(
-      'relation' => 'AND',
-      array(
-        'key' => '_realtytype_id',
-        'value' => $attributes["nimi"],
-        'compare' => '='
-      ),
-      array (
-        'key' => '_assignment_type',
-        'value' => $toimeksianto ,
-        'compare' => 'LIKE'
-      )
-    );
-    return $this->kivi_list_shortcode( $meta_query );
-  }
-
-  public function town_shortcode($attributes) {
-    $meta_query = array(
-      'relation' => 'AND',
-      array(
-        'key' => '_town',
-        'value' => $attributes["nimi"],
-        'compare' => '='
-      )
-    );
-    return $this->kivi_list_shortcode($meta_query);
   }
 }
