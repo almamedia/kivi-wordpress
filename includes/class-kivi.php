@@ -235,10 +235,10 @@ class Kivi {
 
 
   public function load_single_kivi_template($template) {
-    global $post;
     $template_name = 'kivi-single-template.php';
-    $theme_provided_template = get_stylesheet_directory() . "/". $template_name;
-    if ($post->post_type == "kivi_item"){
+
+    if ( get_post_type() == "kivi_item"){
+	    $theme_provided_template = get_stylesheet_directory() . "/". $template_name;
       if( file_exists( $theme_provided_template )) {
         return $theme_provided_template;
       }else{
