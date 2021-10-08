@@ -100,3 +100,21 @@ add_shortcode('kivi-ostotoimeksiannot', function(){
 
 });
 
+/**
+ * Use kivi-brand-color (set in the Kivi admin screen) as color or background color for some elements.
+ * If you want to disable this, empty the settings value.
+ * If you want to use more brand color, use (child) theme css or Customizer custom css.
+ */
+add_filter( 'wp_get_custom_css', function( $css ){
+	$brand_color = esc_html( get_option("kivi-brand-color") );
+
+	if( ! empty($brand_color) ) {
+		$color_selector = 'a.kivi-item-link:hover';
+		$bgcolor_selector = 'h3.kivi-single-item-body-header, input[name=kivi-contact-submit]:hover, input#kivi-index-search';
+		$css .= "\n {$color_selector} { color: {$brand_color}; } ";
+		$css .= "\n {$bgcolor_selector} { background-color: {$brand_color}; } \n";
+	}
+
+
+	return $css;
+}, 10, 1 );
