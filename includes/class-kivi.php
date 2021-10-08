@@ -347,8 +347,11 @@ class Kivi {
 
     $nofilter = array("count", "order");
 
-    // compare should be "LIKE" with these
-    $like = array('assignment_type');
+
+	  // TODO : compare should be "LIKE" with these
+	  $like = array( 'assignment_type' );
+	  $like = array(); // assignment_type is not a basic meta data with REST
+
 
     if( is_array( $attributes ) ) {
       foreach ($attributes as $key => $value) {
