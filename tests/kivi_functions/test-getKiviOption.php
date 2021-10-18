@@ -12,10 +12,5 @@ class Tests_KiviFunctions_GetKiviOption extends WP_UnitTestCase {
 		set_kivi_option( 'test_array', $test_array );
 		$this->assertSame( $test_array, get_kivi_option('test_array') );
 	}
-
-	function test_map_post_meta(){
-		$this->assertSame( 'Kunta', map_post_meta( '_municipality' ) );
-	}
-
 }
 
