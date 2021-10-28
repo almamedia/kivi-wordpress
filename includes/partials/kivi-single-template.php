@@ -87,7 +87,7 @@ if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
                 </div>
             </div>
             <div class="presentation-text">
-	            <?= esc_html( $header_data['fields']['PRESENTATION']['value'] ) ?>
+	            <?= wpautop( $header_data['fields']['PRESENTATION']['value'] ) ?>
             </div>
         </div>
 
@@ -156,7 +156,7 @@ if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
                             <table class="kivi-item-table">
                                 <thead>
                                 <tr>
-                                    <th><?= esc_html( $sub_section['header'] ) ?></th>
+                                    <th colspan="2"><?= esc_html( $sub_section['header'] ) ?></th>
                                 </tr>
                                 </thead>
                                 <tbody>
