@@ -325,6 +325,7 @@ a.page-numbers:hover {
   display: block;
   overflow: hidden;
   opacity: 1;
+  text-align: left;
   transition: all .3s;
 }
 .kivi-item-table tr {

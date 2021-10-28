@@ -103,6 +103,7 @@ if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
                 "_ui_section_REALTY_COMPANY"         => 'hide-by-default',
                 "_ui_section_PRESENTATION"           => 'hide-by-default',
                 "_ui_section_AGENT"                  => 'hide-by-default',
+                "_ui_section_COMPANY"                => 'hide-by-default',
             );
 
             foreach ( $sections as $section_identifier => $header_class ):
@@ -146,6 +147,40 @@ if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
                             <?php endforeach; ?>
                             </tbody>
                         </table>
+
+	                    <?php $sub_sections = is_array($section['sections']) ? $section['sections'] : (array) $section['sections']; ?>
+	                    <?php foreach( $sub_sections as $sub_section ): ?>
+                            <table class="kivi-item-table">
+                                <thead>
+                                <tr>
+                                    <th><?= esc_html( $sub_section['header'] ) ?></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+			                    <?php foreach ( $sub_section['fields'] as $field_key => $info_row ): ?>
+                                    <tr class="info-row-<?= esc_attr( $field_key ) ?>">
+                                        <th class='kivi-item-cell kivi-item-cell-header info-label-<?= esc_attr( $field_key ) ?>'>
+						                    <?= esc_html( $info_row['label'] ) ?>
+                                        </th>
+                                        <td class='kivi-item-cell kivi-item-cell-value info-value-<?= esc_attr( $field_key ) ?>'>
+						                    <?php if ( is_array( $info_row['value'] ) ): ?>
+                                                <ul class="info-value-list">
+								                    <?php foreach ( $info_row['value'] as $value ): ?>
+                                                        <li><?= esc_html( $value ) ?></li>
+								                    <?php endforeach; ?>
+                                                </ul>
+						                    <?php else: ?>
+							                    <?= esc_html( $info_row['value'] ) ?>
+						                    <?php endif; ?>
+                                        </td>
+                                    </tr>
+			                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+	                    <?php endforeach; ?>
+
+
+
                         <?php echo "<!-- action kivi_single{$section_identifier}_after -->"; ?>
                         <?php do_action( "kivi_single{$section_identifier}_after" ); ?>
                     </div>
