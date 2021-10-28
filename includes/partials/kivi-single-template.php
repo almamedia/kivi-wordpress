@@ -86,6 +86,9 @@ if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
                     </p>
                 </div>
             </div>
+            <div class="presentation-text">
+	            <?= esc_html( $header_data['fields']['PRESENTATION']['value'] ) ?>
+            </div>
         </div>
 
 
