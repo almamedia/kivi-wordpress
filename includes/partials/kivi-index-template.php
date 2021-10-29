@@ -17,7 +17,6 @@
  * @subpackage Kivi/public/partials
  */
 get_header();
-$brand_styling = ' style="background-color:'.get_option("kivi-brand-color").';"';
 
 $huonelukuarvo ="";
 $priceminval ="";
@@ -178,7 +177,7 @@ else{
             </select>
           </div>
           <div class="kivi-filter-cell">
-            <input type="submit" name="submit" class="button button-primary button-kivi" id="kivi-index-search"<?php echo esc_attr($brand_styling); ?> value="<?php _e('Hae', 'kivi'); ?>" />
+            <input type="submit" name="submit" class="button button-primary button-kivi" id="kivi-index-search" value="<?php _e('Hae', 'kivi'); ?>" />
           </div>
         </div>
       </form>
