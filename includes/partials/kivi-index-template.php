@@ -18,6 +18,15 @@
  */
 get_header();
 
+$args = array(
+    'post_type' => 'kivi_item',
+    'orderby'	=> 'meta_value',
+    'meta_key'  => '_realty_unique_no',
+    'order'		=> 'DESC',
+    'posts_per_page' => 30,
+);
+$args['paged'] = ( get_query_var('paged') ? get_query_var('paged') : 1 );
+
 $huonelukuarvo ="";
 $priceminval ="";
 $pricemaxval ="";
@@ -55,10 +64,7 @@ if ( ! empty($_GET) ){
   populate_searchcriteria( $toim_tyyppi, $_GET, '_assignment_type', '_assignment_type','LIKE');
   populate_searchcriteria( $town_select, $_GET, '_town', '_town', 'LIKE');
 
-  $args = array(
-    'post_type' => 'kivi_item',
-    'posts_per_page' => 30,
-    'meta_query' => array(
+  $args['meta_query'] = array(
       'relation' => 'AND',
       $roomcount,
       $pricemin,
@@ -75,12 +81,7 @@ if ( ! empty($_GET) ){
         $postcode,
         $realty_id,
       )
-    ),
-	'orderby'	=> 'publish_date', // or 'meta_key'
-	'meta_key' 	=> '_realty_unique_no', // with meta_key, any attribute ex. _homepage_publish_date
-	'order'		=> 'DESC',
   );
-  query_posts($args);
 
   /* Values for the form to match the filter criteria */
 
@@ -94,16 +95,8 @@ if ( ! empty($_GET) ){
   $toim_tyyppi = get_posted_value( $_GET, '_assignment_type' );
 
 }
-else{
-	$args = array(
-		'post_type' => 'kivi_item',
-		'orderby'	=> 'publish_date',
-		'order'		=> 'DESC',
-		'posts_per_page' => 30,
-	);
-	$args['paged'] = ( get_query_var('paged') ? get_query_var('paged') : 1 );
-	query_posts($args);
-}
+
+query_posts($args);
 
 ?>
   <div id="primary" class="content-area">
