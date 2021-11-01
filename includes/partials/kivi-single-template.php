@@ -105,7 +105,7 @@ if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
                 "_ui_section_LOT"                    => 'hide-by-default',
                 "_ui_section_REALTY_COMPANY"         => 'hide-by-default',
                 "_ui_section_PRESENTATION"           => 'hide-by-default',
-                "_ui_section_AGENT"                  => 'hide-by-default',
+                "_ui_section_AGENT"                  => 'show-by-default',
                 "_ui_section_COMPANY"                => 'hide-by-default',
             );
 
