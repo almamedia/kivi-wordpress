@@ -21,7 +21,7 @@ get_header();
 $args = array(
     'post_type' => 'kivi_item',
     'orderby'	=> 'meta_value_num',
-    'meta_key'  => '_realty_unique_no',
+    'meta_key'  => '_realty_id',
     'order'		=> 'DESC',
     'posts_per_page' => 30,
 );
