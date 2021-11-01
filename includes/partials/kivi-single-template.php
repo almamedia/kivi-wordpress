@@ -112,7 +112,7 @@ if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
             foreach ( $sections as $section_identifier => $header_class ):
                 $section = get_post_meta( get_the_ID(), $section_identifier, true );
                 if ( empty( $section ) ) {
-                    break;
+                    continue;
                 }
                 ?>
                 <section id="section-<?= esc_attr( $section_identifier ) ?>"
