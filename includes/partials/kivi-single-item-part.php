@@ -16,7 +16,7 @@ $view    = array();
 $section = get_post_meta( get_the_ID(), '_ui_section_SUMMARY', true );
 
 $view['PRICE']          = $section['fields']['PRICE']['value'];
-$view['LIVING_AREA_M2'] = $section['fields']['LIVING_AREA_M2']['value'];
+$view['AREA_M2']        = $section['fields']['AREA_M2']['value'];
 $view['BUILD_YEAR']     = $section['fields']['BUILD_YEAR']['value'];
 $view['TYPE']           = $section['fields']['TYPE']['value'];
 $view['FLAT_STRUCTURE'] = get_post_meta( get_the_ID(), '_flat_structure', true );
@@ -50,7 +50,7 @@ $view['LOCATION']       = $section['fields']['LOCATION']['value'];
                 </div>
                 <div class="div">
                     <p class="kivi-item-details__area" title="<?php _e( 'Koko', 'Kivi' ) ?>">
-						<?php echo esc_html( $view['LIVING_AREA_M2'] ); ?>
+						<?php echo esc_html( $view['AREA_M2'] ); ?>
                     </p>
                 </div>
                 <div class="div">
