@@ -118,3 +118,15 @@ add_filter( 'wp_get_custom_css', function( $css ){
 
 	return $css;
 }, 10, 1 );
+
+add_action('kivi_single_presentation_text_after', function(){
+	$links = get_post_meta( get_the_ID(), '_ui_LINKS', true );
+	if( ! is_array($links)) {
+		return;
+	}
+	foreach( $links as $link ){
+		echo "<p class='kivi-single-item link-type-{$link['TYPE']}'>
+			<a href='{$link['URL']}' target='_blank'>{$link['DESCRIPTION']} {$link['URL']}</a>
+		</p>";
+	}
+});

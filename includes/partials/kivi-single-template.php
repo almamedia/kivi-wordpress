@@ -89,6 +89,7 @@ if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
             <div class="presentation-text">
 	            <?= wpautop( $header_data['fields']['PRESENTATION']['value'] ) ?>
             </div>
+	        <?php do_action( "kivi_single_presentation_text_after" ); ?>
         </div>
 
 
