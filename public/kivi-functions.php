@@ -125,8 +125,11 @@ add_action('kivi_single_presentation_text_after', function(){
 		return;
 	}
 	foreach( $links as $link ){
+		$link['TYPE']   =    esc_attr( $link['TYPE'] );
+		$link['URL']    =    esc_attr( $link['URL'] );
+		$link['DESCRIPTION'] = esc_html( $link['DESCRIPTION'] );
 		echo "<p class='kivi-single-item link-type-{$link['TYPE']}'>
-			<a href='{$link['URL']}' target='_blank'>{$link['DESCRIPTION']} {$link['URL']}</a>
+			<a href='{$link['URL']}' target='_blank'>{$link['DESCRIPTION']}</a>
 		</p>";
 	}
 });
