@@ -149,6 +149,13 @@ class Kivi_Background_Process extends WP_Background_Process {
 			}
 		}
 
+		if( $item['assignment']['UNENCUMBERED_PRICE'] ) {
+			$meta['_unencumbered_price'] = $item['assignment']['UNENCUMBERED_PRICE'];
+		}
+		if( $item['assignment']['ASSIGNMENT_TYPE_CODE'] ) {
+			$meta['_assignment_type'] = $item['assignment']['ASSIGNMENT_TYPE_CODE'];
+		}
+
 		$log = 'item_update ';
 		if($item_post_id == 0){
 			$log .= '(new) ';
