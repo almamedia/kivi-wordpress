@@ -49,6 +49,7 @@ if ( ! empty($_GET) ){
   $realtytype = array();
   $toim_tyyppi = array();
   $town_select = array();
+  $quartertown = array();
 
   populate_searchcriteria( $pricemin, $_GET, 'kivi-item-asunto-hintamin', '_unencumbered_price', '>=', true);
   populate_searchcriteria( $pricemax, $_GET, 'kivi-item-asunto-hintamax', '_unencumbered_price', '<=', true);
@@ -60,6 +61,7 @@ if ( ! empty($_GET) ){
   populate_searchcriteria( $realtytype, $_GET, '_realtytype', '_realtytype','=');
   populate_searchcriteria( $toim_tyyppi, $_GET, '_assignment_type', '_assignment_type','LIKE');
   populate_searchcriteria( $town_select, $_GET, '_town', '_town', 'LIKE');
+  populate_searchcriteria( $quartertown, $_GET, 'kivi-item-asunto-osoite', '_quarteroftown', 'LIKE');
 
   $args['meta_query'] = array(
       'relation' => 'AND',
@@ -74,6 +76,7 @@ if ( ! empty($_GET) ){
         'relation' => 'OR',
         $street,
         $town,
+        $quartertown,
         $postcode,
         $realty_id,
       )
