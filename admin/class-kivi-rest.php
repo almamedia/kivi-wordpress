@@ -131,10 +131,8 @@ class KiviRest {
 			$url = add_query_arg( 'INDEXED_AFTER', date_format( $date, 'Y-m-d\TH:i:s.v\Z' ), $url );
 		}
 
-
 		$auth_string     = 'Basic ' . get_option( 'kivi-rest-auth' );
 		$args['headers'] = array( 'Authorization' => $auth_string );
-		error_log('Request: '.$url);
 		$res = wp_remote_request( $url, $args );
 
 		if( is_wp_error( $res ) ){

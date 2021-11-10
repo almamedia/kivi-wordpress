@@ -150,7 +150,6 @@ class Kivi_Admin {
 	*/
 	public function items_delete() {
 		$deleted_realties = KiviRest::getItemsToDelete();
-		error_log('(Kivi) Delete these: '.print_r($deleted_realties, true));
 		foreach ( $deleted_realties as $realty ) {
 			$item_post_id = $this->get_item_post_id( $realty['REALTY_UNIQUE_NO'] );
 			if( $item_post_id ){
