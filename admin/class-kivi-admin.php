@@ -91,7 +91,7 @@ class Kivi_Admin {
 	 * 4. Non-existent items are deleted from wp
 	 * 5. background processing is dispatched
 	 */
-	public function kivi_sync($indexed_after = 16) {
+	public function kivi_sync($indexed_after = 20) {
 
 		error_log( 'kivi sync!' );
 
