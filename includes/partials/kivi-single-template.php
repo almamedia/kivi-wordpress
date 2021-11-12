@@ -52,7 +52,7 @@ if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
             <p class="kivi-single-item-structure">
                 <?= $header_data['fields']['TYPE']['value'] ?>
                 <span aria-hidden='true'> | </span>
-                <?php echo get_post_meta( get_the_id(), '_flat_structure', true ) ?>
+                <?php echo get_post_meta( get_the_ID(), '_flat_structure', true ); ?>
             </p>
             <h1 class="kivi-single-item-title">
                 <?= $header_data['fields']['LOCATION']['value'] ?>
@@ -61,10 +61,10 @@ if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
                 <div class="div">
                     <p class="kivi-item-details__price">
                     <span class="kivi-item-details__heading">
-                        <?= $header_data['fields']['PRICE']['label'] ?>
+                        <?= $header_data['fields']['UNENCUMBERED_PRICE']['label'] ?>
                     </span>
                         <br>
-                        <?= $header_data['fields']['PRICE']['value'] ?>
+                        <?= $header_data['fields']['UNENCUMBERED_PRICE']['value'] ?>
                     </p>
                 </div>
                 <div class="div">

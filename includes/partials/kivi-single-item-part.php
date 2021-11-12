@@ -15,20 +15,22 @@
 $view    = array();
 $section = get_post_meta( get_the_ID(), '_ui_section_SUMMARY', true );
 
-$view['PRICE']          = $section['fields']['PRICE']['value'];
+$view['PRICE']          = $section['fields']['UNENCUMBERED_PRICE']['value'];
 $view['AREA_M2']        = $section['fields']['AREA_M2']['value'];
 $view['BUILD_YEAR']     = $section['fields']['BUILD_YEAR']['value'];
 $view['TYPE']           = $section['fields']['TYPE']['value'];
 $view['FLAT_STRUCTURE'] = get_post_meta( get_the_ID(), '_flat_structure', true );
 $view['LOCATION']       = $section['fields']['LOCATION']['value'];
+$view['IMAGE_URL']          = Kivi_Public::get_primary_image_url( get_the_ID() );
 
 
 ?>
-<div class="kivi-index-item col <?php echo Kivi_Public::get_css_classes( get_the_id() ); ?>">
+<div class="kivi-index-item col <?php echo Kivi_Public::get_css_classes( get_the_ID() ); ?>">
     <a href="<?php the_permalink(); ?>" class="kivi-item-link">
         <div class="kivi-item-image">
-            <img src="<?php echo esc_attr( Kivi_Public::get_primary_image_url( get_the_ID() ) ); ?>"
-                 class="attachment-medium_large size-medium_large wp-post-image" alt="" loading="lazy"/>
+	        <?php if ( ! empty( $view['IMAGE_URL']  ) ) : ?>
+                <img src="<?php echo $view['IMAGE_URL'] ; ?>" alt="" loading="lazy"/>
+	        <?php endif; ?>
         </div>
         <div class="kivi-item-body">
             <span class="kivi-item-body__structure limit-2">
@@ -43,7 +45,7 @@ $view['LOCATION']       = $section['fields']['LOCATION']['value'];
             <div class="kivi-item-details">
                 <div class="div">
                     <p class="kivi-item-details__price"
-                       title="<?php ( Kivi_Public::is_for_rent_assignment( get_the_id() ) ) ? _e( 'Vuokra',
+                       title="<?php ( Kivi_Public::is_for_rent_assignment( get_the_ID() ) ) ? _e( 'Vuokra',
 					     'Kivi' ) : _e( 'Hinta', 'Kivi' ); ?>">
 						<?php echo esc_html( $view['PRICE'] ); ?>
                     </p>
