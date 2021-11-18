@@ -15,7 +15,7 @@
 $view    = array();
 $section = get_post_meta( get_the_ID(), '_ui_section_SUMMARY', true );
 
-$view['PRICE']          = $section['fields']['UNENCUMBERED_PRICE']['value'];
+$view['PRICE']          = $section['fields']['RENDERED_PRICE']['value'];
 $view['AREA_M2']        = $section['fields']['AREA_M2']['value'];
 $view['BUILD_YEAR']     = $section['fields']['BUILD_YEAR']['value'];
 $view['TYPE']           = $section['fields']['TYPE']['value'];

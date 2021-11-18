@@ -61,10 +61,10 @@ if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
                 <div class="div">
                     <p class="kivi-item-details__price">
                     <span class="kivi-item-details__heading">
-                        <?= $header_data['fields']['UNENCUMBERED_PRICE']['label'] ?>
+                        <?= $header_data['fields']['RENDERED_PRICE']['label'] ?>
                     </span>
                         <br>
-                        <?= $header_data['fields']['UNENCUMBERED_PRICE']['value'] ?>
+                        <?= $header_data['fields']['RENDERED_PRICE']['value'] ?>
                     </p>
                 </div>
                 <div class="div">
