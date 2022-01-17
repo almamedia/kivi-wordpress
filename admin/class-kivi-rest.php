@@ -79,7 +79,7 @@ class KiviRest {
 		}
 	}
 
-	public function getUiData( $realty_unique_no ) {
+	public static function getUiData( $realty_unique_no ) {
 
 		$realty_unique_no = intval( $realty_unique_no );
 
