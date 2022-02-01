@@ -6,11 +6,13 @@
 - *PHP >= 7.1 required*, 7.4 tested
 - no BasicAuth ( blocks async request )
 
-- Kivi REST-API credentials with 200 hourly request and read capabilities to endpoints /realties/homepage and /purchase-announcements/homepage (first run with large amount of properties might need more, about 210% of properties count)
+- Kivi REST-API credentials with 200 hourly request and read capabilities to endpoints /realties/homepage, /realties/homepage/uiformat and /purchase-announcements/homepage (first run with large amount of properties might need more, about 210% of properties count)
 
 ## Description
 
 A plugin for displaying KIVI real estate system properties on a WordPress site. With the plugin, simple index and single templates are provided for listing and displaying the properties.
+
+Demo / POC available: https://kohdelista.wpengine.com/demoaineisto/kohde/ This is an out-of-the-box Wordpress-installation with Kivi-plugin and WP default theme activated.
 
 KIVI Wordpress plugin imports KIVI data into Wordpress as a background process. The plugin is scheduled to read the modified items in the KIVI system four times in an hour. New items are added, deleted items are deleted and updated items are updated. In WordPress, the KIVI items are stored ad a custom post type named `kivi_item`. Property images are stored asurls to image files CDN, hosted on Kivi. Kivi_item posts are not supposed to be edited using the WordPress editor as the scheduled update from the KIVI system will overwrite any changes if the item is changed in KIVI.
 
@@ -22,9 +24,12 @@ In case of technical issues, contact technical support at kivi-tekniikka@almamed
 
 Just drop extract the package in the `plugins` directory of your WP installation. 'KIVI items' and 'KIVI' tabs will appear in the dashboard. 'KIVI' is the admin area, 'KIVI items' will list the imported items.
 
+It could better to implement system cron instead of default WP-cron (interval 15 minutes or less). See https://developer.wordpress.org/plugins/cron/hooking-wp-cron-into-the-system-task-scheduler/
+This is not a requirement. With a low traffic website, there might be too much time between syncs and some data updates might be skipped.
+
 ## Settings
 
-- REST: User name and password. These are for connecting to Kivi.
+- REST: User name and password. These are for connecting to Kivi. For testing and developing, use `demo-kohdelista` `LZrz@MP*7t`
 
 - Brand color. This will change some the colors of the plugin provided template page. For real customisations and theme like look and feel, a separate template for KIVI items should be implemented on the template directory.
 
@@ -105,7 +110,7 @@ We are also happy to accept any pull requests if they are generic enough and see
 **2.0.0**
 - Heavy recode: use Kivi REST-API instead of XML
 - Use UI-formatted -data from API instead of raw data 
-- Display images using CDN instead of downloading as local media
+- Display images using CDN instead of downloading them to media library
 
 **1.1.2**
 - Fix image ordering on item data update
