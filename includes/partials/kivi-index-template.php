@@ -56,7 +56,7 @@ if ( ! empty($_GET) ){
 
   $args = array(
     'post_type' => 'kivi_item',
-    'posts_per_page' => 30,
+    'posts_per_page' => get_option('posts_per_page'),
     'meta_query' => array(
       'relation' => 'AND',
       $roomcount,
@@ -97,7 +97,7 @@ else{
 		'post_type' => 'kivi_item',
 		'orderby'	=> 'publish_date',
 		'order'		=> 'DESC',
-		'posts_per_page' => 30,
+		'posts_per_page' => get_option('posts_per_page'),
 	);
 	$args['paged'] = ( get_query_var('paged') ? get_query_var('paged') : 1 );
 	query_posts($args);
