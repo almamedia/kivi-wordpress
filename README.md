@@ -1,4 +1,6 @@
-# KIVI WP-plugin
+For new installation, you should use https://github.com/almamedia/kivi-wordpress/tree/REST-API-instead-XML (v2 REST)
+
+# KIVI WP-plugin v1 XML
 - Requires at least: 4.0
 - Tested up to: 5.6.0
 - Stable tag: 1.1.2
