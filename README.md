@@ -1,4 +1,4 @@
-# KIVI WP-plugin
+# KIVI WP-plugin v2 REST
 - Requires at least: 5.0
 - Tested up to: 5.8.0
 - License: GPLv2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
