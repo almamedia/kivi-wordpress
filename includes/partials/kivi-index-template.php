@@ -115,6 +115,7 @@ query_posts($args);
                 <option <?php if ($realtytypeval == 'puutalo') echo 'selected'; ?> value="puutalo" name="puutalo"><?php _e("Puutalo-osake", "kivi"); ?></option>
                 <option <?php if ($realtytypeval == 'luhtitalo') echo 'selected'; ?> value="luhtitalo" name="luhtitalo"><?php _e("Luhtitalo", "kivi"); ?></option>
                 <option <?php if ($realtytypeval == 'toimitila') echo 'selected'; ?> value="toimitila"><?php _e("Toimitila", "kivi"); ?></option>
+				<option <?php if ($realtytypeval == 'metsätila') echo 'selected'; ?> value="metsätila"><?php _e("Maa- ja metsätilat", "kivi"); ?></option>
               </select>
           </div>
           <div class="kivi-filter-cell kivi-filter-cell-50">
