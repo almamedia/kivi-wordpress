@@ -154,7 +154,7 @@ else{
             <label><?php _e('Huoneluku', 'kivi'); ?>
               <select name="kivi-item-asunto-huoneluku-select" value="<?php echo esc_attr($huonelukuarvo); ?>">
                 <option name="default" value="">-</option>
-                <option name="yksio" value="yksio" <?php if ($huonelukuarvo == 'yksio') echo 'selected'; ?> ><?php _e('Yksiö', 'kivi'); ?></option>
+                <option name="yksio" value="yksiö" <?php if ($huonelukuarvo == 'yksiö') echo 'selected'; ?> ><?php _e('Yksiö', 'kivi'); ?></option>
                 <option name="kaksio" value="kaksio" <?php if ($huonelukuarvo == 'kaksio') echo 'selected'; ?>><?php _e('2 huonetta', 'kivi'); ?></option>
                 <option name="kolmio" value="kolmio" <?php if ($huonelukuarvo == 'kolmio') echo 'selected'; ?>><?php _e('3 huonetta', 'kivi'); ?></option>
                 <option name="4 h" value="4 h" <?php if ($huonelukuarvo == '4 h') echo 'selected'; ?>><?php _e('4 huonetta', 'kivi'); ?></option>
