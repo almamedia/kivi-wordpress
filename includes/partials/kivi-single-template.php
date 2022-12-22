@@ -48,46 +48,49 @@ if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
         <div class="kivi-single-item-header">
             <?php
             $header_data = get_post_meta( get_the_ID(), '_ui_section_SUMMARY', true );
+			if( isset( $header_data['fields']['AREA_M2']['value'] ) ) { // fix api response value null for plot area
+				$header_data['fields']['AREA_M2']['value'] = str_replace("null / ", '', $header_data['fields']['AREA_M2']['value']);
+			}
             ?>
             <p class="kivi-single-item-structure">
-                <?= $header_data['fields']['TYPE']['value'] ?>
+                <?= $header_data['fields']['TYPE']['value'] ?? '' ?>
                 <span aria-hidden='true'> | </span>
                 <?php echo get_post_meta( get_the_ID(), '_flat_structure', true ); ?>
             </p>
             <h1 class="kivi-single-item-title">
-                <?= $header_data['fields']['LOCATION']['value'] ?>
+                <?= $header_data['fields']['LOCATION']['value'] ?? '' ?>
             </h1>
             <div class="kivi-item-details">
                 <div class="div">
                     <p class="kivi-item-details__price">
                     <span class="kivi-item-details__heading">
-                        <?= $header_data['fields']['RENDERED_PRICE']['label'] ?>
+                        <?= $header_data['fields']['RENDERED_PRICE']['label'] ?? '' ?>
                     </span>
                         <br>
-                        <?= $header_data['fields']['RENDERED_PRICE']['value'] ?>
+                        <?= $header_data['fields']['RENDERED_PRICE']['value'] ?? '' ?>
                     </p>
                 </div>
                 <div class="div">
                     <p class="kivi-item-details__area">
                     <span class="kivi-item-details__heading">
-                        <?= $header_data['fields']['AREA_M2']['label'] ?>
+                        <?= $header_data['fields']['AREA_M2']['label'] ?? '' ?>
                     </span>
                         <br>
-                        <?= $header_data['fields']['AREA_M2']['value'] ?>
+                        <?= $header_data['fields']['AREA_M2']['value'] ?? '' ?>
                     </p>
                 </div>
                 <div class="div">
                     <p class="kivi-item-details__buildyear">
                     <span class="kivi-item-details__heading">
-                        <?= $header_data['fields']['BUILD_YEAR']['label'] ?>
+                        <?= $header_data['fields']['BUILD_YEAR']['label'] ?? '' ?>
                     </span>
                         <br>
-                        <?= $header_data['fields']['BUILD_YEAR']['value'] ?>
+                        <?= $header_data['fields']['BUILD_YEAR']['value'] ?? '' ?>
                     </p>
                 </div>
             </div>
             <div class="presentation-text">
-	            <?= wpautop( $header_data['fields']['PRESENTATION']['value'] ) ?>
+	            <?= wpautop( $header_data['fields']['PRESENTATION']['value']  ?? '' ) ?>
             </div>
 	        <?php do_action( "kivi_single_presentation_text_after" ); ?>
         </div>
@@ -152,7 +155,12 @@ if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
                             </tbody>
                         </table>
 
-	                    <?php $sub_sections = is_array($section['sections']) ? $section['sections'] : (array) $section['sections']; ?>
+	                    <?php
+						$sub_sections = array();
+						if( isset( $section['sections'] ) ){
+							$sub_sections =  (array) $section['sections'];
+						}
+						?>
 	                    <?php foreach( $sub_sections as $sub_section ): ?>
                             <table class="kivi-item-table">
                                 <thead>

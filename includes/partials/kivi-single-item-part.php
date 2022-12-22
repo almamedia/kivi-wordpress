@@ -12,15 +12,42 @@
  * @package    Kivi
  * @subpackage Kivi/public/partials
  */
-$view    = array();
+
 $section = get_post_meta( get_the_ID(), '_ui_section_SUMMARY', true );
 
-$view['PRICE']          = $section['fields']['RENDERED_PRICE']['value'];
-$view['AREA_M2']        = $section['fields']['AREA_M2']['value'];
-$view['BUILD_YEAR']     = $section['fields']['BUILD_YEAR']['value'];
-$view['TYPE']           = $section['fields']['TYPE']['value'];
+$section_fields = array();
+if( isset( $section['fields'] ) && is_array( $section['fields'] ) ) {
+	$section_fields = $section['fields'];
+}
+
+$view    = array();
+$view['PRICE'] = $view['AREA_M2'] = $view['BUILD_YEAR'] = $view['TYPE'] = '';
+$view['FLAT_STRUCTURE'] = $view['LOCATION'] = $view['IMAGE_URL'] = '';
+
+if( isset( $section_fields['RENDERED_PRICE'] ) ) {
+	$view['PRICE'] = $section_fields['RENDERED_PRICE']['value'];
+}
+
+if( isset( $section_fields['AREA_M2'] ) ) {
+	$view['AREA_M2'] = $section_fields['AREA_M2']['value'];
+
+	// fix api response value null for plot area
+	$view['AREA_M2'] = str_replace( "null / ", '', $view['AREA_M2'] );
+}
+
+if( isset( $section_fields['BUILD_YEAR'] ) ) {
+	$view['BUILD_YEAR'] = $section_fields['BUILD_YEAR']['value'];
+}
+
+if( isset( $section_fields['TYPE'] ) ) {
+	$view['TYPE'] = $section_fields['TYPE']['value'];
+}
+
+if( isset( $section_fields['LOCATION'] ) ) {
+	$view['LOCATION'] = $section_fields['LOCATION']['value'];
+}
+
 $view['FLAT_STRUCTURE'] = get_post_meta( get_the_ID(), '_flat_structure', true );
-$view['LOCATION']       = $section['fields']['LOCATION']['value'];
 $view['IMAGE_URL']          = Kivi_Public::get_primary_image_url( get_the_ID() );
 
 

@@ -36,6 +36,7 @@ $areaminval ="";
 $realtytypeval ="";
 $townval = "";
 $toim_tyyppival = "";
+$toim_tyyppi = "FOR_SALE";
 
 if ( ! empty($_GET) ){
   /* There's a GET request and we need to filter the items to show */
