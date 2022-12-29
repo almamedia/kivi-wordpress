@@ -38,6 +38,7 @@ class KiviRest {
 			return json_decode( $res['body'], true );
 		} else {
 			error_log( "Error KiviRest :: getItemsToDelete()" );
+			return array();
 		}
 	}
 
@@ -50,6 +51,7 @@ class KiviRest {
 			return json_decode( $res['body'], true );
 		} else {
 			error_log( "Error KiviRest :: getAllItems()" );
+			return array();
 		}
 	}
 
