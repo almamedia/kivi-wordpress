@@ -172,7 +172,7 @@ if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 			                    <?php foreach ( $sub_section['fields'] as $field_key => $info_row ): ?>
                                     <tr class="info-row-<?= esc_attr( $field_key ) ?>">
                                         <th class='kivi-item-cell kivi-item-cell-header info-label-<?= esc_attr( $field_key ) ?>'>
-						                    <?= esc_html( $info_row['label'] ) ?>
+						                    <?= esc_html( $info_row['label'] ?? '' ) ?>
                                         </th>
                                         <td class='kivi-item-cell kivi-item-cell-value info-value-<?= esc_attr( $field_key ) ?>'>
 						                    <?php if ( is_array( $info_row['value'] ) ): ?>
