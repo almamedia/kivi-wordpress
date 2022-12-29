@@ -326,7 +326,12 @@ class Kivi_Public {
 		if ( is_array( $presentations ) ) {
 			if( count( $presentations ) > 1 ){
 				usort( $presentations, function ( $a, $b ) {
-					return $a['presentation_date'] - $b['presentation_date'];
+					if( isset( $a['presentation_date'] ) && isset( $b['presentation_date'] ) ) {
+						return $a['presentation_date'] - $b['presentation_date'];
+					}
+					else{
+						return 0;
+					}
 				} );
 			}
 
