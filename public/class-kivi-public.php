@@ -297,7 +297,7 @@ class Kivi_Public {
 		foreach ( $presentations as $key => $presentation ) {
 
 			if ( $strict ) {
-				if( isset( $presentation['presentation_date'] ) ){
+				if( isset( $presentation['presentation_end'] ) ){
 					if ( $presentation['presentation_end'] < date( "Y-m-d H:i:s" ) ) {
 						unset( $presentations[ $key ] );
 					}
