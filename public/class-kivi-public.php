@@ -324,9 +324,11 @@ class Kivi_Public {
 	public static function get_next_presentation( $post_id ) {
 		$presentations = self::get_future_presentations( $post_id );
 		if ( is_array( $presentations ) ) {
-			usort( $presentations, function ( $a, $b ) {
-				return $a['presentation_date'] - $b['presentation_date'];
-			} );
+			if( count( $presentations ) > 1 ){
+				usort( $presentations, function ( $a, $b ) {
+					return $a['presentation_date'] - $b['presentation_date'];
+				} );
+			}
 
 			return reset( $presentations );
 		}
