@@ -1,9 +1,9 @@
 # KIVI WP-plugin v2 REST
 - Requires WordPress version at least: 5.0
-- Tested WordPress version up to: 5.8.0
+- Tested WordPress version up to: 6.1.1
 - License: GPLv2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
 
-- *PHP >= 7.1 required*, 7.4 tested
+- *PHP >= 7.1 required*, 8.1 tested
 - no BasicAuth ( blocks async request )
 
 - Kivi REST-API credentials with 200 hourly request and read capabilities to endpoints /realties/homepage, /realties/homepage/uiformat and /purchase-announcements/homepage (first run with large amount of properties might need more, about 210% of properties count)
