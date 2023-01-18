@@ -125,15 +125,6 @@ class Kivi_Admin {
 				$result[$key] = $value;
 			}
 
-			if ( ! empty( get_kivi_option( 'kivi-prefilter-name' ) ) && ! empty( get_kivi_option( 'kivi-prefilter-value' ) ) ) {
-				$filtername = get_kivi_option( 'kivi-prefilter-name' );
-				if ( isset( $result[ $filtername ] ) && $result[ $filtername ] == get_kivi_option( 'kivi-prefilter-value' ) ) {
-					/* Filters match */
-				} else {
-					/* Filters don't match, ignore this item */
-					continue;
-				}
-			}
 			$this->process->push_to_queue( $result );
 
 		}
@@ -197,13 +188,9 @@ class Kivi_Admin {
 	public function kivi_save_settings() {
 		update_option( 'kivi-brand-color', sanitize_text_field( $_POST['kivi-brand-color'] ) );
 		update_option( 'kivi-slug', sanitize_text_field( $_POST['kivi-slug'] ) );
-		set_kivi_option( 'kivi-use-debt-free-price-on-shortcode',
-			sanitize_text_field( $_POST['kivi-use-debt-free-price-on-shortcode'] ) );
-		set_kivi_option( 'kivi-clean-values', sanitize_text_field( $_POST['kivi-clean-values'] ) );
 		set_kivi_option( 'kivi-prefilter-name', sanitize_text_field( $_POST['kivi-prefilter-name'] ) );
 		set_kivi_option( 'kivi-prefilter-value', sanitize_text_field( $_POST['kivi-prefilter-value'] ) );
 		set_kivi_option( 'kivi-gmap-id', sanitize_text_field( $_POST['kivi-gmap-id'] ) );
-		update_option( 'kivi-remote-url', esc_url_raw( $_POST['kivi-remote-url'], array( 'https', 'http' ) ) );
 
 		if ( ! empty( $_POST['kivi-rest-user'] ) && ! empty( $_POST['kivi-rest-pass'] ) ) {
 			$kivi_creds = base64_encode( $_POST['kivi-rest-user'] . ':' . $_POST['kivi-rest-pass'] );

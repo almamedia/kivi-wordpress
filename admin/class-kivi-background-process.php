@@ -107,70 +107,66 @@ class Kivi_Background_Process extends WP_Background_Process {
 	 * in WP admin without overwriting after scheduled update.
 	 */
 	public function item_update( &$item ) {
-		$postarr                = array();
+		$postarr      = array();
 		$item_post_id = 0;
-		$post_date = '';
-		$args  = array(
-			'meta_query'  => array(
+		$post_date    = '';
+		$args         = array(
+			'meta_query' => array(
 				array(
 					'key'   => '_realty_unique_no',
 					'value' => $item['realty_unique_no'],
 					'type'  => 'NUMERIC',
 				)
 			),
-			'post_type'   => 'kivi_item',
+			'post_type'  => 'kivi_item',
 		);
-		$posts = get_posts( $args );
+		$posts        = get_posts( $args );
 
-		if( count($posts) ){
-			$item_post = $posts[0];
+		if ( count( $posts ) ) {
+			$item_post    = $posts[0];
 			$item_post_id = $item_post->ID;
-			$post_date = $item_post->post_date;
+			$post_date    = $item_post->post_date;
 		}
 
 		$postarr['ID'] = $item_post_id;
 
-		$uidata = KiviRest::getUiData($item['realty_unique_no']);
-		$meta                   = array();
+		$uidata = KiviRest::getUiData( $item['realty_unique_no'] );
+		$meta   = array();
 
-		$postarr['post_type']   = 'kivi_item';
-		$postarr['post_title']  = wp_strip_all_tags( $item['flat_structure'] . ' ' . $item['town'] . ' ' . $item['street'] );
+		$postarr['post_type']  = 'kivi_item';
+		$postarr['post_title'] = wp_strip_all_tags( $item['flat_structure'] . ' ' . $item['town'] . ' ' . $item['street'] );
 
-		foreach( $item as $key => $data ) {
-			$meta['_'.$key] = $data;
+		foreach ( $item as $key => $data ) {
+			$meta[ '_' . $key ] = $data;
 		}
 
-		foreach( $uidata as $key => $data ) {
-			$meta['_ui_'.$key] = $data;
+		foreach ( $uidata as $key => $data ) {
+			$meta[ '_ui_' . $key ] = $data;
 		}
-		if(is_array($uidata['sections'])){
-			foreach( $uidata['sections'] as $key => $data ) {
-				$meta['_ui_section_'.$key] = $data;
+		if ( isset( $uidata['sections'] ) && is_array( $uidata['sections'] ) ) {
+			foreach ( $uidata['sections'] as $key => $data ) {
+				$meta[ '_ui_section_' . $key ] = $data;
 			}
 		}
 
-		if( $item['assignment']['UNENCUMBERED_PRICE'] ) {
+		if ( isset( $item['assignment']['UNENCUMBERED_PRICE'] ) && $item['assignment']['UNENCUMBERED_PRICE'] ) {
 			$meta['_unencumbered_price'] = $item['assignment']['UNENCUMBERED_PRICE'];
 		}
-		if( $item['assignment']['ASSIGNMENT_TYPE_CODE'] ) {
+		if ( isset( $item['assignment']['ASSIGNMENT_TYPE_CODE'] ) && $item['assignment']['ASSIGNMENT_TYPE_CODE'] ) {
 			$meta['_assignment_type'] = $item['assignment']['ASSIGNMENT_TYPE_CODE'];
 		}
 
 		$log = 'item_update ';
-		if($item_post_id == 0){
+		if ( $item_post_id == 0 ) {
 			$log .= '(new) ';
 		}
-		$log .= current_time('mysql');
-		$log .= " ".md5(wp_json_encode($item).wp_json_encode($uidata));
+		$log .= current_time( 'mysql' );
+		$log .= " " . md5( wp_json_encode( $item ) . wp_json_encode( $uidata ) );
 
 
-		$postarr['meta_input'] = $meta;
+		$postarr['meta_input']  = $meta;
 		$postarr['post_status'] = 'publish';
-		$postarr['post_date'] = $post_date;
-
-		$new_id = wp_insert_post( $postarr );
-		add_post_meta( $new_id, '_kivi_log', $log);
-
+		$postarr['post_date']   = $post_date;
 	}
 
 
