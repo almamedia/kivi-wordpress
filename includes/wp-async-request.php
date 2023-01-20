@@ -139,6 +139,7 @@ abstract class WP_Async_Request {
 		}
 
 		$args = array(
+			'body'      => array(),
 			'timeout'   => 0.01,
 			'blocking'  => false,
 			'cookies'   => $_COOKIE,
@@ -146,7 +147,9 @@ abstract class WP_Async_Request {
 		);
 
 		if ( property_exists( $this, 'data' ) ) {
-			$args['body'] = $this->data;
+			if( ! empty( $this->data ) ){
+				$args['body'] = $this->data;
+			}
 		}
 
 
