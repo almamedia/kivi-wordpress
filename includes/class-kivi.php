@@ -171,9 +171,9 @@ class Kivi {
 		$this->loader->add_action( 'wp_ajax_kivi_save_settings', $plugin_admin, 'kivi_save_settings' );
 		add_action( 'kivi-admin-rest-form', array( 'KiviRest', 'testApiConnection' ) );
 
-
 		add_filter( 'cron_schedules', 'kivi_add_schedule' );
-
+		$this->loader->add_filter( 'kivi_has_prefilter', $plugin_admin, 'has_prefilter' );
+		$this->loader->add_filter( 'kivi_prefilter_single_item', $plugin_admin, 'prefilter_single_item', 10, 2 );
 	}
 
 	public function register_kivi_settings() {

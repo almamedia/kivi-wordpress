@@ -168,21 +168,17 @@ class Kivi_Background_Process extends WP_Background_Process {
 		$postarr['post_status'] = 'publish';
 		$postarr['post_date']   = $post_date;
 
-		if ( ! empty( get_kivi_option( 'kivi-prefilter-name' ) ) && ! empty( get_kivi_option( 'kivi-prefilter-value' ) ) ) {
-			foreach ( $meta as $key => $value ) {
-				if ( $key == get_kivi_option( 'kivi-prefilter-name' ) && $value == get_kivi_option( 'kivi-prefilter-value' ) ) {
-					/* Filters match */
-					$new_id = wp_insert_post( $postarr );
-					add_post_meta( $new_id, '_kivi_log', $log);
-					error_log( 'Filters match' );
-				} else {
-					/* Filters don't match, ignore this item */
-				}
-			}
-		}
-		else{
+		if ( ! apply_filters( 'kivi_has_prefilter', false ) ) {
+			// no prefilter, always add
 			$new_id = wp_insert_post( $postarr );
 			add_post_meta( $new_id, '_kivi_log', $log);
+		}
+		else{
+			if ( apply_filters( 'kivi_prefilter_single_item', false, $postarr ) ) {
+				// add only if filters match
+				$new_id = wp_insert_post( $postarr );
+				add_post_meta( $new_id, '_kivi_log', $log);
+			}
 		}
 	}
 

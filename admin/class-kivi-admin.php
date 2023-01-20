@@ -516,4 +516,34 @@ class Kivi_Admin {
 		wp_clear_scheduled_hook( 'kivi_items_sync' );
 	}
 
+	/**
+	 * Check if Kivi items needs to be prefiltered. If this returns false, all items will be imported.
+	 * @param $ret return value, defaults to false
+	 * @return bool
+	 */
+	public function has_prefilter( $ret ){
+		if( ! empty( get_kivi_option( 'kivi-prefilter-name' ) ) && ! empty( get_kivi_option( 'kivi-prefilter-value' ) ) ) {
+			return true;
+		}
+		return $ret;
+	}
+
+	/**
+	 * Check if a single item will be imported. If this returns true for an item, it will be imported. If false, it will
+	 * be discarded.
+	 * @param $ret return value, defaults to false
+	 * @param $postarr
+	 * @return bool
+	 */
+	public function prefilter_single_item( $ret, $postarr ){
+		if( isset( $postarr['meta_input'] ) && is_array( $postarr['meta_input'] ) ) {
+			foreach ($postarr['meta_input'] as $meta_key => $meta_value) {
+				if ($meta_key == get_kivi_option('kivi-prefilter-name') && $meta_value == get_kivi_option('kivi-prefilter-value')) {
+					return true;
+				}
+			}
+		}
+		return $ret;
+	}
+
 }
