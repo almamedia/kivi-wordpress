@@ -56,14 +56,12 @@
 }
 
 .kivi-item-body {
-  font-size: 16px;
-  line-height: 1.5;
   padding-top: 8px;
   box-sizing: border-box;
 }
 .kivi-item-body h2 {
   margin-top: 8px;
-  font-size: 16px;
+  font-size: 1em;
   padding-top: 8px;
   margin-bottom: 1rem;
 }
@@ -133,16 +131,14 @@ input[type="submit"].button-kivi {
   left: 0;
 }
 
-.kivi-item-cell {
-  font-size: 14px;
-  padding: 8px;
+.kivi-item-cell, .kivi-item-table th {
   border: 0;
   vertical-align: top;
+	text-align: left;
 }
 
 .kivi-item-cell.kivi-item-cell-header {
   width: 240px;
-  padding: 8px;
   text-align: left;
   word-break: break-word;
 }
@@ -375,7 +371,7 @@ div.is-hidden {
 	font-size: 15px;
 	line-height: 17px;
 	font-weight: bold;
-	color: #000; 
+	color: #000;
 	text-transform: uppercase;
 	background-color: rgba(255,255,255,0.5);
     padding: 5px 0;
