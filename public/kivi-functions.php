@@ -88,6 +88,8 @@ add_shortcode('kivi-ostotoimeksiannot', function(){
 		set_transient( 'kivi-rest-purchase-announcements', $results, HOUR_IN_SECONDS );
 	}
 
+	ob_start();
+
 	foreach( $results as $ota ) { // "osto toimeksi anto"
 
         if ( $overridden_template = locate_template( 'kivi-purchase-announcement.php' ) ) {
@@ -98,6 +100,7 @@ add_shortcode('kivi-ostotoimeksiannot', function(){
 
 	}
 
+	return ob_get_clean();
 });
 
 /**
