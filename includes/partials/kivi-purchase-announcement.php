@@ -13,12 +13,14 @@
  * @subpackage Kivi/public/partials
  */
 $view = array();
-$view['ITEMGROUP'] = $ota['ITEMGROUP'];
-$view['AREAS'] = "";
-foreach($ota['AREA'] as $areas_arr){
-    $view['AREAS'] .= "{$areas_arr['TOWN']}, {$areas_arr['REGION']}";
+if ( ! empty( $ota ) ) {
+	$view['ITEMGROUP'] = $ota['ITEMGROUP'];
+}
+$view['AREAS'] = $view['PRICE'] = $view['MIN_AREA'] = $view['FLAT_TYPES'] = $view['INFO'] = "";
+foreach( $ota['AREA'] as $areas_arr ) {
+    $view['AREAS'] .= "{$areas_arr['TOWN']}, {$areas_arr['REGION']} ";
     if(!empty($areas_arr['QUARTEROFTOWN'])){
-	    $view['AREAS'] .= " ({$areas_arr['QUARTEROFTOWN']})";
+	    $view['AREAS'] .= " ({$areas_arr['QUARTEROFTOWN']}) ";
     }
 }
 if($ota['UNENCUMBERED_PRICE_MAX']){
@@ -44,6 +46,3 @@ if( ! empty( $ota['INFO'] ) ) {
     <h4><?= esc_html($view['FLAT_TYPES']) ?></h4>
     <p><?= esc_html($view['INFO']) ?></p>
 </div>
-
-<?php
-//var_dump($ota);
