@@ -73,6 +73,10 @@ Lists townhouses for rent.
 `[kivi itemgroup="vuokra-asunnot"]`
 Lists apartments for rent.
 
+### Ostotoimeksiannot (purchase announcements)
+`[kivi-ostotoimeksiannot]`
+Adds purchase announcements to. This feature requires purchace announcements -api endpoint. (Ask sales or customer service)
+
 
 ## Updating plugin
 Replace all plugin files by FTP.
