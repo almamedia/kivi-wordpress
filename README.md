@@ -75,7 +75,7 @@ Lists apartments for rent.
 
 ### Ostotoimeksiannot (purchase announcements)
 `[kivi-ostotoimeksiannot]`
-Adds purchase announcements to. This feature requires purchace announcements -api endpoint. (Ask sales or customer service)
+Adds purchase announcements to page. This feature requires purchace announcements -api endpoint. (Ask sales or customer service)
 
 
 ## Updating plugin
