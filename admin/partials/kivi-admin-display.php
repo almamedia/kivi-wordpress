@@ -21,7 +21,7 @@
             <img src="<?php echo plugin_dir_url( __FILE__ ) . '../../img/kivi_logo_laatikolla_.svg'; ?>" alt="kivi logo"
                  width="120">
 			<br />
-			<a href="https://github.com/almamedia/kivi-wordpress/blob/REST-API-instead-XML/README.md#settings" target="_blank">
+			<a href="https://github.com/almamedia/kivi-wordpress/tree/REST-API-instead-XML#settings" target="_blank">
 				<?php _e( "Lisäosan dokumentaatio GitHubissa", "kivi" ); ?>
 			</a>
         </div>
