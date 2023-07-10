@@ -359,6 +359,7 @@ div.is-hidden {
 
 .slick-for .slick-slide.slick-current.slick-active img {
   max-height: var(--img-height);
+	max-width: 100%;
   width: auto;
 }
 
