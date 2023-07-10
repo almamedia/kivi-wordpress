@@ -92,10 +92,15 @@ input[type="submit"].button-kivi {
   text-align: center;
 }
 
+.slick-slide {
+	overflow-y: hidden;
+}
+
 .slick-slide,
 .slick-slide img {
   display: inline-block;
   text-align: center;
+	max-width: 100%;
 }
 
 
@@ -359,7 +364,6 @@ div.is-hidden {
 
 .slick-for .slick-slide.slick-current.slick-active img {
   max-height: var(--img-height);
-	max-width: 100%;
   width: auto;
 }
 
