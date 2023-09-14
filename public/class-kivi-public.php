@@ -676,6 +676,31 @@ class Kivi_Public {
 		return $url;
 	}
 
+	/**
+	 * Get unique realty types (meta data '_realtytype' among current published kivi_items )
+	 *
+	 * @return array unique realty type strings
+	 */
+	public static function get_realtytypes() {
+		$post_ids = get_posts(
+			array(
+				'post_type' => 'kivi_item',
+				'meta_key' => '_realtytype',
+				'posts_per_page' => -1,
+				'fields' => 'ids',
+				'post_status' => 'publish'
+			)
+		);
+
+		$meta_values = array();
+		foreach( $post_ids as $id ) {
+			$meta_values[] = get_post_meta( $id, '_realtytype', true );
+		}
+
+		return array_unique($meta_values);
+
+	}
+
 	private static function get_assignment_value( $item_post_id, $assignment_data_name ) {
 		$assigment = get_post_meta( $item_post_id, '_assignment', true );
 		if ( isset( $assigment->$assignment_data_name ) ) {

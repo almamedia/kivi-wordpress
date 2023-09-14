@@ -106,17 +106,9 @@ query_posts($args);
         <div class="kivi-item-filters-wrapper">
           <div class="kivi-filter-cell">
             <label><?php _e('Asunnon tyyppi', 'kivi'); ?>
-              <select name="_realtytype">
-                <option <?php if ($realtytypeval == '') echo 'selected'; ?> value="" name=""><?php _e("-", "kivi"); ?></option>
-                <option <?php if ($realtytypeval == 'kerrostalo') echo 'selected'; ?> value="kerrostalo" name="kerrostalo"><?php _e("Kerrostalo", "kivi"); ?></option>
-                <option <?php if ($realtytypeval == 'omakotitalo') echo 'selected'; ?> value="omakotitalo" name="omakotitalo"><?php _e("Omakotitalo", "kivi"); ?></option>
-                <option <?php if ($realtytypeval == 'rivitalo') echo 'selected'; ?> value="rivitalo" name="rivitalo"><?php _e("Rivitalo", "kivi"); ?></option>
-                <option <?php if ($realtytypeval == 'paritalo') echo 'selected'; ?> value="paritalo" name="paritalo"><?php _e("Paritalo", "kivi"); ?></option>
-                <option <?php if ($realtytypeval == 'erillistalo') echo 'selected'; ?> value="erillistalo" name="erillistalo"><?php _e("Erillistalo", "kivi"); ?></option>
-                <option <?php if ($realtytypeval == 'puutalo') echo 'selected'; ?> value="puutalo" name="puutalo"><?php _e("Puutalo-osake", "kivi"); ?></option>
-                <option <?php if ($realtytypeval == 'luhtitalo') echo 'selected'; ?> value="luhtitalo" name="luhtitalo"><?php _e("Luhtitalo", "kivi"); ?></option>
-                <option <?php if ($realtytypeval == 'toimitila') echo 'selected'; ?> value="toimitila"><?php _e("Toimitila", "kivi"); ?></option>
-				<option <?php if ($realtytypeval == 'metsätila') echo 'selected'; ?> value="metsätila"><?php _e("Maa- ja metsätilat", "kivi"); ?></option>
+              	<select name="_realtytype">
+				<option <?php if ($realtytypeval == '') echo 'selected'; ?> value="" name=""><?php _e("-", "kivi"); ?></option>
+				<?php do_action( 'kivi_index_filter_realtytype_options', $realtytypeval ); ?>
               </select>
           </div>
           <div class="kivi-filter-cell kivi-filter-cell-50">

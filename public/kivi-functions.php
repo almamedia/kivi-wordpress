@@ -80,6 +80,20 @@ add_action('kivi_single_ui_section_AGENT', function(){
 	}
 });
 
+/*
+ * echo options for propertytype dropdown
+ * $realtytypeval selected value
+ */
+add_action('kivi_index_filter_realtytype_options', function( $realtytypeval = "" ){
+	foreach ( Kivi_Public::get_realtytypes() as $rtype ) {
+		$selected_str = "";
+		if ($realtytypeval == $rtype) {
+			$selected_str = 'selected';
+		}
+		echo "<option value='$rtype' name='$rtype' $selected_str>".ucfirst($rtype)."</option>";
+	}
+}, 1);
+
 
 add_shortcode('kivi-ostotoimeksiannot', function(){
 
