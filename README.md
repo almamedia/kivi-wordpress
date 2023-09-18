@@ -111,6 +111,9 @@ We are also happy to accept any pull requests if they are generic enough and see
 
 ## Changelog
 
+**2.0.5**
+- Make property type field in item filtering form more dynamic (get values from item data instead of hard coded ones)
+
 **2.0.0**
 - Heavy recode: use Kivi REST-API instead of XML
 - Use UI-formatted -data from API instead of raw data 
