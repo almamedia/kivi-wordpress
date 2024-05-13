@@ -3,7 +3,7 @@
 - Tested WordPress version up to: 6.1.1
 - License: GPLv2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
 
-- *PHP >= 7.1 required*, 8.1 tested
+- *PHP >= 7.1 required*, 8.2 tested
 - no BasicAuth ( blocks async request )
 
 - Kivi REST-API credentials with 200 hourly request and read capabilities to endpoints /realties/homepage, /realties/homepage/uiformat and /purchase-announcements/homepage (first run with large amount of properties might need more, about 210% of properties count)
