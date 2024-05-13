@@ -18,8 +18,6 @@ KIVI Wordpress plugin imports KIVI data into Wordpress as a background process. 
 
 For getting the correct export from KIVI system, a REST-API credentials should be opened first. For more information, contact the sales or the customer support kivi@almamedia.fi. 
 
-In case of technical issues, contact technical support at kivi-tekniikka@almamedia.fi
-
 ## Installation
 
 Just drop extract the package in the `plugins` directory of your WP installation. 'KIVI items' and 'KIVI' tabs will appear in the dashboard. 'KIVI' is the admin area, 'KIVI items' will list the imported items.
