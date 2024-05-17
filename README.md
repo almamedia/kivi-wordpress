@@ -101,6 +101,38 @@ add_filter( 'pre_get_document_title', function($title){
 }, 99 );
 ```
 
+## Setting image for social media shares
+As plugin does not download any images to Wordpress, post thumbnail is not supported by the kivi_item post type. To add "og:image" -meta tag, use this snippet in current theme functions.php:
+
+```php
+add_action( 'wp_head', function() {
+	if ( is_singular( 'kivi_item' ) ) {
+		$main_image_url = Kivi_Public::get_primary_image_url( get_the_ID() );
+		if ( filter_var( $main_image_url, FILTER_VALIDATE_URL ) ) {
+			$main_image_url = esc_attr($main_image_url);
+			echo "<meta property='og:image' content='$main_image_url' />\n";
+		}
+	}
+}, 5);
+```
+
+If you are using All in one SEO -plugin, use this instead:
+
+```php
+// All in one SEO
+add_filter( 'aioseo_facebook_tags', function ( $facebookMeta ) {
+   if ( is_singular( 'kivi_item' ) ) {
+	   	$main_image_url = Kivi_Public::get_primary_image_url( get_the_ID() );
+		if ( filter_var( $main_image_url, FILTER_VALIDATE_URL ) ) {
+			$facebookMeta['og:image'] = esc_attr($main_image_url);
+		}
+   }
+   return $facebookMeta;
+} );
+```
+
+
+
 ## Feature Requests and Contributing
 
 We are not too actively developing individual features for the plugin as it's meant to be a starting point for development anyways. However, we do fix bugs and for example add support for new data if such data appears in the source system. If there are specific needs you can of course contact our sales.
