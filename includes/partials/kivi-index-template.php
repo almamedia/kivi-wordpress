@@ -20,8 +20,8 @@ get_header();
 
 $args = array(
     'post_type' => 'kivi_item',
-    'orderby'	=> 'meta_value_num',
-    'meta_key'  => '_realty_id',
+    'orderby'	=> 'meta_value',
+    'meta_key'  => '_ui_FIRST_PUBLISH_DATE',
     'order'		=> 'DESC',
     'posts_per_page' => 30,
     'meta_query'=> array(
