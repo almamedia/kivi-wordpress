@@ -152,6 +152,11 @@ add_action('kivi_single_presentation_text_after', function(){
 });
 
 add_action( 'wp_head', function() {
+	// if aioseo installed, return
+	if ( function_exists( 'aioseo' ) ) {
+		return;
+	}
+
 	if ( is_singular( 'kivi_item' ) ) {
 		$main_image_url = Kivi_Public::get_primary_image_url( get_the_ID() );
 		if ( filter_var( $main_image_url, FILTER_VALIDATE_URL ) ) {
