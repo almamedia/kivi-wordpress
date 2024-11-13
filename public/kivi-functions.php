@@ -150,3 +150,25 @@ add_action('kivi_single_presentation_text_after', function(){
 		</p>";
 	}
 });
+
+add_action( 'wp_head', function() {
+	if ( is_singular( 'kivi_item' ) ) {
+		$main_image_url = Kivi_Public::get_primary_image_url( get_the_ID() );
+		if ( filter_var( $main_image_url, FILTER_VALIDATE_URL ) ) {
+			$main_image_url = esc_attr($main_image_url);
+			echo "<meta property='og:image' content='$main_image_url' />\n";
+		}
+	}
+}, 5);
+
+// All in one SEO
+add_filter( 'aioseo_facebook_tags', function ( $facebookMeta ) {
+   if ( is_singular( 'kivi_item' ) ) {
+	   	$main_image_url = Kivi_Public::get_primary_image_url( get_the_ID() );
+		if ( filter_var( $main_image_url, FILTER_VALIDATE_URL ) ) {
+			$facebookMeta['og:image'] = esc_attr($main_image_url);
+		}
+   }
+   return $facebookMeta;
+} );
+
