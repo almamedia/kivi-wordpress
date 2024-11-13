@@ -44,15 +44,37 @@ class KiviRest {
 
 	public static function getAllItems( $indexed_after = 16 ) {
 		$instance = new KiviRest();
+		$header_data = array();
+		$all_items = array();
 
 		$res = $instance->kiviRemoteRequest( 'realties/homepage', array(), $indexed_after );
 
 		if ( ! is_wp_error( $res ) && ( $res['response']['code'] == 200 || $res['response']['code'] == 201 ) ) {
-			return json_decode( $res['body'], true );
+			$all_items = json_decode( $res['body'], true ); // first 200 items
+			$header_data = $res['headers']->getAll();
 		} else {
 			error_log( "Error KiviRest :: getAllItems()" );
 			return array();
 		}
+
+		$item_count = 0;
+		if ( isset( $header_data['x-total-hit-count'] ) ) {
+			$item_count = intval($header_data['x-total-hit-count']);
+		}
+
+		if($item_count > 200){ // if over 200 items
+			$pages = ceil($item_count / 200);
+			for($i = 1; $i < $pages; $i++){
+				$to_skip = $i*200;
+				$res = $instance->kiviRemoteRequest( 'realties/homepage?SKIP='.$to_skip, array(), $indexed_after );
+				if ( ! is_wp_error( $res ) && ( $res['response']['code'] == 200 || $res['response']['code'] == 201 ) ) {
+					$all_items = array_merge($all_items, json_decode( $res['body'], true ));
+				} else {
+					error_log( "Error KiviRest :: getAllItems() page $i" );
+				}
+			}
+		}
+		return $all_items;
 	}
 
 	public static function testApiConnection() {
