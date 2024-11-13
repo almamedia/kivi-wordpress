@@ -101,36 +101,6 @@ add_filter( 'pre_get_document_title', function($title){
 }, 99 );
 ```
 
-## Setting image for social media shares
-As plugin does not download any images to Wordpress, post thumbnail is not supported by the kivi_item post type. To add "og:image" -meta tag, use this snippet in current theme functions.php:
-
-```php
-add_action( 'wp_head', function() {
-	if ( is_singular( 'kivi_item' ) ) {
-		$main_image_url = Kivi_Public::get_primary_image_url( get_the_ID() );
-		if ( filter_var( $main_image_url, FILTER_VALIDATE_URL ) ) {
-			$main_image_url = esc_attr($main_image_url);
-			echo "<meta property='og:image' content='$main_image_url' />\n";
-		}
-	}
-}, 5);
-```
-
-If you are using All in one SEO -plugin, use this instead:
-
-```php
-// All in one SEO
-add_filter( 'aioseo_facebook_tags', function ( $facebookMeta ) {
-   if ( is_singular( 'kivi_item' ) ) {
-	   	$main_image_url = Kivi_Public::get_primary_image_url( get_the_ID() );
-		if ( filter_var( $main_image_url, FILTER_VALIDATE_URL ) ) {
-			$facebookMeta['og:image'] = esc_attr($main_image_url);
-		}
-   }
-   return $facebookMeta;
-} );
-```
-
 
 
 ## Feature Requests and Contributing
@@ -140,6 +110,11 @@ We are not too actively developing individual features for the plugin as it's me
 We are also happy to accept any pull requests if they are generic enough and seem fit for our users.
 
 ## Changelog
+
+**2.0.6**
+- Implement support for over 200 items at once (hard limit in Kivi REST API)
+- Fix possible warning if item comes without flat_structure
+- Add og:image codes to plugin code, remove snippets from README
 
 **2.0.5**
 - Make property type field in item filtering form more dynamic (get values from item data instead of hard coded ones)
