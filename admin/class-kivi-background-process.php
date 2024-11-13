@@ -134,7 +134,13 @@ class Kivi_Background_Process extends WP_Background_Process {
 		$meta   = array();
 
 		$postarr['post_type']  = 'kivi_item';
-		$postarr['post_title'] = wp_strip_all_tags( $item['flat_structure'] . ' ' . $item['town'] . ' ' . $item['street'] );
+
+		$flat_structure        = "";
+		if ( isset( $item['flat_structure'] ) && !empty( $item['flat_structure'] ) ) {
+			$flat_structure = $item['flat_structure'];
+		}
+		$postarr['post_title'] = wp_strip_all_tags( $flat_structure . ' ' . $item['town'] . ' ' . $item['street'] );
+		$postarr['post_title'] = trim( $postarr['post_title'] );
 
 		foreach ( $item as $key => $data ) {
 			$meta[ '_' . $key ] = $data;
