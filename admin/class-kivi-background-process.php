@@ -25,7 +25,7 @@ class Kivi_Background_Process extends WP_Background_Process {
 		/* Add or update item */
 		$this->handle_parsed_item( $item );
 
-		sleep( intval( apply_filters( 'kivi-background-task-sleep', 1 ) ) );
+		sleep( intval( apply_filters( 'kivi-background-task-sleep', 0 ) ) );
 
 		return false;
 	}
