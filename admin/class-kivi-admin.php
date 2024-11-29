@@ -93,7 +93,7 @@ class Kivi_Admin {
 	 */
 	public function kivi_sync($indexed_after = 20) {
 
-		error_log( 'kivi sync!' );
+		error_log( 'kivi sync! '.get_site_url() );
 
 		update_option( 'kivi-show-statusbar', 1 );
 
@@ -102,6 +102,7 @@ class Kivi_Admin {
 		 */
 
 		if ( $this->process->is_process_already_running() ) {
+			error_log( 'kivi sync already running' );
 			wp_send_json( array( 'message' => 'Tausta-ajo jo käynnissä' ) );
 			wp_die();
 		}
