@@ -177,7 +177,15 @@ class Kivi_Background_Process extends WP_Background_Process {
 		if ( ! apply_filters( 'kivi_has_prefilter', false ) ) {
 			// no prefilter, always add
 			$new_id = wp_insert_post( $postarr );
-			add_post_meta( $new_id, '_kivi_log', $log);
+			if ( is_wp_error( $new_id ) ) {
+				$error_message = $new_id->get_error_message();
+				error_log($error_message);
+			} elseif ( $new_id == 0 ) {
+				error_log("Error: Post data is empty or invalid. Post data: " . print_r($postarr, true));
+			}
+			else{
+				add_post_meta( $new_id, '_kivi_log', $log);
+			}
 		}
 		else{
 			if ( apply_filters( 'kivi_prefilter_single_item', false, $postarr ) ) {
