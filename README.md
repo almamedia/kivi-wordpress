@@ -111,6 +111,10 @@ We are also happy to accept any pull requests if they are generic enough and see
 
 ## Changelog
 
+**2.0.7**
+- Add logging
+- Make sync faster to complete
+
 **2.0.6**
 - Implement support for over 200 items at once (hard limit in Kivi REST API)
 - Fix possible warning if item comes without flat_structure
