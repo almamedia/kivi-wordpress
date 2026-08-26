@@ -65,6 +65,16 @@
     return $ret;
   }
 
+  function view_energyclass( $post_id ){
+    if ( get_post_meta( $post_id, '_rc_energy_flag', true ) === 'false' ) {
+      $view = New Kivi_Viewable( $label=map_post_meta('_energyclass_name') );
+      $text = __("Ei lain edellyttämää energiatodistusta","kivi");
+      $view->add( $text );
+      return $view;
+    }
+    return Kivi_Viewable::asSingle( $post_id, '_energyclass_name' );
+  }
+
   /* Get the sales person image url related to the post. */
   function get_iv_person_image( $post_id, $size='medium' ){
     $att = get_post_meta( $post_id, '_kivi_iv_person_image',true);
@@ -169,7 +179,7 @@
     $box->add( Kivi_Viewable::asSingle( $post_id, '_realtyidentifier' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_estatename' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_has_other' ) );
-    $box->add( Kivi_Viewable::asSingle( $post_id, '_energyclass_name' ) );
+    $box->add( view_energyclass( $post_id ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_carshelter_count' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_garage_count' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_rc_renovation_made' ) );
@@ -212,7 +222,7 @@
     $box->add( Kivi_Viewable::asSingle( $post_id, '_condition_id' ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_condition' ) );
   	$box->add( Kivi_Viewable::asSingle( $post_id, '_renovation_made' ) );
-    $box->add( Kivi_Viewable::asSingle( $post_id, '_energyclass_name' ) );
+    $box->add( view_energyclass( $post_id ) );
     $box->add( Kivi_Viewable::asSingle( $post_id, '_heating' ) );
     $view = New Kivi_Viewable( $label=__("Lämmitysjärjestelmän kuvaus","kivi"));
     $view->add( New Kivi_Property( $post_id,  $name='', $type="realtyoption", 'Lämmitysjärjestelmä', '' ) );
